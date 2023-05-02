@@ -191,6 +191,7 @@ sc_v_Tanno_2012_Baetis <- read.csv(sc_v_Tanno_2012_Baetis_path, sep=";", dec="."
 sc_sub_path <- "Suitability_Curves_Data/Baetis/Tanno_2012_Baetis_sp_substrate_winter.csv" 
 sc_sub <- read.csv(sc_sub_path, sep=";", dec=".", header = TRUE)
 
+
 # Plot suitability curves 
 ### WATER DEPTH ###
 # Tanno 2012 Rhithrogena 
@@ -995,6 +996,7 @@ HHS_Tanno_2012_Baetis <- plot(c(3.9, 4.6, 7, 11.4, 13.3, 32.69), c(HHS_Tanno_201
 ```{r}
 # make data frame for plotting
 library(readr)
+library(ggplot2)
 WUA_HHS <- read_delim("results_statistics/Results_Multivariate_Habitat_Model.csv")
 
 # select all WUA's for plotting
@@ -1017,8 +1019,11 @@ WA_HABBY_Rhithrogena <- WUA_HHS[ c(0, 13:18), c(1,2,5)]
 # WUA results
 WUA_results <- ggplot() +
   geom_line(data = WUA_Tanno_2012_Baetis, aes(Discharge, WUA, color = "WUA_Tanno_Baetis")) +
+  geom_point(data = WUA_Tanno_2012_Baetis, aes(Discharge, WUA, color = "WUA_Tanno_Baetis")) +
   geom_line(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA, color = "WUA_Tanno_Rhithrogena")) +
+  geom_point(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA, color = "WUA_Tanno_Rhithrogena")) +
    geom_line(data = WUA_HABBY_Rhithrogena, aes(Discharge, WUA, color = "HABBY_Rhithrogena")) +
+  geom_point(data = WUA_HABBY_Rhithrogena, aes(Discharge, WUA, color = "HABBY_Rhithrogena")) +
    scale_color_manual(name = "Macroinvertebrates",
                      values = c("WUA_Tanno_Baetis" = "violet", "WUA_Tanno_Rhithrogena" = "lightblue", "HABBY_Rhithrogena" = "green" ), 
                      labels = c("Tanno 2012 Baetis sp.", "Tanno 2012 Rhithrogena", "HABBY Rhithrogena eaton larva")) +
@@ -1026,9 +1031,12 @@ WUA_results <- ggplot() +
 
 # HHS results
 HHS_results <- ggplot() +
-  geom_line(data = HHS_Tanno_2012_Baetis, aes(Discharge, HHS, color = "HHS_Tanno_Baetis"), linetype = "dashed", size = 1.5) +
-  geom_line(data = HHS_Tanno_2012_Rhithrogena, aes(Discharge, HHS, color = "HHS_Tanno_Rhithrogena"), linetype = "dashed", size = 1.5) +
-   geom_line(data = HHS_HABBY_Rhithrogena, aes(Discharge, HHS, color = "HABBY_Rhithrogena"), linetype = "dashed", size = 1.5) +
+  geom_line(data = HHS_Tanno_2012_Baetis, aes(Discharge, HHS, color = "HHS_Tanno_Baetis")) +
+  geom_point(data = HHS_Tanno_2012_Baetis, aes(Discharge, HHS, color = "HHS_Tanno_Baetis")) +
+  geom_line(data = HHS_Tanno_2012_Rhithrogena, aes(Discharge, HHS, color = "HHS_Tanno_Rhithrogena")) +
+  geom_point(data = HHS_Tanno_2012_Rhithrogena, aes(Discharge, HHS, color = "HHS_Tanno_Rhithrogena")) +
+   geom_line(data = HHS_HABBY_Rhithrogena, aes(Discharge, HHS, color = "HABBY_Rhithrogena")) +
+  geom_point(data = HHS_HABBY_Rhithrogena, aes(Discharge, HHS, color = "HABBY_Rhithrogena")) +
    scale_color_manual(name = "Macroinvertebrates",
                      values = c("HHS_Tanno_Baetis" = "violet", "HHS_Tanno_Rhithrogena" = "lightblue", "HABBY_Rhithrogena" = "green" ), 
                      labels = c("Tanno 2012 Baetis sp.", "Tanno 2012 Rhithrogena", "HABBY Rhithrogena eaton larva")) +
@@ -1036,7 +1044,8 @@ HHS_results <- ggplot() +
 
 # WA tot results
 WA_tot_results <- ggplot() +
-  geom_line(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot, col = "blue"), linetype = "dashed", size = 1.5) +
+  geom_line(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot), col = "blue") +
+  geom_point(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot), col = "blue") +
   labs(title = "Comparing total wetted area at different discharges", x = "Discharge [m3/s]", y = "Wetted Area (WA_tot)")
 ```
 
