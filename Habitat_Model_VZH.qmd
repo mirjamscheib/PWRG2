@@ -1,0 +1,273 @@
+---
+title: "Habitat_Model_VZH"
+format: html
+---
+
+# Clear R environment 
+```{r}
+#clear R environment
+rm(list = ls())
+```
+
+# Install and load packages 
+```{r}
+# check for a package, install and load
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+library(terra)
+library(tmap)
+library(raster)
+library(ggplot2)
+library(tibble)
+```
+
+# Load Input Raster Velocity
+```{r}
+# Read raster-files of velocities 
+v_path <- "raster_files"
+
+# read raster-files
+velocity_7 <- raster(file.path(v_path, "Landquart_results_velocity_7.tif"))
+velocity_3 <- raster(file.path(v_path, "Landquart_results_velocity_3.tif"))
+velocity_4 <- raster(file.path(v_path, "Landquart_results_velocity_4.tif"))
+velocity_11 <- raster(file.path(v_path, "Landquart_results_velocity_11.tif"))
+velocity_13 <- raster(file.path(v_path, "Landquart_results_velocity_13.tif"))
+velocity_32 <- raster(file.path(v_path, "Landquart_results_velocity_32.tif"))
+
+# Set all 0-cells to NA 
+velocity_7[velocity_7 == 0] <- NA
+velocity_3[velocity_3 == 0] <- NA
+velocity_4[velocity_4 == 0] <- NA
+velocity_11[velocity_11 == 0] <- NA
+velocity_13[velocity_13 == 0] <- NA
+velocity_32[velocity_32 == 0] <- NA
+```
+
+# Reclassify Rasters (VZH)
+```{r}
+# Define the reclassification table
+# In this example, values from 0 to 0.05 are set to 1,
+# values from 0.05 to 0.25 are set to 3, and so on.
+# values from VZH are in cm/s, in raster in m/s (therefore values from VZH are converted into m/s with e.g., 5cm/s / 100 = 0.05m/s)
+reclass_table <- c(0, 0.05, 1, 
+                   0.05, 0.25, 3, 
+                   0.25, 0.75, 5,
+                   0.75, 1.50, 4,
+                   1.50, 2.50, 5,
+                   2.50, Inf, NA)
+
+# Classify rasters (include.lowest = TRUE includes 0 m/s, which will be also classified as 1)
+raster_classify_7 <- reclassify(velocity_7, reclass_table,  include.lowest = TRUE)
+raster_classify_3 <- reclassify(velocity_3, reclass_table,  include.lowest = TRUE)
+raster_classify_4 <- reclassify(velocity_4, reclass_table,  include.lowest = TRUE)
+raster_classify_11 <- reclassify(velocity_11, reclass_table,  include.lowest = TRUE)
+raster_classify_13 <- reclassify(velocity_13, reclass_table,  include.lowest = TRUE)
+raster_classify_32 <- reclassify(velocity_32, reclass_table,  include.lowest = TRUE)
+
+# Visualization of the results
+plot(raster_classify_7)
+
+# write/save reclassified rasters
+writeRaster(raster_classify_7, "raster_files/raster_classify_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_3, "raster_files/raster_classify_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_4, "raster_files/raster_classify_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_11, "raster_files/raster_classify_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_13, "raster_files/raster_classify_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_32, "raster_files/raster_classify_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+# Habitat modelling 
+## Read Suitability Curve 
+```{r}
+# Read suitability curve
+sc_v_VZH_path <- "Suitability_Curves_Data/VZH/VZH_B5.csv" 
+sc_v_VZH <- read.csv(sc_v_VZH_path, sep=";", dec=".", header = TRUE)
+```
+
+## Univariate Habitat Model (Velocity Class)
+```{r}
+# Read raster-files of velocities 
+v_path <- "raster_files"
+
+# read raster-files
+v_7 <- raster(file.path(v_path, "raster_classify_7.tif"))
+v_3 <- raster(file.path(v_path, "raster_classify_3.tif"))
+v_4 <- raster(file.path(v_path, "raster_classify_4.tif"))
+v_11 <- raster(file.path(v_path, "raster_classify_11.tif"))
+v_13 <- raster(file.path(v_path, "raster_classify_13.tif"))
+v_32 <- raster(file.path(v_path, "raster_classify_32.tif"))
+
+# Q7
+VZH_7 <- calc(v_7, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+
+# Q3.9
+VZH_3 <- calc(v_3, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+
+# Q4.6
+VZH_4 <- calc(v_4, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+
+# Q11
+VZH_11 <- calc(v_11, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+
+# Q13.3
+VZH_13 <- calc(v_13, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+
+# Q32.69
+VZH_32 <- calc(v_32, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+```
+
+# Calculate WUA 
+```{r}
+# Q7
+WUA_VZH_7 <- cellStats(VZH_7, 'sum') * 4
+
+# Q3.9
+WUA_VZH_3 <- cellStats(VZH_3, 'sum') * 4
+
+# Q4.6
+WUA_VZH_4 <- cellStats(VZH_4, 'sum') * 4
+
+# Q11
+WUA_VZH_11 <- cellStats(VZH_11, 'sum') * 4
+
+# Q13.3
+WUA_VZH_13 <- cellStats(VZH_13, 'sum') * 4
+
+# Q32.69
+WUA_VZH_32 <- cellStats(VZH_32, 'sum') * 4
+```
+
+# Calculate frequency table
+```{r}
+# Q7
+freq_VZH_7 <- as.data.frame(freq(VZH_7, digit=1, useNA= "no")) 
+
+# Q3.9
+freq_VZH_3 <- as.data.frame(freq(VZH_3, digit=1, useNA= "no")) 
+
+# Q4.6
+freq_VZH_4 <- as.data.frame(freq(VZH_4, digit=1, useNA= "no")) 
+
+# Q11
+freq_VZH_11 <- as.data.frame(freq(VZH_11, digit=1, useNA= "no")) 
+
+# Q13.3
+freq_VZH_13 <- as.data.frame(freq(VZH_13, digit=1, useNA= "no")) 
+
+# Q32.69
+freq_VZH_32 <- as.data.frame(freq(VZH_32, digit=1, useNA= "no")) 
+```
+
+# Calculate WA_tot
+```{r}
+# Q7
+WA_tot_VZH_7 <- sum(freq_VZH_7$count) * 4
+
+# Q3.9
+WA_tot_VZH_3 <- sum(freq_VZH_3$count) * 4
+
+# Q4.6
+WA_tot_VZH_4 <- sum(freq_VZH_4$count) * 4
+
+# Q11
+WA_tot_VZH_11 <- sum(freq_VZH_11$count) * 4
+
+# Q13.3
+WA_tot_VZH_13 <- sum(freq_VZH_13$count) * 4
+
+# Q32.69
+WA_tot_VZH_32 <- sum(freq_VZH_32$count) * 4
+```
+
+# Calculate HHS [-]
+```{r}
+# Q7
+HHS_VZH_7 <- WUA_VZH_7/WA_tot_VZH_7
+
+# Q3.9
+HHS_VZH_3 <- WUA_VZH_3/WA_tot_VZH_3
+
+# Q4.6
+HHS_VZH_4 <- WUA_VZH_4/WA_tot_VZH_4
+
+# Q11
+HHS_VZH_11 <- WUA_VZH_11/WA_tot_VZH_11
+
+# Q13.3
+HHS_VZH_13 <- WUA_VZH_13/WA_tot_VZH_13
+
+# Q32.69
+HHS_VZH_32 <- WUA_VZH_32/WA_tot_VZH_32
+```
+
+# dataframe and .csv of calculated indices 
+```{r}
+# data frame WUA and HHS 
+results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZH"), Discharge = c(7, 3.9, 4.6, 11.4, 13.3, 32.69), 
+                      WUA = c(WUA_VZH_7, WUA_VZH_3, WUA_VZH_4, WUA_VZH_11, WUA_VZH_13, WUA_VZH_32), 
+                      HHS = c(HHS_VZH_7, HHS_VZH_3, HHS_VZH_4, HHS_VZH_11, HHS_VZH_13, HHS_VZH_32),
+                      WA_tot = c(WA_tot_VZH_7, WA_tot_VZH_3, WA_tot_VZH_4, WA_tot_VZH_11, WA_tot_VZH_13, WA_tot_VZH_32))
+
+write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
+```
+
+# Comparing WUA, HHS, WA_tot with different Q
+```{r}
+# make data frame for plotting
+library(readr)
+library(ggplot2)
+WUA_HHS <- read_delim("results_statistics/Results_VZH_Habitat_Model.csv")
+
+# plot results
+# WUA results
+WUA_results <- ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, WUA, color = "WUA_HHS_VZH")) +
+  geom_point(data = WUA_HHS, aes(Discharge, WUA, color = "WUA_HHS_VZH")) +
+   scale_color_manual(name = "Macroinvertebrates",
+                     values = c("WUA_HHS_VZH" = "violet")) +
+  labs(title = "WUA of VZH", x = "Discharge [m3/s]", y = "Weighted usable area (WUA)")
+
+# HHS results
+HHS_results <- ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, HHS, color = "WUA_HHS_VZH")) +
+  geom_point(data = WUA_HHS, aes(Discharge, HHS, color = "WUA_HHS_VZH")) +
+   scale_color_manual(name = "Macroinvertebrates",
+                     values = c("WUA_HHS_VZH" = "violet")) +
+  labs(title = "HHS of VZH", x = "Discharge [m3/s]", y = "Hydraulic Habitat Suitability (HHS)")
+
+# WA tot results
+WA_tot_results <- ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, WA_tot), col = "blue") +
+  geom_point(data = WUA_HHS, aes(Discharge, WA_tot), col = "blue") +
+  labs(title = "Comparing total wetted area at different discharges", x = "Discharge [m3/s]", y = "Wetted Area (WA_tot)")
+```
+
+```{r}
+# save plots into .png
+# set the dimensions of the quadrat
+quadrat_width <- 15 # in cm
+quadrat_height <- 10 # in cm
+
+# WUA 
+ggsave(filename = "results_statistics/WUA_VZH_results.png",plot = WUA_results, width = quadrat_width, height = quadrat_height, units = "cm")
+
+
+# HHS
+ggsave(filename = "results_statistics/HHS_VZH_results.png",plot = HHS_results, width = quadrat_width, height = quadrat_height, units = "cm")
+
+# WA_tot
+ggsave(filename = "results_statistics/WA_tot_VZH_results.png",plot = WA_tot_results, width = quadrat_width, height = quadrat_height, units = "cm")
+```
+
+
+
+
