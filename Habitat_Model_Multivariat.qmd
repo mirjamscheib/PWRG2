@@ -30,746 +30,1205 @@ library(ggplot2)
 ```
 
 
-# 1. Input-Data
-## a. Water Depth
+# ok- 1. Input-Data
+## ok- a. Water Depth
 ```{r}
 # Waehlen Sie zuerst einen beliebigen Abfluss sowie eine beliebige Projektvariante und berechnen Sie fuer eine beliebige Altersklasse die entsprechenden univariate Habitateignungsindizes (HSI), der globale Habitateignungsindex (GHSI), das Weighted Usable Area (WUA) Index und das Hydraulic Habitat Suitability (HHS) Index 
 
-# Read raster-files of water depths
+# Read raster-files of water depths -------------------------------------------
 depth_path <- "raster_files"
 
-# read raster-files
-depth_7 <- raster(file.path(depth_path, "Landquart_results_depth_7.tif"))
+# read raster-files ----------------------------------------------------
+depth_2 <- raster(file.path(depth_path, "Landquart_results_depth_2.tif"))
 depth_3 <- raster(file.path(depth_path, "Landquart_results_depth_3.tif"))
 depth_4 <- raster(file.path(depth_path, "Landquart_results_depth_4.tif"))
+depth_7 <- raster(file.path(depth_path, "Landquart_results_depth_7.tif"))
+depth_9 <- raster(file.path(depth_path, "Landquart_results_depth_9.tif"))
 depth_11 <- raster(file.path(depth_path, "Landquart_results_depth_11.tif"))
 depth_13 <- raster(file.path(depth_path, "Landquart_results_depth_13.tif"))
+depth_15 <- raster(file.path(depth_path, "Landquart_results_depth_15.tif"))
+depth_18 <- raster(file.path(depth_path, "Landquart_results_depth_18.tif"))
+depth_22 <- raster(file.path(depth_path, "Landquart_results_depth_22.tif"))
+depth_25 <- raster(file.path(depth_path, "Landquart_results_depth_25.tif"))
+depth_28 <- raster(file.path(depth_path, "Landquart_results_depth_28.tif"))
 depth_32 <- raster(file.path(depth_path, "Landquart_results_depth_32.tif"))
 
-# Set all 0-cells to NA 
-depth_7[depth_7 == 0] <- NA
+# Set all 0-cells to NA ----------------------------------------------------
+depth_2[depth_2 == 0] <- NA
 depth_3[depth_3 == 0] <- NA
 depth_4[depth_4 == 0] <- NA
+depth_7[depth_7 == 0] <- NA
+depth_9[depth_9 == 0] <- NA
 depth_11[depth_11 == 0] <- NA
 depth_13[depth_13 == 0] <- NA
+depth_15[depth_15 == 0] <- NA
+depth_18[depth_18 == 0] <- NA
+depth_22[depth_22 == 0] <- NA
+depth_25[depth_25 == 0] <- NA
+depth_28[depth_28 == 0] <- NA
 depth_32[depth_32 == 0] <- NA
-
-# Plot raster water depths
-plot(depth_7, main = "Water depth [m]")
-plot(depth_3, main = "Water depth [m]")
-plot(depth_4, main = "Water depth [m]")
-plot(depth_11, main = "Water depth [m]")
-plot(depth_13, main = "Water depth [m]")
-plot(depth_32, main = "Water depth [m]")
 ```
 
-## b. Velocity 
+## ok- b. Velocity 
 ```{r}
-# Read raster-files of velocities 
+# Read raster-files of velocities --------------------------------------------
 v_path <- "raster_files"
 
-# read raster-files
-velocity_7 <- raster(file.path(v_path, "Landquart_results_velocity_7.tif"))
+# read raster-files ----------------------------------------------------
+velocity_2 <- raster(file.path(v_path, "Landquart_results_velocity_2.tif"))
 velocity_3 <- raster(file.path(v_path, "Landquart_results_velocity_3.tif"))
 velocity_4 <- raster(file.path(v_path, "Landquart_results_velocity_4.tif"))
+velocity_7 <- raster(file.path(v_path, "Landquart_results_velocity_7.tif"))
+velocity_9 <- raster(file.path(v_path, "Landquart_results_velocity_9.tif"))
 velocity_11 <- raster(file.path(v_path, "Landquart_results_velocity_11.tif"))
 velocity_13 <- raster(file.path(v_path, "Landquart_results_velocity_13.tif"))
+velocity_15 <- raster(file.path(v_path, "Landquart_results_velocity_15.tif"))
+velocity_18 <- raster(file.path(v_path, "Landquart_results_velocity_18.tif"))
+velocity_22 <- raster(file.path(v_path, "Landquart_results_velocity_22.tif"))
+velocity_25 <- raster(file.path(v_path, "Landquart_results_velocity_25.tif"))
+velocity_28 <- raster(file.path(v_path, "Landquart_results_velocity_28.tif"))
 velocity_32 <- raster(file.path(v_path, "Landquart_results_velocity_32.tif"))
 
-# Set all 0-cells to NA 
-velocity_7[velocity_7 == 0] <- NA
+# Set all 0-cells to NA ---------------------------------------------------
+velocity_2[velocity_2 == 0] <- NA
 velocity_3[velocity_3 == 0] <- NA
 velocity_4[velocity_4 == 0] <- NA
+velocity_7[velocity_7 == 0] <- NA
+velocity_9[velocity_9 == 0] <- NA
 velocity_11[velocity_11 == 0] <- NA
 velocity_13[velocity_13 == 0] <- NA
+velocity_15[velocity_15 == 0] <- NA
+velocity_18[velocity_18 == 0] <- NA
+velocity_22[velocity_22 == 0] <- NA
+velocity_25[velocity_25 == 0] <- NA
+velocity_28[velocity_28 == 0] <- NA
 velocity_32[velocity_32 == 0] <- NA
-
-# Plot raster velocities 
-plot(velocity_7, main = "Velocity [m/s]")
-plot(velocity_3, main = "Velocity [m/s]")
-plot(velocity_4, main = "Velocity [m/s]")
-plot(velocity_11, main = "Velocity [m/s]")
-plot(velocity_13, main = "Velocity [m/s]")
-plot(velocity_32, main = "Velocity [m/s]")
 ```
 
-## c. Substrate
+## ok- c. Substrate
 ```{r}
-# Read raster-file of substrate
+# Read raster-file of substrate --------------------------------------------
 sub_path <- "raster_files"
 
-# Read raster-file
+# Read raster-file ----------------------------------------------------
 sub <- raster(file.path(sub_path, "Landquart_results_substrate.tif"))
 
-# Create a mask of non-NA values with all Q's
-mask_7 <- !is.na(depth_7)
+# Create a mask of non-NA values with all Q's ----------------------------------
+mask_2 <- !is.na(depth_2)
 mask_3 <- !is.na(depth_3)
 mask_4 <- !is.na(depth_4)
+mask_7 <- !is.na(depth_7)
+mask_9 <- !is.na(depth_9)
 mask_11 <- !is.na(depth_11)
 mask_13 <- !is.na(depth_13)
+mask_15 <- !is.na(depth_15)
+mask_18 <- !is.na(depth_18)
+mask_22 <- !is.na(depth_22)
+mask_25 <- !is.na(depth_25)
+mask_28 <- !is.na(depth_28)
 mask_32 <- !is.na(depth_32)
 
-# Apply the mask to the raster
-depth_masked_7 <- mask(depth_7, mask_7)
+# Apply the mask to the raster ------------------------------------------------
+depth_masked_2 <- mask(depth_2, mask_2)
 depth_masked_3 <- mask(depth_3, mask_3)
 depth_masked_4 <- mask(depth_4, mask_4)
+depth_masked_7 <- mask(depth_7, mask_7)
+depth_masked_9 <- mask(depth_9, mask_9)
 depth_masked_11 <- mask(depth_11, mask_11)
 depth_masked_13 <- mask(depth_13, mask_13)
+depth_masked_15 <- mask(depth_15, mask_15)
+depth_masked_18 <- mask(depth_18, mask_18)
+depth_masked_22 <- mask(depth_22, mask_22)
+depth_masked_25 <- mask(depth_25, mask_25)
+depth_masked_28 <- mask(depth_28, mask_28)
 depth_masked_32 <- mask(depth_32, mask_32)
 
-# Save the masked raster as a new file
-writeRaster(depth_masked_7, "raster_files/depth_masked_7.tif", format="GTiff", overwrite = TRUE)
+# Save the masked raster as a new file ----------------------------------------
+writeRaster(depth_masked_2, "raster_files/depth_masked_2.tif", format="GTiff", overwrite = TRUE)
 writeRaster(depth_masked_3, "raster_files/depth_masked_3.tif", format="GTiff", overwrite = TRUE)
 writeRaster(depth_masked_4, "raster_files/depth_masked_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_7, "raster_files/depth_masked_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_9, "raster_files/depth_masked_9.tif", format="GTiff", overwrite = TRUE)
 writeRaster(depth_masked_11, "raster_files/depth_masked_11.tif", format="GTiff", overwrite = TRUE)
 writeRaster(depth_masked_13, "raster_files/depth_masked_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_15, "raster_files/depth_masked_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_18, "raster_files/depth_masked_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_22, "raster_files/depth_masked_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_25, "raster_files/depth_masked_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(depth_masked_28, "raster_files/depth_masked_28.tif", format="GTiff", overwrite = TRUE)
 writeRaster(depth_masked_32, "raster_files/depth_masked_32.tif", format="GTiff", overwrite = TRUE)
 
-#Plot raster-file of substrate
+#Plot raster-file of substrate ------------------------------------------------
 plot(sub)
 
-# Clip the raster1 with raster2
-sub_7 <- mask(sub, depth_masked_7)
+# Clip the raster1 with raster2 ----------------------------------------------
+sub_2 <- mask(sub, depth_masked_2)
 sub_3 <- mask(sub, depth_masked_3)
 sub_4 <- mask(sub, depth_masked_4)
+sub_7 <- mask(sub, depth_masked_7)
+sub_9 <- mask(sub, depth_masked_9)
 sub_11 <- mask(sub, depth_masked_11)
 sub_13 <- mask(sub, depth_masked_13)
+sub_15 <- mask(sub, depth_masked_15)
+sub_18 <- mask(sub, depth_masked_18)
+sub_22 <- mask(sub, depth_masked_22)
+sub_25 <- mask(sub, depth_masked_25)
+sub_28 <- mask(sub, depth_masked_28)
 sub_32 <- mask(sub, depth_masked_32)
 
-# plot clipped substrate raster-file
-plot(sub_7)
-plot(sub_3)
-plot(sub_4)
-plot(sub_11)
-plot(sub_13)
-plot(sub_32)
-
-# Save the clipped raster-files as a new file
-writeRaster(sub_7, filename="raster_files/substrate_7.tif", format="GTiff", overwrite = TRUE)
+# Save the clipped raster-files as a new file --------------------------------
+writeRaster(sub_2, filename="raster_files/substrate_2.tif", format="GTiff", overwrite = TRUE)
 writeRaster(sub_3, filename="raster_files/substrate_3.tif", format="GTiff", overwrite = TRUE)
 writeRaster(sub_4, filename="raster_files/substrate_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_7, filename="raster_files/substrate_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_9, filename="raster_files/substrate_9.tif", format="GTiff", overwrite = TRUE)
 writeRaster(sub_11, filename="raster_files/substrate_11.tif", format="GTiff", overwrite = TRUE)
 writeRaster(sub_13, filename="raster_files/substrate_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_15, filename="raster_files/substrate_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_18, filename="raster_files/substrate_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_22, filename="raster_files/substrate_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_25, filename="raster_files/substrate_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(sub_28, filename="raster_files/substrate_28.tif", format="GTiff", overwrite = TRUE)
 writeRaster(sub_32, filename="raster_files/substrate_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
 
-# 2. Habitat modelling 
-## a. Suitability Curves 
+# ok- 2. Habitat modelling 
+## ok- a. Suitability Curves 
 ```{r}
 # Read suitability curves 
-
-### WATER DEPTH ###
-## Tanno 2012 Rhitrhogena sp.
+### WATER DEPTH ### ----------------------------------------------------
+## Tanno 2012 Rhitrhogena sp. ----------------------------------------------------
 sc_depth_Tanno_2012_Rhithrogena_path <- "Suitability_Curves_Data/Rhithrogena/Tanno_2012_Rhitrogena_sp_depth_winter.csv" 
 sc_depth_Tanno_2012_Rhithrogena <- read.csv(sc_depth_Tanno_2012_Rhithrogena_path, sep=";", dec=".", header = TRUE)
-# head(PK_T)
 
-## HABBY Rhitrhogena eaton
+## HABBY Rhitrhogena eaton ----------------------------------------------------
 sc_depth_HABBY_Rhithrogena_path <- "Suitability_Curves_Data/Rhithrogena/HABBY_Rhitrogena_eaton_larva_depth.csv" 
 sc_depth_HABBY_Rhithrogena <- read.csv(sc_depth_HABBY_Rhithrogena_path, sep=";", dec=".", header = TRUE)
 
-## Tanno 2012 Baetis sp.
+## Tanno 2012 Baetis sp. ----------------------------------------------------
 sc_depth_Tanno_2012_Baetis_path <- "Suitability_Curves_Data/Baetis/Tanno_2012_Baetis_sp_depth_winter.csv" 
 sc_depth_Tanno_2012_Baetis <- read.csv(sc_depth_Tanno_2012_Baetis_path, sep=";", dec=".", header = TRUE)
 
-### VELOCITY ###
-# Tanno 2012 Rhithrogena sp. 
+### VELOCITY ### ----------------------------------------------------
+# Tanno 2012 Rhithrogena sp. ----------------------------------------------------
 sc_v_Tanno_2012_Rhithrogena_path <- "Suitability_Curves_Data/Rhithrogena/Tanno_2012_Rhithrogena_sp_velocity_winter.csv" 
 sc_v_Tanno_2012_Rhithrogena <- read.csv(sc_v_Tanno_2012_Rhithrogena_path, sep=";", dec=".", header = TRUE)
 # head(PK_FG)
 
-# HABBY Rhithrogena eaton 
+# HABBY Rhithrogena eaton ----------------------------------------------------
 sc_v_HABBY_Rhithrogena_path <- "Suitability_Curves_Data/Rhithrogena/HABBY_Rhithrogena_eaton_larva_velocity.csv" 
 sc_v_HABBY_Rhithrogena <- read.csv(sc_v_HABBY_Rhithrogena_path, sep=";", dec=".", header = TRUE)
 
-# Tanno 2012 Baetis sp. 
+# Tanno 2012 Baetis sp. ----------------------------------------------------
 sc_v_Tanno_2012_Baetis_path <- "Suitability_Curves_Data/Baetis/Tanno_2012_Baetis_sp_velocity_winter.csv" 
 sc_v_Tanno_2012_Baetis <- read.csv(sc_v_Tanno_2012_Baetis_path, sep=";", dec=".", header = TRUE)
 
-### SUBTRATE ###
-sc_sub_path <- "Suitability_Curves_Data/Baetis/Tanno_2012_Baetis_sp_substrate_winter.csv" 
-sc_sub <- read.csv(sc_sub_path, sep=";", dec=".", header = TRUE)
+### SUBTRATE ### ----------------------------------------------------
+# Tanno 2012 Baetis sp. ----------------------------------------------------
+sc_sub_Baetis_path <- "Suitability_Curves_Data/Baetis/Tanno_2012_Baetis_sp_substrate_winter.csv" 
+sc_sub_Baetis <- read.csv(sc_sub_Baetis_path, sep=";", dec=".", header = TRUE)
 
+# Tanno 2012 Rhithrogena sp. ----------------------------------------------------
+sc_sub_Rhithrogena_path <- "Suitability_Curves_Data/Rhithrogena/Tanno_2012_Rhithrogena_sp_substrate_winter.csv" 
+sc_sub_Rhithrogena <- read.csv(sc_sub_Rhithrogena_path, sep=";", dec=".", header = TRUE)
+```
 
+```{r}
 # Plot suitability curves 
-### WATER DEPTH ###
-# Tanno 2012 Rhithrogena 
+### WATER DEPTH ### ----------------------------------------------------
+# Tanno 2012 Rhithrogena ----------------------------------------------------
 plot(approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
      main = "Tanno 2012: Rhithrogena sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Tiefe [m]", ylab = "HS [-]")
+     xlab = "Depth [m]", ylab = "HS [-]")
 
-# HABBY Rhithrogena 
+# HABBY Rhithrogena ----------------------------------------------------
 plot(approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
      main = "HABBY: Rhithrogena eaton", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Tiefe [m]", ylab = "HS [-]")
+     xlab = "Depth [m]", ylab = "HS [-]")
 
-# Tanno 2012 Baetis 
+# Tanno 2012 Baetis ----------------------------------------------------
 plot(approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
      main = "Tanno 2012: Baetis sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Tiefe [m]", ylab = "HS [-]")
+     xlab = "Depth [m]", ylab = "HS [-]")
 
-### VELOCITY ###
-# Tanno 2012 Rhithrogena 
+### VELOCITY ### ----------------------------------------------------
+# Tanno 2012 Rhithrogena ----------------------------------------------------
 plot(approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
      main = "Tanno 2012: Rhithrogena sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "FG [m/s]", ylab = "HS [-]")
+     xlab = "Velocity [m/s]", ylab = "HS [-]")
 
-# HABBY Rhithrogena 
+# HABBY Rhithrogena ----------------------------------------------------
 plot(approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
      main = "HABBY: Rhithrogena eaton", col = "black",  lty = 1, lwd = 2, 
-     xlab = "FG [m/s]", ylab = "HS [-]")
+     xlab = "Velocity [m/s]", ylab = "HS [-]")
 
-# Tanno 2012 Baetis 
+# Tanno 2012 Baetis ----------------------------------------------------
 plot(approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
      main = "Tanno 2012: Baetis sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "FG [m/s]", ylab = "HS [-]")
+     xlab = "Velocity [m/s]", ylab = "HS [-]")
 
-### SUBSTRATE ###
-plot(approxfun(sc_sub$Substrate.class, sc_sub$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
+### SUBSTRATE ### ----------------------------------------------------
+# Tanno 2012 Baetis ----------------------------------------------------
+plot(approxfun(sc_sub_Baetis$Substrate.class, sc_sub_Baetis$Abundance, method = "linear", rule = 2), xlim = c(0,8.5), 
      main = "Tanno 2012: Baetis sp. (winter)", col = "black",  lty = 1, lwd = 2, 
+     xlab = "Substrate class", ylab = "HS [-]")
+
+# Tanno 2012 Rhithrogena ----------------------------------------------------
+plot(approxfun(sc_sub_Rhithrogena$Substrate.class, sc_sub_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,8.5), 
+     main = "Tanno 2012: Rhithrogena sp. (winter)", col = "black",  lty = 1, lwd = 2, 
      xlab = "Substrate class", ylab = "HS [-]")
 ```
 
 
-## b. Univariate HM 
-### b1. water depth
+## ok- b. Univariate HM 
+### ok- b1. water depth
 ```{r}
 ### WATER DEPTH ###
-# Tanno 2012 Rhithrogena
-# Q7
-HS_Tanno_2012_Rhithrogena_depth_7 <- calc(depth_7, fun = approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, rule = 2))
+# Tanno 2012 Rhithrogena -------------------------------------------
+univariat_wd_rhithrogena_tanno_2012 <- function(x, y = sc_depth_Tanno_2012_Rhithrogena$depth..m., z = sc_depth_Tanno_2012_Rhithrogena$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q3.9
-HS_Tanno_2012_Rhithrogena_depth_3 <- calc(depth_3, fun = approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, rule = 2))
+# ALL Q's
+HS_Tanno_2012_Rhithrogena_depth_2 <- univariat_wd_rhithrogena_tanno_2012(depth_2)
+HS_Tanno_2012_Rhithrogena_depth_3 <- univariat_wd_rhithrogena_tanno_2012(depth_3)
+HS_Tanno_2012_Rhithrogena_depth_4 <- univariat_wd_rhithrogena_tanno_2012(depth_4)
+HS_Tanno_2012_Rhithrogena_depth_7 <- univariat_wd_rhithrogena_tanno_2012(depth_7)
+HS_Tanno_2012_Rhithrogena_depth_9 <- univariat_wd_rhithrogena_tanno_2012(depth_9)
+HS_Tanno_2012_Rhithrogena_depth_11 <- univariat_wd_rhithrogena_tanno_2012(depth_11)
+HS_Tanno_2012_Rhithrogena_depth_13 <- univariat_wd_rhithrogena_tanno_2012(depth_13)
+HS_Tanno_2012_Rhithrogena_depth_15 <- univariat_wd_rhithrogena_tanno_2012(depth_15)
+HS_Tanno_2012_Rhithrogena_depth_18 <- univariat_wd_rhithrogena_tanno_2012(depth_18)
+HS_Tanno_2012_Rhithrogena_depth_22 <- univariat_wd_rhithrogena_tanno_2012(depth_22)
+HS_Tanno_2012_Rhithrogena_depth_25 <- univariat_wd_rhithrogena_tanno_2012(depth_25)
+HS_Tanno_2012_Rhithrogena_depth_28 <- univariat_wd_rhithrogena_tanno_2012(depth_28)
+HS_Tanno_2012_Rhithrogena_depth_32 <- univariat_wd_rhithrogena_tanno_2012(depth_32)
 
-# Q4.6
-HS_Tanno_2012_Rhithrogena_depth_4 <- calc(depth_4, fun = approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, rule = 2))
+# HABBY Rhithrogena -------------------------------------------
+univariat_wd_rhithrogena_habby <- function(x, y = sc_depth_HABBY_Rhithrogena$depth..m., z = sc_depth_HABBY_Rhithrogena$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q11
-HS_Tanno_2012_Rhithrogena_depth_11 <- calc(depth_11, fun = approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, rule = 2))
+# All Q's 
+HS_HABBY_Rhithrogena_depth_2 <- univariat_wd_rhithrogena_habby(depth_2)
+HS_HABBY_Rhithrogena_depth_3 <- univariat_wd_rhithrogena_habby(depth_3)
+HS_HABBY_Rhithrogena_depth_4 <- univariat_wd_rhithrogena_habby(depth_4)
+HS_HABBY_Rhithrogena_depth_7 <- univariat_wd_rhithrogena_habby(depth_7)
+HS_HABBY_Rhithrogena_depth_9 <- univariat_wd_rhithrogena_habby(depth_9)
+HS_HABBY_Rhithrogena_depth_11 <- univariat_wd_rhithrogena_habby(depth_11)
+HS_HABBY_Rhithrogena_depth_13 <- univariat_wd_rhithrogena_habby(depth_13)
+HS_HABBY_Rhithrogena_depth_15 <- univariat_wd_rhithrogena_habby(depth_15)
+HS_HABBY_Rhithrogena_depth_18 <- univariat_wd_rhithrogena_habby(depth_18)
+HS_HABBY_Rhithrogena_depth_22 <- univariat_wd_rhithrogena_habby(depth_22)
+HS_HABBY_Rhithrogena_depth_25 <- univariat_wd_rhithrogena_habby(depth_25)
+HS_HABBY_Rhithrogena_depth_28 <- univariat_wd_rhithrogena_habby(depth_28)
+HS_HABBY_Rhithrogena_depth_32 <- univariat_wd_rhithrogena_habby(depth_32)
 
-# Q13
-HS_Tanno_2012_Rhithrogena_depth_13 <- calc(depth_13, fun = approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, rule = 2))
+# Tanno 2012 Baetis -------------------------------------------
+univariat_wd_baetis_tanno_2012 <- function(x, y = sc_depth_Tanno_2012_Baetis$depth..m., z = sc_depth_Tanno_2012_Baetis$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q32
-HS_Tanno_2012_Rhithrogena_depth_32 <- calc(depth_32, fun = approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, rule = 2))
+# ALL Q's
+HS_Tanno_2012_Baetis_depth_2 <- univariat_wd_baetis_tanno_2012(depth_2)
+HS_Tanno_2012_Baetis_depth_3 <- univariat_wd_baetis_tanno_2012(depth_3)
+HS_Tanno_2012_Baetis_depth_4 <- univariat_wd_baetis_tanno_2012(depth_4)
+HS_Tanno_2012_Baetis_depth_7 <- univariat_wd_baetis_tanno_2012(depth_7)
+HS_Tanno_2012_Baetis_depth_9 <- univariat_wd_baetis_tanno_2012(depth_9)
+HS_Tanno_2012_Baetis_depth_11 <- univariat_wd_baetis_tanno_2012(depth_11)
+HS_Tanno_2012_Baetis_depth_13 <- univariat_wd_baetis_tanno_2012(depth_13)
+HS_Tanno_2012_Baetis_depth_15 <- univariat_wd_baetis_tanno_2012(depth_15)
+HS_Tanno_2012_Baetis_depth_18 <- univariat_wd_baetis_tanno_2012(depth_18)
+HS_Tanno_2012_Baetis_depth_22 <- univariat_wd_baetis_tanno_2012(depth_22)
+HS_Tanno_2012_Baetis_depth_25 <- univariat_wd_baetis_tanno_2012(depth_25)
+HS_Tanno_2012_Baetis_depth_28 <- univariat_wd_baetis_tanno_2012(depth_28)
+HS_Tanno_2012_Baetis_depth_32 <- univariat_wd_baetis_tanno_2012(depth_32)
 
-# HABBY Rhithrogena 
-# Q7
-HS_HABBY_Rhithrogena_depth_7 <- calc(depth_7, fun = approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q3.9
-HS_HABBY_Rhithrogena_depth_3 <- calc(depth_3, fun = approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q4.6
-HS_HABBY_Rhithrogena_depth_4 <- calc(depth_4, fun = approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q11
-HS_HABBY_Rhithrogena_depth_11 <- calc(depth_11, fun = approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q13
-HS_HABBY_Rhithrogena_depth_13 <- calc(depth_13, fun = approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q32
-HS_HABBY_Rhithrogena_depth_32 <- calc(depth_32, fun = approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Tanno 2012 Baetis 
-# Q7
-HS_Tanno_2012_Baetis_depth_7 <- calc(depth_7, fun = approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q3.9
-HS_Tanno_2012_Baetis_depth_3 <- calc(depth_3, fun = approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q4.6
-HS_Tanno_2012_Baetis_depth_4 <- calc(depth_4, fun = approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q11
-HS_Tanno_2012_Baetis_depth_11 <- calc(depth_11, fun = approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q13
-HS_Tanno_2012_Baetis_depth_13 <- calc(depth_13, fun = approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q32
-HS_Tanno_2012_Baetis_depth_32 <- calc(depth_32, fun = approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Plot HM regarding depth with different Q's
-plot(HS_Tanno_2012_Rhithrogena_depth_7)
-plot(HS_Tanno_2012_Rhithrogena_depth_3)
-plot(HS_Tanno_2012_Rhithrogena_depth_4)
-plot(HS_Tanno_2012_Rhithrogena_depth_11)
-plot(HS_Tanno_2012_Rhithrogena_depth_13)
-plot(HS_Tanno_2012_Rhithrogena_depth_32)
-
-plot(HS_HABBY_Rhithrogena_depth_7)
-plot(HS_HABBY_Rhithrogena_depth_3)
-plot(HS_HABBY_Rhithrogena_depth_4)
-plot(HS_HABBY_Rhithrogena_depth_11)
-plot(HS_HABBY_Rhithrogena_depth_13)
-plot(HS_HABBY_Rhithrogena_depth_32)
-
-plot(HS_Tanno_2012_Baetis_depth_7)
-plot(HS_Tanno_2012_Baetis_depth_3)
-plot(HS_Tanno_2012_Baetis_depth_4)
-plot(HS_Tanno_2012_Baetis_depth_11)
-plot(HS_Tanno_2012_Baetis_depth_13)
-plot(HS_Tanno_2012_Baetis_depth_32)
-
-
-# set coordinate system (crs)
-crs(HS_Tanno_2012_Rhithrogena_depth_7) <- "+proj=longlat"
+# set coordinate system (crs) -------------------------------------------
+crs(HS_Tanno_2012_Rhithrogena_depth_2) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_depth_3) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_depth_4) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_7) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_9) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_depth_11) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_depth_13) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_15) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_18) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_22) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_25) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_depth_28) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_depth_32) <- "+proj=longlat"
 
-crs(HS_HABBY_Rhithrogena_depth_7) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_2) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_depth_3) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_depth_4) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_7) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_9) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_depth_11) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_depth_13) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_15) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_18) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_22) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_25) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_depth_28) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_depth_32) <- "+proj=longlat"
 
-crs(HS_Tanno_2012_Baetis_depth_7) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_2) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_depth_3) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_depth_4) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_7) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_9) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_depth_11) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_depth_13) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_15) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_18) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_22) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_25) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_depth_28) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_depth_32) <- "+proj=longlat"
 
-# save as .tif
-# Tanno 2012 Rhithrogena
-writeRaster(HS_Tanno_2012_Rhithrogena_depth_7, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+# save as .tif -------------------------------------------
+# Tanno 2012 Rhithrogena -------------------------------------------
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_2, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Rhithrogena_depth_3, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Rhithrogena_depth_4, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_7, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_9, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Rhithrogena_depth_11, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Rhithrogena_depth_13, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_15, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_18, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_22, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_25, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_depth_28, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Rhithrogena_depth_32, filename="results_univariate/HS_depth_Tanno_2012_Rhithrogena_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 
-# HABBY Rhithrogena 
-writeRaster(HS_HABBY_Rhithrogena_depth_7, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_7.tif", format="GTiff", overwrite=TRUE)
+# HABBY Rhithrogena -------------------------------------------
+writeRaster(HS_HABBY_Rhithrogena_depth_2, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_HABBY_Rhithrogena_depth_3, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_HABBY_Rhithrogena_depth_4, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_HABBY_Rhithrogena_depth_7, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_depth_9, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_HABBY_Rhithrogena_depth_11, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_HABBY_Rhithrogena_depth_13, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_HABBY_Rhithrogena_depth_15, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_depth_18, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_depth_22, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_depth_25, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_depth_28, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_HABBY_Rhithrogena_depth_32, filename="results_univariate/HS_depth_HABBY_Rhithrogena_eaton_larva_32.tif", format="GTiff", overwrite=TRUE)
 
-# Tanno 2012 Baetis 
-writeRaster(HS_Tanno_2012_Baetis_depth_7, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+# Tanno 2012 Baetis -------------------------------------------
+writeRaster(HS_Tanno_2012_Baetis_depth_2, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Baetis_depth_3, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Baetis_depth_4, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Baetis_depth_7, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_depth_9, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Baetis_depth_11, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Baetis_depth_13, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Baetis_depth_15, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_depth_18, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_depth_22, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_depth_25, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_depth_28, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Baetis_depth_32, filename="results_univariate/HS_depth_Tanno_2012_Baetis_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 ```
 
-### b2. velocity
+### ok- b2. velocity
 ```{r}
 ### VELOCITY ###
-# Tanno 2012 Rhithrogena
-# Q7
-HS_Tanno_2012_Rhithrogena_velocity_7 <- calc(velocity_7, fun = approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, rule = 2)) 
+# Tanno 2012 Rhithrogena -------------------------------------------
+univariat_v_rhithrogena_tanno_2012 <- function(x, y = sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., z = sc_v_Tanno_2012_Rhithrogena$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q3.9
-HS_Tanno_2012_Rhithrogena_velocity_3 <- calc(velocity_3, fun = approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, rule = 2))
-
-# Q4.6
-HS_Tanno_2012_Rhithrogena_velocity_4 <- calc(velocity_4, fun = approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, rule = 2))
-
-# Q11
-HS_Tanno_2012_Rhithrogena_velocity_11 <- calc(velocity_11, fun = approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, rule = 2))
-
-# Q13.3
-HS_Tanno_2012_Rhithrogena_velocity_13 <- calc(velocity_13, fun = approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, rule = 2))
-
-# Q32.69
-HS_Tanno_2012_Rhithrogena_velocity_32 <- calc(velocity_32, fun = approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, rule = 2))
-
-# HABBY Rhithrogena
-# Q7
-HS_HABBY_Rhithrogena_velocity_7 <- calc(velocity_7, fun = approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, rule = 2))
-
-# Q3.9
-HS_HABBY_Rhithrogena_velocity_3 <- calc(velocity_3, fun = approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q4.6
-HS_HABBY_Rhithrogena_velocity_4 <- calc(velocity_4, fun = approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q11
-HS_HABBY_Rhithrogena_velocity_11 <- calc(velocity_11, fun = approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q13.3
-HS_HABBY_Rhithrogena_velocity_13 <- calc(velocity_13, fun = approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Q32.69
-HS_HABBY_Rhithrogena_velocity_32 <- calc(velocity_32, fun = approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, rule = 2)) 
-
-# Tanno 2012 Baetis
-# Q7
-HS_Tanno_2012_Baetis_velocity_7 <- calc(velocity_7, fun = approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q3.9
-HS_Tanno_2012_Baetis_velocity_3 <- calc(velocity_3, fun = approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q4.6
-HS_Tanno_2012_Baetis_velocity_4 <- calc(velocity_4, fun = approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q11
-HS_Tanno_2012_Baetis_velocity_11 <- calc(velocity_11, fun = approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q13.3
-HS_Tanno_2012_Baetis_velocity_13 <- calc(velocity_13, fun = approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Q32.69
-HS_Tanno_2012_Baetis_velocity_32 <- calc(velocity_32, fun = approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, rule = 2))
-
-# Plot habitat suitability regarding velocities 
-plot(HS_Tanno_2012_Rhithrogena_velocity_7)
-plot(HS_Tanno_2012_Rhithrogena_velocity_3)
-plot(HS_Tanno_2012_Rhithrogena_velocity_4)
-plot(HS_Tanno_2012_Rhithrogena_velocity_11)
-plot(HS_Tanno_2012_Rhithrogena_velocity_13)
-plot(HS_Tanno_2012_Rhithrogena_velocity_32)
-
-plot(HS_HABBY_Rhithrogena_velocity_7)
-plot(HS_HABBY_Rhithrogena_velocity_3)
-plot(HS_HABBY_Rhithrogena_velocity_4)
-plot(HS_HABBY_Rhithrogena_velocity_11)
-plot(HS_HABBY_Rhithrogena_velocity_13)
-plot(HS_HABBY_Rhithrogena_velocity_32)
-
-plot(HS_Tanno_2012_Baetis_velocity_7)
-plot(HS_Tanno_2012_Baetis_velocity_3)
-plot(HS_Tanno_2012_Baetis_velocity_4)
-plot(HS_Tanno_2012_Baetis_velocity_11)
-plot(HS_Tanno_2012_Baetis_velocity_13)
-plot(HS_Tanno_2012_Baetis_velocity_32)
+# ALL Q's
+HS_Tanno_2012_Rhithrogena_velocity_2 <- univariat_v_rhithrogena_tanno_2012(velocity_2)
+HS_Tanno_2012_Rhithrogena_velocity_3 <- univariat_v_rhithrogena_tanno_2012(velocity_3)
+HS_Tanno_2012_Rhithrogena_velocity_4 <- univariat_v_rhithrogena_tanno_2012(velocity_4)
+HS_Tanno_2012_Rhithrogena_velocity_7 <- univariat_v_rhithrogena_tanno_2012(velocity_7)
+HS_Tanno_2012_Rhithrogena_velocity_9 <- univariat_v_rhithrogena_tanno_2012(velocity_9)
+HS_Tanno_2012_Rhithrogena_velocity_11 <- univariat_v_rhithrogena_tanno_2012(velocity_11)
+HS_Tanno_2012_Rhithrogena_velocity_13 <- univariat_v_rhithrogena_tanno_2012(velocity_13)
+HS_Tanno_2012_Rhithrogena_velocity_15 <- univariat_v_rhithrogena_tanno_2012(velocity_15)
+HS_Tanno_2012_Rhithrogena_velocity_18 <- univariat_v_rhithrogena_tanno_2012(velocity_18)
+HS_Tanno_2012_Rhithrogena_velocity_22 <- univariat_v_rhithrogena_tanno_2012(velocity_22)
+HS_Tanno_2012_Rhithrogena_velocity_25 <- univariat_v_rhithrogena_tanno_2012(velocity_25)
+HS_Tanno_2012_Rhithrogena_velocity_28 <- univariat_v_rhithrogena_tanno_2012(velocity_28)
+HS_Tanno_2012_Rhithrogena_velocity_32 <- univariat_v_rhithrogena_tanno_2012(velocity_32)
 
 
-#Koordinatensystem (crs)
-crs(HS_Tanno_2012_Rhithrogena_velocity_7) <- "+proj=longlat"
+# HABBY Rhithrogena -------------------------------------------
+univariat_v_rhithrogena_habby <- function(x, y = sc_v_HABBY_Rhithrogena$Velocity..m.s., z = sc_v_HABBY_Rhithrogena$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
+
+# ALL Q's
+HS_HABBY_Rhithrogena_velocity_2 <- univariat_v_rhithrogena_habby(velocity_2)
+HS_HABBY_Rhithrogena_velocity_3 <- univariat_v_rhithrogena_habby(velocity_3)
+HS_HABBY_Rhithrogena_velocity_4 <- univariat_v_rhithrogena_habby(velocity_4)
+HS_HABBY_Rhithrogena_velocity_7 <- univariat_v_rhithrogena_habby(velocity_7)
+HS_HABBY_Rhithrogena_velocity_9 <- univariat_v_rhithrogena_habby(velocity_9)
+HS_HABBY_Rhithrogena_velocity_11 <- univariat_v_rhithrogena_habby(velocity_11)
+HS_HABBY_Rhithrogena_velocity_13 <- univariat_v_rhithrogena_habby(velocity_13)
+HS_HABBY_Rhithrogena_velocity_15 <- univariat_v_rhithrogena_habby(velocity_15)
+HS_HABBY_Rhithrogena_velocity_18 <- univariat_v_rhithrogena_habby(velocity_18)
+HS_HABBY_Rhithrogena_velocity_22 <- univariat_v_rhithrogena_habby(velocity_22)
+HS_HABBY_Rhithrogena_velocity_25 <- univariat_v_rhithrogena_habby(velocity_25)
+HS_HABBY_Rhithrogena_velocity_28 <- univariat_v_rhithrogena_habby(velocity_28)
+HS_HABBY_Rhithrogena_velocity_32 <- univariat_v_rhithrogena_habby(velocity_32)
+
+
+# Tanno 2012 Baetis -------------------------------------------
+univariat_v_baetis_tanno_2012 <- function(x, y = sc_v_Tanno_2012_Baetis$Velocity..m.s., z = sc_v_Tanno_2012_Baetis$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
+
+# ALL Q's
+HS_Tanno_2012_Baetis_velocity_2 <- univariat_v_baetis_tanno_2012(velocity_2)
+HS_Tanno_2012_Baetis_velocity_3 <- univariat_v_baetis_tanno_2012(velocity_3)
+HS_Tanno_2012_Baetis_velocity_4 <- univariat_v_baetis_tanno_2012(velocity_4)
+HS_Tanno_2012_Baetis_velocity_7 <- univariat_v_baetis_tanno_2012(velocity_7)
+HS_Tanno_2012_Baetis_velocity_9 <- univariat_v_baetis_tanno_2012(velocity_9)
+HS_Tanno_2012_Baetis_velocity_11 <- univariat_v_baetis_tanno_2012(velocity_11)
+HS_Tanno_2012_Baetis_velocity_13 <- univariat_v_baetis_tanno_2012(velocity_13)
+HS_Tanno_2012_Baetis_velocity_15 <- univariat_v_baetis_tanno_2012(velocity_15)
+HS_Tanno_2012_Baetis_velocity_18 <- univariat_v_baetis_tanno_2012(velocity_18)
+HS_Tanno_2012_Baetis_velocity_22 <- univariat_v_baetis_tanno_2012(velocity_22)
+HS_Tanno_2012_Baetis_velocity_25 <- univariat_v_baetis_tanno_2012(velocity_25)
+HS_Tanno_2012_Baetis_velocity_28 <- univariat_v_baetis_tanno_2012(velocity_28)
+HS_Tanno_2012_Baetis_velocity_32 <- univariat_v_baetis_tanno_2012(velocity_32)
+
+# Koordinatensystem (crs) -------------------------------------------
+crs(HS_Tanno_2012_Rhithrogena_velocity_2) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_velocity_3) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_velocity_4) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_7) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_9) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_velocity_11) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_velocity_13) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_15) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_18) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_22) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_25) <- "+proj=longlat"
+crs(HS_Tanno_2012_Rhithrogena_velocity_28) <- "+proj=longlat"
 crs(HS_Tanno_2012_Rhithrogena_velocity_32) <- "+proj=longlat"
 
-crs(HS_HABBY_Rhithrogena_velocity_7) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_2) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_velocity_3) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_velocity_4) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_7) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_9) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_velocity_11) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_velocity_13) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_15) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_18) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_22) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_25) <- "+proj=longlat"
+crs(HS_HABBY_Rhithrogena_velocity_28) <- "+proj=longlat"
 crs(HS_HABBY_Rhithrogena_velocity_32) <- "+proj=longlat"
 
-crs(HS_Tanno_2012_Baetis_velocity_7) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_2) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_velocity_3) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_velocity_4) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_7) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_9) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_velocity_11) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_velocity_13) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_15) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_18) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_22) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_25) <- "+proj=longlat"
+crs(HS_Tanno_2012_Baetis_velocity_28) <- "+proj=longlat"
 crs(HS_Tanno_2012_Baetis_velocity_32) <- "+proj=longlat"
 
-# save as .tif
-# Tanno 2012: Rhithrogena
-writeRaster(HS_Tanno_2012_Rhithrogena_velocity_7, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+# save as .tif -------------------------------------------
+# Tanno 2012: Rhithrogena -------------------------------------------
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_2, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Rhithrogena_velocity_3, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Rhithrogena_velocity_4, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_7, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_9, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Rhithrogena_velocity_11, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Rhithrogena_velocity_13, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_15, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_18, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_22, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_25, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Rhithrogena_velocity_28, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Rhithrogena_velocity_32, filename="results_univariate/HS_velocity_Tanno_2012_Rhithrogena_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 
-# HABBY Rhithrogena 
-writeRaster(HS_HABBY_Rhithrogena_velocity_7, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_7.tif", format="GTiff", overwrite=TRUE)
+# HABBY Rhithrogena -------------------------------------------
+writeRaster(HS_HABBY_Rhithrogena_velocity_2, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_HABBY_Rhithrogena_velocity_3, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_HABBY_Rhithrogena_velocity_4, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_HABBY_Rhithrogena_velocity_7, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_velocity_9, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_HABBY_Rhithrogena_velocity_11, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_HABBY_Rhithrogena_velocity_13, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_HABBY_Rhithrogena_velocity_15, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_velocity_18, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_velocity_22, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_velocity_25, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_HABBY_Rhithrogena_velocity_28, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_HABBY_Rhithrogena_velocity_32, filename="results_univariate/HS_velocity_HABBY_Rhithrogena_eaton_larva_32.tif", format="GTiff", overwrite=TRUE)
 
-# Tanno 2012 Baetis 
-writeRaster(HS_Tanno_2012_Baetis_velocity_7, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+# Tanno 2012 Baetis -------------------------------------------
+writeRaster(HS_Tanno_2012_Baetis_velocity_2, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Baetis_velocity_3, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Baetis_velocity_4, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Baetis_velocity_7, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_velocity_9, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Baetis_velocity_11, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(HS_Tanno_2012_Baetis_velocity_13, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_Tanno_2012_Baetis_velocity_15, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_velocity_18, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_velocity_22, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_velocity_25, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_Tanno_2012_Baetis_velocity_28, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(HS_Tanno_2012_Baetis_velocity_32, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 ```
 
+### b3. persistent habitat velocity
+```{r}
+# Clip the raster1 with raster2
+# Tanno 2012 Rhithrogena -------------------------------------------
+persistent_2 <- mask(VZH_2, VZH_2)
+persistent_3 <- mask(VZH_2, VZH_3)
+persistent_4 <- mask(VZH_2, VZH_4)
+persistent_7 <- mask(VZH_2, VZH_7)
+persistent_9 <- mask(VZH_2, VZH_9)
+persistent_11 <- mask(VZH_2, VZH_11)
+persistent_13 <- mask(VZH_2, VZH_13)
+persistent_15 <- mask(VZH_2, VZH_15)
+persistent_18 <- mask(VZH_2, VZH_18)
+persistent_22 <- mask(VZH_2, VZH_22)
+persistent_25 <- mask(VZH_2, VZH_25)
+persistent_28 <- mask(VZH_2, VZH_28)
+persistent_32 <- mask(VZH_2, VZH_32)
 
-### b3. substrate
+# proof results
+# verteilung VZH_32 sieht anders aus, als persistent_32 und persistent_32 sieht genau gleich aus wie persistent_2 in der Habitatverteilung....
+plot(VZH_32)
+plot(persistent_32)
+plot(persistent_2)
+
+# Save the clipped raster-files as a new file
+writeRaster(persistent_2, filename="results_univariate/persistent_VZH_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_3, filename="results_univariate/persistent_VZH_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_4, filename="results_univariate/persistent_VZH_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_7, filename="results_univariate/persistent_VZH_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_9, filename="results_univariate/persistent_VZH_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_11, filename="results_univariate/persistent_VZH_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_13, filename="results_univariate/persistent_VZH_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_15, filename="results_univariate/persistent_VZH_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_18, filename="results_univariate/persistent_VZH_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_22, filename="results_univariate/persistent_VZH_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_25, filename="results_univariate/persistent_VZH_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_28, filename="results_univariate/persistent_VZH_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_32, filename="results_univariate/persistent_VZH_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+### ok- b3. substrate
 ```{r}
 # Substrate (Sub)
-# Tanno 2012: Baetis sp.
-# Q7
-HS_sub_7 <- calc(sub_7, fun = approxfun(sc_sub$Substrate.class, sc_sub$Abundance, rule = 2)) 
+# Tanno 2012: Baetis sp. -------------------------------------------
+univariat_sub_baetis <- function(x, y = sc_sub_Baetis$Substrate.class, z = sc_sub_Baetis$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q3.9
-HS_sub_3 <- calc(sub_3, fun = approxfun(sc_sub$Substrate.class, sc_sub$Abundance, rule = 2)) 
+# All Q's 
+HS_sub_Baetis_2 <- univariat_sub_baetis(sub_2)
+HS_sub_Baetis_3 <- univariat_sub_baetis(sub_3)
+HS_sub_Baetis_4 <- univariat_sub_baetis(sub_4)
+HS_sub_Baetis_7 <- univariat_sub_baetis(sub_7)
+HS_sub_Baetis_9 <- univariat_sub_baetis(sub_9)
+HS_sub_Baetis_11 <- univariat_sub_baetis(sub_11)
+HS_sub_Baetis_13 <- univariat_sub_baetis(sub_13)
+HS_sub_Baetis_15 <- univariat_sub_baetis(sub_15)
+HS_sub_Baetis_18 <- univariat_sub_baetis(sub_18)
+HS_sub_Baetis_22 <- univariat_sub_baetis(sub_22)
+HS_sub_Baetis_25 <- univariat_sub_baetis(sub_25)
+HS_sub_Baetis_28 <- univariat_sub_baetis(sub_28)
+HS_sub_Baetis_32 <- univariat_sub_baetis(sub_32)
 
-# Q4.6
-HS_sub_4 <- calc(sub_4, fun = approxfun(sc_sub$Substrate.class, sc_sub$Abundance, rule = 2)) 
+# Tanno 2012: Rhithrogena sp. -------------------------------------------
+univariat_sub_rhithrogena <- function(x, y = sc_sub_Rhithrogena$Substrate.class, z = sc_sub_Rhithrogena$Abundance){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q11
-HS_sub_11 <- calc(sub_11, fun = approxfun(sc_sub$Substrate.class, sc_sub$Abundance, rule = 2)) 
+# All Q's 
+HS_sub_Rhithrogena_2 <- univariat_sub_rhithrogena(sub_2)
+HS_sub_Rhithrogena_3 <- univariat_sub_rhithrogena(sub_3)
+HS_sub_Rhithrogena_4 <- univariat_sub_rhithrogena(sub_4)
+HS_sub_Rhithrogena_7 <- univariat_sub_rhithrogena(sub_7)
+HS_sub_Rhithrogena_9 <- univariat_sub_rhithrogena(sub_9)
+HS_sub_Rhithrogena_11 <- univariat_sub_rhithrogena(sub_11)
+HS_sub_Rhithrogena_13 <- univariat_sub_rhithrogena(sub_13)
+HS_sub_Rhithrogena_15 <- univariat_sub_rhithrogena(sub_15)
+HS_sub_Rhithrogena_18 <- univariat_sub_rhithrogena(sub_18)
+HS_sub_Rhithrogena_22 <- univariat_sub_rhithrogena(sub_22)
+HS_sub_Rhithrogena_25 <- univariat_sub_rhithrogena(sub_25)
+HS_sub_Rhithrogena_28 <- univariat_sub_rhithrogena(sub_28)
+HS_sub_Rhithrogena_32 <- univariat_sub_rhithrogena(sub_32)
 
-# Q13.3
-HS_sub_13 <- calc(sub_13, fun = approxfun(sc_sub$Substrate.class, sc_sub$Abundance, rule = 2)) 
+# Koordinatensystem (crs) -------------------------------------------
+crs(HS_sub_Baetis_2) <- "+proj=longlat"
+crs(HS_sub_Baetis_3) <- "+proj=longlat"
+crs(HS_sub_Baetis_4) <- "+proj=longlat"
+crs(HS_sub_Baetis_7) <- "+proj=longlat"
+crs(HS_sub_Baetis_9) <- "+proj=longlat"
+crs(HS_sub_Baetis_11) <- "+proj=longlat"
+crs(HS_sub_Baetis_13) <- "+proj=longlat"
+crs(HS_sub_Baetis_15) <- "+proj=longlat"
+crs(HS_sub_Baetis_18) <- "+proj=longlat"
+crs(HS_sub_Baetis_22) <- "+proj=longlat"
+crs(HS_sub_Baetis_25) <- "+proj=longlat"
+crs(HS_sub_Baetis_28) <- "+proj=longlat"
+crs(HS_sub_Baetis_32) <- "+proj=longlat"
 
-# Q32.69
-HS_sub_32 <- calc(sub_32, fun = approxfun(sc_sub$Substrate.class, sc_sub$Abundance, rule = 2)) 
+crs(HS_sub_Rhithrogena_2) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_3) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_4) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_7) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_9) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_11) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_13) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_15) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_18) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_22) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_25) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_28) <- "+proj=longlat"
+crs(HS_sub_Rhithrogena_32) <- "+proj=longlat"
 
+# save as .tif -------------------------------------------
+# Tanno 2012: Baetis sp. -------------------------------------------
+writeRaster(HS_sub_Baetis_2, filename="results_univariate/HS_sub_Baetis_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
-#Plot Habitateignung in Bezug auf Tiefe
-plot(HS_sub_7)
-plot(HS_sub_3)
-plot(HS_sub_4)
-plot(HS_sub_11)
-plot(HS_sub_13)
-plot(HS_sub_32)
+writeRaster(HS_sub_Baetis_3, filename="results_univariate/HS_sub_Baetis_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(HS_sub_Baetis_4, filename="results_univariate/HS_sub_Baetis_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
-# Koordinatensystem (crs)
-crs(HS_sub_7) <- "+proj=longlat"
-crs(HS_sub_3) <- "+proj=longlat"
-crs(HS_sub_4) <- "+proj=longlat"
-crs(HS_sub_11) <- "+proj=longlat"
-crs(HS_sub_13) <- "+proj=longlat"
-crs(HS_sub_32) <- "+proj=longlat"
+writeRaster(HS_sub_Baetis_7, filename="results_univariate/HS_sub_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
 
-# save as .tif
-writeRaster(HS_sub_7, filename="results_univariate/HS_sub_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+writeRaster(HS_sub_Baetis_9, filename="results_univariate/HS_sub_Baetis_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
 
-writeRaster(HS_sub_3, filename="results_univariate/HS_sub_Baetis_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
+writeRaster(HS_sub_Baetis_11, filename="results_univariate/HS_sub_Baetis_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
-writeRaster(HS_sub_4, filename="results_univariate/HS_sub_Baetis_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
+writeRaster(HS_sub_Baetis_13, filename="results_univariate/HS_sub_Baetis_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
-writeRaster(HS_sub_11, filename="results_univariate/HS_sub_Baetis_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
+writeRaster(HS_sub_Baetis_15, filename="results_univariate/HS_sub_Baetis_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
 
-writeRaster(HS_sub_13, filename="results_univariate/HS_sub_Baetis_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
+writeRaster(HS_sub_Baetis_18, filename="results_univariate/HS_sub_Baetis_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
 
-writeRaster(HS_sub_32, filename="results_univariate/HS_sub_Baetis_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
+writeRaster(HS_sub_Baetis_22, filename="results_univariate/HS_sub_Baetis_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Baetis_25, filename="results_univariate/HS_sub_Baetis_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Baetis_28, filename="results_univariate/HS_sub_Baetis_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Baetis_32, filename="results_univariate/HS_sub_Baetis_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
+
+# Tanno 2012: Rhithrogena sp. -------------------------------------------
+writeRaster(HS_sub_Rhithrogena_2, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_3, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_4, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_7, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_9, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_11, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_13, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_15, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_18, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_22, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_25, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_28, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(HS_sub_Rhithrogena_32, filename="results_univariate/HS_sub_Rhithrogena_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 ```
 
 
-## c. GHSI Habitateignungsindex 
+## ok- c. GHSI Habitateignungsindex
 ```{r}
 ### GHSI ###
-# Tanno 2012 Rhithrogena
-# Q7
-GHSI_Tanno_2012_Rhithrogena_7 <- overlay(HS_Tanno_2012_Rhithrogena_depth_7, HS_Tanno_2012_Rhithrogena_velocity_7, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+# Tanno 2012 Rhithrogena -------------------------------------------
+ghsi_3 <- function(x, y, z){
+  overlay(x, y, z, 
+          sub, fun = return(sqrt(x^3*y^3*z^3)))
+}
 
-# Q3.9
-GHSI_Tanno_2012_Rhithrogena_3 <- overlay(HS_Tanno_2012_Rhithrogena_depth_3, HS_Tanno_2012_Rhithrogena_velocity_3, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+# All Q's
+GHSI_Tanno_2012_Rhithrogena_2 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_2, HS_Tanno_2012_Rhithrogena_velocity_2, HS_sub_Rhithrogena_2)
 
-# Q4.6
-GHSI_Tanno_2012_Rhithrogena_4 <- overlay(HS_Tanno_2012_Rhithrogena_depth_4, HS_Tanno_2012_Rhithrogena_velocity_4, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_3 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_3, HS_Tanno_2012_Rhithrogena_velocity_3, HS_sub_Rhithrogena_3)
 
-# Q11
-GHSI_Tanno_2012_Rhithrogena_11 <- overlay(HS_Tanno_2012_Rhithrogena_depth_11, HS_Tanno_2012_Rhithrogena_velocity_11, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_4 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_4, HS_Tanno_2012_Rhithrogena_velocity_4, HS_sub_Rhithrogena_4)
 
-# Q13.3
-GHSI_Tanno_2012_Rhithrogena_13 <- overlay(HS_Tanno_2012_Rhithrogena_depth_13, HS_Tanno_2012_Rhithrogena_velocity_13, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_7 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_7, HS_Tanno_2012_Rhithrogena_velocity_7, HS_sub_Rhithrogena_7)
 
-# Q32.69
-GHSI_Tanno_2012_Rhithrogena_32 <- overlay(HS_Tanno_2012_Rhithrogena_depth_32, HS_Tanno_2012_Rhithrogena_velocity_32, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_9 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_9, HS_Tanno_2012_Rhithrogena_velocity_9, HS_sub_Rhithrogena_9)
 
-# HABBY Rhithrogena
-# Q7
-GHSI_HABBY_Rhithrogena_7 <- overlay(HS_HABBY_Rhithrogena_depth_7, HS_HABBY_Rhithrogena_velocity_7, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_11 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_11, HS_Tanno_2012_Rhithrogena_velocity_11, HS_sub_Rhithrogena_11)
 
-# Q3.9
-GHSI_HABBY_Rhithrogena_3 <- overlay(HS_HABBY_Rhithrogena_depth_3, HS_HABBY_Rhithrogena_velocity_3, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_13 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_13, HS_Tanno_2012_Rhithrogena_velocity_13, HS_sub_Rhithrogena_13)
 
-# Q4.6
-GHSI_HABBY_Rhithrogena_4 <- overlay(HS_HABBY_Rhithrogena_depth_4, HS_HABBY_Rhithrogena_velocity_4, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_15 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_15, HS_Tanno_2012_Rhithrogena_velocity_15, HS_sub_Rhithrogena_15)
 
-# Q11
-GHSI_HABBY_Rhithrogena_11 <- overlay(HS_HABBY_Rhithrogena_depth_11, HS_HABBY_Rhithrogena_velocity_11, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_18 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_18, HS_Tanno_2012_Rhithrogena_velocity_18, HS_sub_Rhithrogena_18)
 
-# Q13.3
-GHSI_HABBY_Rhithrogena_13 <- overlay(HS_HABBY_Rhithrogena_depth_13, HS_HABBY_Rhithrogena_velocity_13, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_22 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_22, HS_Tanno_2012_Rhithrogena_velocity_22, HS_sub_Rhithrogena_22)
 
-# Q32.69
-GHSI_HABBY_Rhithrogena_32 <- overlay(HS_HABBY_Rhithrogena_depth_32, HS_HABBY_Rhithrogena_velocity_32, fun = function(r1, r2){return(sqrt(r1^2*r2^2))})
+GHSI_Tanno_2012_Rhithrogena_25 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_25, HS_Tanno_2012_Rhithrogena_velocity_25, HS_sub_Rhithrogena_25)
 
-# Tanno 2012 Baetis (+ sub)
-# Q7
-GHSI_Tanno_2012_Baetis_7 <- overlay(HS_Tanno_2012_Baetis_depth_7, HS_Tanno_2012_Baetis_velocity_7, HS_sub_7, fun = function(r1, r2, r3){return(sqrt(r1^3*r2^3*r3^3))})
+GHSI_Tanno_2012_Rhithrogena_28 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_28, HS_Tanno_2012_Rhithrogena_velocity_28, HS_sub_Rhithrogena_28)
 
-# Q3.9
-GHSI_Tanno_2012_Baetis_3 <- overlay(HS_Tanno_2012_Baetis_depth_3, HS_Tanno_2012_Baetis_velocity_3, HS_sub_3, fun = function(r1, r2, r3){return(sqrt(r1^3*r2^3*r3^3))})
+GHSI_Tanno_2012_Rhithrogena_32 <- ghsi_3(HS_Tanno_2012_Rhithrogena_depth_32, HS_Tanno_2012_Rhithrogena_velocity_32, HS_sub_Rhithrogena_32)
 
-# Q4.6
-GHSI_Tanno_2012_Baetis_4 <- overlay(HS_Tanno_2012_Baetis_depth_4, HS_Tanno_2012_Baetis_velocity_4, HS_sub_4, fun = function(r1, r2, r3){return(sqrt(r1^3*r2^3*r3^3))})
+# HABBY Rhithrogena -------------------------------------------
+ghsi_2 <- function(x, y){
+  overlay(x, y, 
+          sub, fun = return(sqrt(x^2*y^2)))
+}
 
-# Q11
-GHSI_Tanno_2012_Baetis_11 <- overlay(HS_Tanno_2012_Baetis_depth_11, HS_Tanno_2012_Baetis_velocity_11, HS_sub_11, fun = function(r1, r2, r3){return(sqrt(r1^3*r2^3*r3^3))})
-
-# Q13.3
-GHSI_Tanno_2012_Baetis_13 <- overlay(HS_Tanno_2012_Baetis_depth_13, HS_Tanno_2012_Baetis_velocity_13, HS_sub_13, fun = function(r1, r2, r3){return(sqrt(r1^3*r2^3*r3^3))})
-
-# Q32.69
-GHSI_Tanno_2012_Baetis_32 <- overlay(HS_Tanno_2012_Baetis_depth_32, HS_Tanno_2012_Baetis_velocity_32, HS_sub_32, fun = function(r1, r2, r3){return(sqrt(r1^3*r2^3*r3^3))})
+# All Q's
+GHSI_HABBY_Rhithrogena_2 <- ghsi_2(HS_HABBY_Rhithrogena_depth_2, HS_HABBY_Rhithrogena_velocity_2)
+GHSI_HABBY_Rhithrogena_3 <- ghsi_2(HS_HABBY_Rhithrogena_depth_3, HS_HABBY_Rhithrogena_velocity_3)
+GHSI_HABBY_Rhithrogena_4 <- ghsi_2(HS_HABBY_Rhithrogena_depth_4, HS_HABBY_Rhithrogena_velocity_4)
+GHSI_HABBY_Rhithrogena_7 <- ghsi_2(HS_HABBY_Rhithrogena_depth_7, HS_HABBY_Rhithrogena_velocity_7)
+GHSI_HABBY_Rhithrogena_9 <- ghsi_2(HS_HABBY_Rhithrogena_depth_9, HS_HABBY_Rhithrogena_velocity_9)
+GHSI_HABBY_Rhithrogena_11 <- ghsi_2(HS_HABBY_Rhithrogena_depth_11, HS_HABBY_Rhithrogena_velocity_11)
+GHSI_HABBY_Rhithrogena_13 <- ghsi_2(HS_HABBY_Rhithrogena_depth_13, HS_HABBY_Rhithrogena_velocity_13)
+GHSI_HABBY_Rhithrogena_15 <- ghsi_2(HS_HABBY_Rhithrogena_depth_15, HS_HABBY_Rhithrogena_velocity_15)
+GHSI_HABBY_Rhithrogena_18 <- ghsi_2(HS_HABBY_Rhithrogena_depth_18, HS_HABBY_Rhithrogena_velocity_18)
+GHSI_HABBY_Rhithrogena_22 <- ghsi_2(HS_HABBY_Rhithrogena_depth_22, HS_HABBY_Rhithrogena_velocity_22)
+GHSI_HABBY_Rhithrogena_25 <- ghsi_2(HS_HABBY_Rhithrogena_depth_25, HS_HABBY_Rhithrogena_velocity_25)
+GHSI_HABBY_Rhithrogena_28 <- ghsi_2(HS_HABBY_Rhithrogena_depth_28, HS_HABBY_Rhithrogena_velocity_28)
+GHSI_HABBY_Rhithrogena_32 <- ghsi_2(HS_HABBY_Rhithrogena_depth_32, HS_HABBY_Rhithrogena_velocity_32)
 
 
-### Plot GHSI ###
-plot(GHSI_Tanno_2012_Rhithrogena_7)
-plot(GHSI_Tanno_2012_Rhithrogena_3)
-plot(GHSI_Tanno_2012_Rhithrogena_4)
-plot(GHSI_Tanno_2012_Rhithrogena_11)
-plot(GHSI_Tanno_2012_Rhithrogena_13)
-plot(GHSI_Tanno_2012_Rhithrogena_32)
+# Tanno 2012 Baetis (+ sub) -------------------------------------------
+# All Q's
+GHSI_Tanno_2012_Baetis_2 <- ghsi_3(HS_Tanno_2012_Baetis_depth_2, HS_Tanno_2012_Baetis_velocity_2, HS_sub_Baetis_2)
 
-plot(GHSI_HABBY_Rhithrogena_7)
-plot(GHSI_HABBY_Rhithrogena_3)
-plot(GHSI_HABBY_Rhithrogena_4)
-plot(GHSI_HABBY_Rhithrogena_11)
-plot(GHSI_HABBY_Rhithrogena_13)
-plot(GHSI_HABBY_Rhithrogena_32)
+GHSI_Tanno_2012_Baetis_3 <- ghsi_3(HS_Tanno_2012_Baetis_depth_3, HS_Tanno_2012_Baetis_velocity_3, HS_sub_Baetis_3)
 
-plot(GHSI_Tanno_2012_Baetis_7)
-plot(GHSI_Tanno_2012_Baetis_3)
-plot(GHSI_Tanno_2012_Baetis_4)
-plot(GHSI_Tanno_2012_Baetis_11)
-plot(GHSI_Tanno_2012_Baetis_13)
-plot(GHSI_Tanno_2012_Baetis_32)
-```
+GHSI_Tanno_2012_Baetis_4 <- ghsi_3(HS_Tanno_2012_Baetis_depth_4, HS_Tanno_2012_Baetis_velocity_4, HS_sub_Baetis_4)
 
+GHSI_Tanno_2012_Baetis_7 <- ghsi_3(HS_Tanno_2012_Baetis_depth_7, HS_Tanno_2012_Baetis_velocity_7, HS_sub_Baetis_7)
 
-```{r}
-# Erstelle Haeufigkeitstabelle #????????
-# Tanno 2012: Rhithrogena 
-# Q7
-freq_GHSI_Tanno_2012_Rhithrogena_7 <- as.data.frame(freq(GHSI_Tanno_2012_Rhithrogena_7, digit=1, useNA= "no")) 
+GHSI_Tanno_2012_Baetis_9 <- ghsi_3(HS_Tanno_2012_Baetis_depth_9, HS_Tanno_2012_Baetis_velocity_9, HS_sub_Baetis_9)
 
-# Q3.9
-freq_GHSI_Tanno_2012_Rhithrogena_3 <- as.data.frame(freq(GHSI_Tanno_2012_Rhithrogena_3, digit=1, useNA= "no")) 
+GHSI_Tanno_2012_Baetis_11 <- ghsi_3(HS_Tanno_2012_Baetis_depth_11, HS_Tanno_2012_Baetis_velocity_11, HS_sub_Baetis_11)
 
-# Q4.6
-freq_GHSI_Tanno_2012_Rhithrogena_4 <- as.data.frame(freq(GHSI_Tanno_2012_Rhithrogena_4, digit=1, useNA= "no")) 
+GHSI_Tanno_2012_Baetis_13 <- ghsi_3(HS_Tanno_2012_Baetis_depth_13, HS_Tanno_2012_Baetis_velocity_13, HS_sub_Baetis_13)
 
-# Q11
-freq_GHSI_Tanno_2012_Rhithrogena_11 <- as.data.frame(freq(GHSI_Tanno_2012_Rhithrogena_11, digit=1, useNA= "no")) 
+GHSI_Tanno_2012_Baetis_15 <- ghsi_3(HS_Tanno_2012_Baetis_depth_15, HS_Tanno_2012_Baetis_velocity_15, HS_sub_Baetis_15)
 
-# Q13.3
-freq_GHSI_Tanno_2012_Rhithrogena_13 <- as.data.frame(freq(GHSI_Tanno_2012_Rhithrogena_13, digit=1, useNA= "no")) 
+GHSI_Tanno_2012_Baetis_18 <- ghsi_3(HS_Tanno_2012_Baetis_depth_18, HS_Tanno_2012_Baetis_velocity_18, HS_sub_Baetis_18)
 
-# Q32.69
-freq_GHSI_Tanno_2012_Rhithrogena_32 <- as.data.frame(freq(GHSI_Tanno_2012_Rhithrogena_32, digit=1, useNA= "no")) 
+GHSI_Tanno_2012_Baetis_22 <- ghsi_3(HS_Tanno_2012_Baetis_depth_22, HS_Tanno_2012_Baetis_velocity_22, HS_sub_Baetis_22)
 
-# HABBY Rhithrogena 
-# Q7
-freq_GHSI_HABBY_Rhithrogena_7 <- as.data.frame(freq(GHSI_HABBY_Rhithrogena_7, digit=1, useNA= "no")) 
-# Q3.9
-freq_GHSI_HABBY_Rhithrogena_3 <- as.data.frame(freq(GHSI_HABBY_Rhithrogena_3, digit=1, useNA= "no"))
+GHSI_Tanno_2012_Baetis_25 <- ghsi_3(HS_Tanno_2012_Baetis_depth_25, HS_Tanno_2012_Baetis_velocity_25, HS_sub_Baetis_25)
 
-# Q4.6
-freq_GHSI_HABBY_Rhithrogena_4 <- as.data.frame(freq(GHSI_HABBY_Rhithrogena_4, digit=1, useNA= "no"))
+GHSI_Tanno_2012_Baetis_28 <- ghsi_3(HS_Tanno_2012_Baetis_depth_28, HS_Tanno_2012_Baetis_velocity_28, HS_sub_Baetis_28)
 
-# Q11
-freq_GHSI_HABBY_Rhithrogena_11 <- as.data.frame(freq(GHSI_HABBY_Rhithrogena_11, digit=1, useNA= "no"))
+GHSI_Tanno_2012_Baetis_32 <- ghsi_3(HS_Tanno_2012_Baetis_depth_32, HS_Tanno_2012_Baetis_velocity_32, HS_sub_Baetis_32)
 
-# Q13.3
-freq_GHSI_HABBY_Rhithrogena_13 <- as.data.frame(freq(GHSI_HABBY_Rhithrogena_13, digit=1, useNA= "no"))
-
-# Q32.69
-freq_GHSI_HABBY_Rhithrogena_32 <- as.data.frame(freq(GHSI_HABBY_Rhithrogena_32, digit=1, useNA= "no"))
-
-# Tanno 2012 Baetis sp.
-# Q7
-freq_GHSI_Tanno_2012_Baetis_7 <- as.data.frame(freq(GHSI_Tanno_2012_Baetis_7, digit=1, useNA= "no")) 
-# Q3.9
-freq_GHSI_Tanno_2012_Baetis_3 <- as.data.frame(freq(GHSI_Tanno_2012_Baetis_3, digit=1, useNA= "no"))
-
-# Q4.6
-freq_GHSI_Tanno_2012_Baetis_4 <- as.data.frame(freq(GHSI_Tanno_2012_Baetis_4, digit=1, useNA= "no"))
-
-# Q11
-freq_GHSI_Tanno_2012_Baetis_11 <- as.data.frame(freq(GHSI_Tanno_2012_Baetis_11, digit=1, useNA= "no"))
-
-# Q13.3
-freq_GHSI_Tanno_2012_Baetis_13 <- as.data.frame(freq(GHSI_Tanno_2012_Baetis_13, digit=1, useNA= "no"))
-
-# Q32.69
-freq_GHSI_Tanno_2012_Baetis_32 <- as.data.frame(freq(GHSI_Tanno_2012_Baetis_32, digit=1, useNA= "no"))
-
-# save as .tif
-# Tanno 2012: Rhithrogena
-writeRaster(GHSI_Tanno_2012_Rhithrogena_7, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+# save as .tif -------------------------------------------
+# Tanno 2012: Rhithrogena -------------------------------------------
+writeRaster(GHSI_Tanno_2012_Rhithrogena_2, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_Tanno_2012_Rhithrogena_3, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_Tanno_2012_Rhithrogena_4, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(GHSI_Tanno_2012_Rhithrogena_7, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Rhithrogena_9, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(GHSI_Tanno_2012_Rhithrogena_11, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_Tanno_2012_Rhithrogena_13, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(GHSI_Tanno_2012_Rhithrogena_15, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Rhithrogena_18, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Rhithrogena_22, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Rhithrogena_25, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Rhithrogena_28, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(GHSI_Tanno_2012_Rhithrogena_32, filename="results_multivariate/GHSI_Tanno_2012_Rhithrogena_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 
-# HABBY Rhithrogena 
-writeRaster(GHSI_HABBY_Rhithrogena_7, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_7.tif", format="GTiff", overwrite=TRUE)
+# HABBY Rhithrogena -------------------------------------------
+writeRaster(GHSI_HABBY_Rhithrogena_2, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_HABBY_Rhithrogena_3, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_HABBY_Rhithrogena_4, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(GHSI_HABBY_Rhithrogena_7, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_HABBY_Rhithrogena_9, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(GHSI_HABBY_Rhithrogena_11, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_HABBY_Rhithrogena_13, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(GHSI_HABBY_Rhithrogena_15, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_HABBY_Rhithrogena_18, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_HABBY_Rhithrogena_22, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_HABBY_Rhithrogena_25, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_HABBY_Rhithrogena_28, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(GHSI_HABBY_Rhithrogena_32, filename="results_multivariate/GHSI_HABBY_Rhithrogena_eaton_larva_32.tif", format="GTiff", overwrite=TRUE)
 
-# Tanno 2012 Baetis sp. 
-writeRaster(GHSI_Tanno_2012_Baetis_7, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+# Tanno 2012 Baetis sp. -------------------------------------------
+writeRaster(GHSI_Tanno_2012_Baetis_2, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_2.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_Tanno_2012_Baetis_3, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_3.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_Tanno_2012_Baetis_4, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_4.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(GHSI_Tanno_2012_Baetis_7, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_7.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Baetis_9, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_9.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(GHSI_Tanno_2012_Baetis_11, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_11.tif", format="GTiff", overwrite=TRUE)
 
 writeRaster(GHSI_Tanno_2012_Baetis_13, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_13.tif", format="GTiff", overwrite=TRUE)
 
+writeRaster(GHSI_Tanno_2012_Baetis_15, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_15.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Baetis_18, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_18.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Baetis_22, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_22.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Baetis_25, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_25.tif", format="GTiff", overwrite=TRUE)
+
+writeRaster(GHSI_Tanno_2012_Baetis_28, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_28.tif", format="GTiff", overwrite=TRUE)
+
 writeRaster(GHSI_Tanno_2012_Baetis_32, filename="results_multivariate/GHSI_Tanno_2012_Baetis_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 ```
 
-
-## e. Weigthed Usable Area [m2]
+## ok- Persistent Habitats GHSI
 ```{r}
-# Tanno 2012: Rhithrogena 
-# Q7
-WUA_Tanno_2012_Rhithrogena_7 <- cellStats(GHSI_Tanno_2012_Rhithrogena_7, 'sum') * 4
+# Clip the raster1 with raster2
+# Tanno 2012 Rhithrogena -------------------------------------------
+persistent_tanno_2012_rhithrogena_2 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_2)
+
+persistent_tanno_2012_rhithrogena_3 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_3)
+
+persistent_tanno_2012_rhithrogena_4 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_4)
+
+persistent_tanno_2012_rhithrogena_7 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_7)
+
+persistent_tanno_2012_rhithrogena_9 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_9)
+
+persistent_tanno_2012_rhithrogena_11 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_11)
+
+persistent_tanno_2012_rhithrogena_13 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_13)
+
+persistent_tanno_2012_rhithrogena_15 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_15)
+
+persistent_tanno_2012_rhithrogena_18 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_18)
+
+persistent_tanno_2012_rhithrogena_22 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_22)
+
+persistent_tanno_2012_rhithrogena_25 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_25)
+
+persistent_tanno_2012_rhithrogena_28 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_28)
+
+persistent_tanno_2012_rhithrogena_32 <- mask(GHSI_Tanno_2012_Rhithrogena_2, GHSI_Tanno_2012_Rhithrogena_32)
+
+# HABBY Rhithrogena -------------------------------------------
+persistent_habby_rhithrogena_2 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_2)
+
+persistent_habby_rhithrogena_3 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_3)
+
+persistent_habby_rhithrogena_4 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_4)
+
+persistent_habby_rhithrogena_7 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_7)
+
+persistent_habby_rhithrogena_9 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_9)
+
+persistent_habby_rhithrogena_11 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_11)
+
+persistent_habby_rhithrogena_13 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_13)
+
+persistent_habby_rhithrogena_15 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_15)
+
+persistent_habby_rhithrogena_18 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_18)
+
+persistent_habby_rhithrogena_22 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_22)
+
+persistent_habby_rhithrogena_25 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_25)
+
+persistent_habby_rhithrogena_28 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_28)
+
+persistent_habby_rhithrogena_32 <- mask(GHSI_HABBY_Rhithrogena_2, GHSI_HABBY_Rhithrogena_32)
+
+# Tanno 2012 Baetis sp. -------------------------------------------
+persistent_tanno_2012_baetis_2 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_2)
+
+persistent_tanno_2012_baetis_3 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_3)
+
+persistent_tanno_2012_baetis_4 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_4)
+
+persistent_tanno_2012_baetis_7 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_7)
+
+persistent_tanno_2012_baetis_9 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_9)
+
+persistent_tanno_2012_baetis_11 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_11)
+
+persistent_tanno_2012_baetis_13 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_13)
+
+persistent_tanno_2012_baetis_15 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_15)
+
+persistent_tanno_2012_baetis_18 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_18)
+
+persistent_tanno_2012_baetis_22 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_22)
+
+persistent_tanno_2012_baetis_25 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_25)
+
+persistent_tanno_2012_baetis_28 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_28)
+
+persistent_tanno_2012_baetis_32 <- mask(GHSI_Tanno_2012_Baetis_2, GHSI_Tanno_2012_Baetis_32)
+
+# Save the clipped raster-files as a new file -------------------------
+# Tanno 2012 Rhithrogena -------------------------------------------
+writeRaster(persistent_tanno_2012_rhithrogena_2, filename="results_univariate/persistent_rhithrogena_tanno_2012_2.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_3, filename="results_univariate/persistent_rhithrogena_tanno_2012_3.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_4, filename="results_univariate/persistent_rhithrogena_tanno_2012_4.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_7, filename="results_univariate/persistent_rhithrogena_tanno_2012_7.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_9, filename="results_univariate/persistent_rhithrogena_tanno_2012_9.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_11, filename="results_univariate/persistent_rhithrogena_tanno_2012_11.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_13, filename="results_univariate/persistent_rhithrogena_tanno_2012_13.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_15, filename="results_univariate/persistent_rhithrogena_tanno_2012_15.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_18, filename="results_univariate/persistent_rhithrogena_tanno_2012_18.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_22, filename="results_univariate/persistent_rhithrogena_tanno_2012_22.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_25, filename="results_univariate/persistent_rhithrogena_tanno_2012_25.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_28, filename="results_univariate/persistent_rhithrogena_tanno_2012_28.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_rhithrogena_32, filename="results_univariate/persistent_rhithrogena_tanno_2012_32.tif", format="GTiff", overwrite = TRUE)
+
+# HABBY Rhithrogena -------------------------------------------
+writeRaster(persistent_habby_rhithrogena_2, filename="results_univariate/persistent_rhithrogena_habby_2.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_3, filename="results_univariate/persistent_rhithrogena_habby_3.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_4, filename="results_univariate/persistent_rhithrogena_habby_4.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_7, filename="results_univariate/persistent_rhithrogena_habby_7.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_9, filename="results_univariate/persistent_rhithrogena_habby_9.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_11, filename="results_univariate/persistent_rhithrogena_habby_11.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_13, filename="results_univariate/persistent_rhithrogena_habby_13.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_15, filename="results_univariate/persistent_rhithrogena_habby_15.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_18, filename="results_univariate/persistent_rhithrogena_habby_18.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_22, filename="results_univariate/persistent_rhithrogena_habby_22.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_25, filename="results_univariate/persistent_rhithrogena_habby_25.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_28, filename="results_univariate/persistent_rhithrogena_habby_28.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_habby_rhithrogena_32, filename="results_univariate/persistent_rhithrogena_habby_32.tif", format="GTiff", overwrite = TRUE)
+
+# Tanno 2012 Baetis sp. -------------------------------------------
+writeRaster(persistent_tanno_2012_baetis_2, filename="results_univariate/persistent_baetis_tanno_2012_2.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_3, filename="results_univariate/persistent_baetis_tanno_2012_3.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_4, filename="results_univariate/persistent_baetis_tanno_2012_4.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_7, filename="results_univariate/persistent_baetis_tanno_2012_7.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_9, filename="results_univariate/persistent_baetis_tanno_2012_9.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_11, filename="results_univariate/persistent_baetis_tanno_2012_11.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_13, filename="results_univariate/persistent_baetis_tanno_2012_13.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_15, filename="results_univariate/persistent_baetis_tanno_2012_15.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_18, filename="results_univariate/persistent_baetis_tanno_2012_18.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_22, filename="results_univariate/persistent_baetis_tanno_2012_22.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_25, filename="results_univariate/persistent_baetis_tanno_2012_25.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_28, filename="results_univariate/persistent_baetis_tanno_2012_28.tif", format="GTiff", overwrite = TRUE)
+
+writeRaster(persistent_tanno_2012_baetis_32, filename="results_univariate/persistent_baetis_tanno_2012_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+### ok- c1. frequency tables
+```{r}
+# Erstelle Haeufigkeitstabelle 
+# Tanno 2012: Rhithrogena -------------------------------------------
+freq_table <- function(x){
+ as.data.frame(freq(x, digit=1, useNA= "no"))
+}
+
+# All Q's
+freq_GHSI_Tanno_2012_Rhithrogena_2 <- freq_table(GHSI_Tanno_2012_Rhithrogena_2)
+freq_GHSI_Tanno_2012_Rhithrogena_3 <- freq_table(GHSI_Tanno_2012_Rhithrogena_3)
+freq_GHSI_Tanno_2012_Rhithrogena_4 <- freq_table(GHSI_Tanno_2012_Rhithrogena_4)
+freq_GHSI_Tanno_2012_Rhithrogena_7 <- freq_table(GHSI_Tanno_2012_Rhithrogena_7)
+freq_GHSI_Tanno_2012_Rhithrogena_9 <- freq_table(GHSI_Tanno_2012_Rhithrogena_9)
+freq_GHSI_Tanno_2012_Rhithrogena_11 <- freq_table(GHSI_Tanno_2012_Rhithrogena_11)
+freq_GHSI_Tanno_2012_Rhithrogena_13 <- freq_table(GHSI_Tanno_2012_Rhithrogena_13)
+freq_GHSI_Tanno_2012_Rhithrogena_15 <- freq_table(GHSI_Tanno_2012_Rhithrogena_15)
+freq_GHSI_Tanno_2012_Rhithrogena_18 <- freq_table(GHSI_Tanno_2012_Rhithrogena_18)
+freq_GHSI_Tanno_2012_Rhithrogena_22 <- freq_table(GHSI_Tanno_2012_Rhithrogena_22)
+freq_GHSI_Tanno_2012_Rhithrogena_25 <- freq_table(GHSI_Tanno_2012_Rhithrogena_25)
+freq_GHSI_Tanno_2012_Rhithrogena_28 <- freq_table(GHSI_Tanno_2012_Rhithrogena_28)
+freq_GHSI_Tanno_2012_Rhithrogena_32 <- freq_table(GHSI_Tanno_2012_Rhithrogena_32)
+
+# HABBY Rhithrogena -------------------------------------------
+# All Q's
+freq_GHSI_HABBY_Rhithrogena_2 <- freq_table(GHSI_HABBY_Rhithrogena_2)
+freq_GHSI_HABBY_Rhithrogena_3 <- freq_table(GHSI_HABBY_Rhithrogena_3)
+freq_GHSI_HABBY_Rhithrogena_4 <- freq_table(GHSI_HABBY_Rhithrogena_4)
+freq_GHSI_HABBY_Rhithrogena_7 <- freq_table(GHSI_HABBY_Rhithrogena_7)
+freq_GHSI_HABBY_Rhithrogena_9 <- freq_table(GHSI_HABBY_Rhithrogena_9)
+freq_GHSI_HABBY_Rhithrogena_11 <- freq_table(GHSI_HABBY_Rhithrogena_11)
+freq_GHSI_HABBY_Rhithrogena_13 <- freq_table(GHSI_HABBY_Rhithrogena_13)
+freq_GHSI_HABBY_Rhithrogena_15 <- freq_table(GHSI_HABBY_Rhithrogena_15)
+freq_GHSI_HABBY_Rhithrogena_18 <- freq_table(GHSI_HABBY_Rhithrogena_18)
+freq_GHSI_HABBY_Rhithrogena_22 <- freq_table(GHSI_HABBY_Rhithrogena_22)
+freq_GHSI_HABBY_Rhithrogena_25 <- freq_table(GHSI_HABBY_Rhithrogena_25)
+freq_GHSI_HABBY_Rhithrogena_28 <- freq_table(GHSI_HABBY_Rhithrogena_28)
+freq_GHSI_HABBY_Rhithrogena_32 <- freq_table(GHSI_HABBY_Rhithrogena_32)
+
+# Tanno 2012 Baetis sp. -------------------------------------------
+# All Q's
+freq_GHSI_Tanno_2012_Baetis_2 <- freq_table(GHSI_Tanno_2012_Baetis_2)
+freq_GHSI_Tanno_2012_Baetis_3 <- freq_table(GHSI_Tanno_2012_Baetis_3)
+freq_GHSI_Tanno_2012_Baetis_4 <- freq_table(GHSI_Tanno_2012_Baetis_4)
+freq_GHSI_Tanno_2012_Baetis_7 <- freq_table(GHSI_Tanno_2012_Baetis_7)
+freq_GHSI_Tanno_2012_Baetis_9 <- freq_table(GHSI_Tanno_2012_Baetis_9)
+freq_GHSI_Tanno_2012_Baetis_11 <- freq_table(GHSI_Tanno_2012_Baetis_11)
+freq_GHSI_Tanno_2012_Baetis_13 <- freq_table(GHSI_Tanno_2012_Baetis_13)
+freq_GHSI_Tanno_2012_Baetis_15 <- freq_table(GHSI_Tanno_2012_Baetis_15)
+freq_GHSI_Tanno_2012_Baetis_18 <- freq_table(GHSI_Tanno_2012_Baetis_18)
+freq_GHSI_Tanno_2012_Baetis_22 <- freq_table(GHSI_Tanno_2012_Baetis_22)
+freq_GHSI_Tanno_2012_Baetis_25 <- freq_table(GHSI_Tanno_2012_Baetis_25)
+freq_GHSI_Tanno_2012_Baetis_28 <- freq_table(GHSI_Tanno_2012_Baetis_28)
+freq_GHSI_Tanno_2012_Baetis_32 <- freq_table(GHSI_Tanno_2012_Baetis_32)
+```
+
+
+## e. Weigthed Usable Area normal [m2]
+```{r}
+# Tanno 2012: Rhithrogena -------------------------------------------
+# Q2.4
+WUA_Tanno_2012_Rhithrogena_2 <- cellStats(GHSI_Tanno_2012_Rhithrogena_2, 'sum') * 4
 
 # Q3.9
 WUA_Tanno_2012_Rhithrogena_3 <- cellStats(GHSI_Tanno_2012_Rhithrogena_3, 'sum') * 4
@@ -777,18 +1236,39 @@ WUA_Tanno_2012_Rhithrogena_3 <- cellStats(GHSI_Tanno_2012_Rhithrogena_3, 'sum') 
 # Q4.6
 WUA_Tanno_2012_Rhithrogena_4 <- cellStats(GHSI_Tanno_2012_Rhithrogena_4, 'sum') * 4
 
+# Q7
+WUA_Tanno_2012_Rhithrogena_7 <- cellStats(GHSI_Tanno_2012_Rhithrogena_7, 'sum') * 4
+
+# Q9
+WUA_Tanno_2012_Rhithrogena_9 <- cellStats(GHSI_Tanno_2012_Rhithrogena_9, 'sum') * 4
+
 # Q11
 WUA_Tanno_2012_Rhithrogena_11 <- cellStats(GHSI_Tanno_2012_Rhithrogena_11, 'sum') * 4
 
 # Q13.3
 WUA_Tanno_2012_Rhithrogena_13 <- cellStats(GHSI_Tanno_2012_Rhithrogena_13, 'sum') * 4
 
+# Q15
+WUA_Tanno_2012_Rhithrogena_15 <- cellStats(GHSI_Tanno_2012_Rhithrogena_15, 'sum') * 4
+
+# Q18
+WUA_Tanno_2012_Rhithrogena_18 <- cellStats(GHSI_Tanno_2012_Rhithrogena_18, 'sum') * 4
+
+# Q22
+WUA_Tanno_2012_Rhithrogena_22 <- cellStats(GHSI_Tanno_2012_Rhithrogena_22, 'sum') * 4
+
+# Q25
+WUA_Tanno_2012_Rhithrogena_25 <- cellStats(GHSI_Tanno_2012_Rhithrogena_25, 'sum') * 4
+
+# Q28
+WUA_Tanno_2012_Rhithrogena_28 <- cellStats(GHSI_Tanno_2012_Rhithrogena_28, 'sum') * 4
+
 # Q32.69
 WUA_Tanno_2012_Rhithrogena_32 <- cellStats(GHSI_Tanno_2012_Rhithrogena_32, 'sum') * 4
 
-# HABBY Rhithrogena 
-# Q7
-WUA_HABBY_Rhithrogena_7 <- cellStats(GHSI_HABBY_Rhithrogena_7, 'sum') * 4
+# HABBY Rhithrogena -------------------------------------------
+# Q2.4
+WUA_HABBY_Rhithrogena_2 <- cellStats(GHSI_HABBY_Rhithrogena_2, 'sum') * 4
 
 # Q3.9
 WUA_HABBY_Rhithrogena_3 <- cellStats(GHSI_HABBY_Rhithrogena_3, 'sum') * 4
@@ -796,18 +1276,39 @@ WUA_HABBY_Rhithrogena_3 <- cellStats(GHSI_HABBY_Rhithrogena_3, 'sum') * 4
 # Q4.6
 WUA_HABBY_Rhithrogena_4 <- cellStats(GHSI_HABBY_Rhithrogena_4, 'sum') * 4
 
+# Q7
+WUA_HABBY_Rhithrogena_7 <- cellStats(GHSI_HABBY_Rhithrogena_7, 'sum') * 4
+
+# Q9
+WUA_HABBY_Rhithrogena_9 <- cellStats(GHSI_HABBY_Rhithrogena_9, 'sum') * 4
+
 # Q11
 WUA_HABBY_Rhithrogena_11 <- cellStats(GHSI_HABBY_Rhithrogena_11, 'sum') * 4
 
 # Q13.3
 WUA_HABBY_Rhithrogena_13 <- cellStats(GHSI_HABBY_Rhithrogena_13, 'sum') * 4
 
+# Q15
+WUA_HABBY_Rhithrogena_15 <- cellStats(GHSI_HABBY_Rhithrogena_15, 'sum') * 4
+
+# Q18
+WUA_HABBY_Rhithrogena_18 <- cellStats(GHSI_HABBY_Rhithrogena_18, 'sum') * 4
+
+# Q22
+WUA_HABBY_Rhithrogena_22 <- cellStats(GHSI_HABBY_Rhithrogena_22, 'sum') * 4
+
+# Q25
+WUA_HABBY_Rhithrogena_25 <- cellStats(GHSI_HABBY_Rhithrogena_25, 'sum') * 4
+
+# Q28
+WUA_HABBY_Rhithrogena_28 <- cellStats(GHSI_HABBY_Rhithrogena_28, 'sum') * 4
+
 # Q32.69
 WUA_HABBY_Rhithrogena_32 <- cellStats(GHSI_HABBY_Rhithrogena_32, 'sum') * 4
 
-# Tanno 2012: Baetis sp. 
-# Q7 
-WUA_Tanno_2012_Baetis_7 <- cellStats(GHSI_Tanno_2012_Baetis_7, 'sum') * 4
+# Tanno 2012: Baetis sp. -------------------------------------------
+# Q2.4
+WUA_Tanno_2012_Baetis_2 <- cellStats(GHSI_Tanno_2012_Baetis_2, 'sum') * 4
 
 # Q3.9
 WUA_Tanno_2012_Baetis_3 <- cellStats(GHSI_Tanno_2012_Baetis_3, 'sum') * 4
@@ -815,11 +1316,32 @@ WUA_Tanno_2012_Baetis_3 <- cellStats(GHSI_Tanno_2012_Baetis_3, 'sum') * 4
 # Q4.6
 WUA_Tanno_2012_Baetis_4 <- cellStats(GHSI_Tanno_2012_Baetis_4, 'sum') * 4
 
+# Q7 
+WUA_Tanno_2012_Baetis_7 <- cellStats(GHSI_Tanno_2012_Baetis_7, 'sum') * 4
+
+# Q9
+WUA_Tanno_2012_Baetis_9 <- cellStats(GHSI_Tanno_2012_Baetis_9, 'sum') * 4
+
 # Q11
 WUA_Tanno_2012_Baetis_11 <- cellStats(GHSI_Tanno_2012_Baetis_11, 'sum') * 4
 
 # Q13.3
 WUA_Tanno_2012_Baetis_13 <- cellStats(GHSI_Tanno_2012_Baetis_13, 'sum') * 4
+
+# Q15
+WUA_Tanno_2012_Baetis_15 <- cellStats(GHSI_Tanno_2012_Baetis_15, 'sum') * 4
+
+# Q18
+WUA_Tanno_2012_Baetis_18 <- cellStats(GHSI_Tanno_2012_Baetis_18, 'sum') * 4
+
+# Q22
+WUA_Tanno_2012_Baetis_22 <- cellStats(GHSI_Tanno_2012_Baetis_22, 'sum') * 4
+
+# Q25
+WUA_Tanno_2012_Baetis_25 <- cellStats(GHSI_Tanno_2012_Baetis_25, 'sum') * 4
+
+# Q28
+WUA_Tanno_2012_Baetis_28 <- cellStats(GHSI_Tanno_2012_Baetis_28, 'sum') * 4
 
 # Q32.69
 WUA_Tanno_2012_Baetis_32 <- cellStats(GHSI_Tanno_2012_Baetis_32, 'sum') * 4
@@ -827,9 +1349,9 @@ WUA_Tanno_2012_Baetis_32 <- cellStats(GHSI_Tanno_2012_Baetis_32, 'sum') * 4
 
 ## f. Wetted Area [m2]
 ```{r}
-# Tanno 2012: Rhithrogena
-# Q7
-WA_tot_Tanno_2012_Rhithrogena_7 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_7$count) * 4
+# Tanno 2012: Rhithrogena -------------------------------------------
+# Q2.4
+WA_tot_Tanno_2012_Rhithrogena_2 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_2$count) * 4
 
 # Q3.9
 WA_tot_Tanno_2012_Rhithrogena_3 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_3$count) * 4
@@ -837,18 +1359,39 @@ WA_tot_Tanno_2012_Rhithrogena_3 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_3$count)
 # Q4.6
 WA_tot_Tanno_2012_Rhithrogena_4 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_4$count) * 4
 
+# Q7
+WA_tot_Tanno_2012_Rhithrogena_7 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_7$count) * 4
+
+# Q9
+WA_tot_Tanno_2012_Rhithrogena_9 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_9$count) * 4
+
 # Q11
 WA_tot_Tanno_2012_Rhithrogena_11 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_11$count) * 4
 
 # Q13.3
 WA_tot_Tanno_2012_Rhithrogena_13 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_13$count) * 4
 
+# Q15
+WA_tot_Tanno_2012_Rhithrogena_15 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_15$count) * 4
+
+# Q18
+WA_tot_Tanno_2012_Rhithrogena_18 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_18$count) * 4
+
+# Q22
+WA_tot_Tanno_2012_Rhithrogena_22 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_22$count) * 4
+
+# Q25
+WA_tot_Tanno_2012_Rhithrogena_25 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_25$count) * 4
+
+# Q28
+WA_tot_Tanno_2012_Rhithrogena_28 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_28$count) * 4
+
 # Q32.69
 WA_tot_Tanno_2012_Rhithrogena_32 <- sum(freq_GHSI_Tanno_2012_Rhithrogena_32$count) * 4
 
-# HABBY Rhithrogena 
-# Q7
-WA_tot_HABBY_Rhithrogena_7 <- sum(freq_GHSI_HABBY_Rhithrogena_7$count) * 4
+# HABBY Rhithrogena -------------------------------------------
+# Q2.4
+WA_tot_HABBY_Rhithrogena_2 <- sum(freq_GHSI_HABBY_Rhithrogena_2$count) * 4
 
 # Q3.9
 WA_tot_HABBY_Rhithrogena_3 <- sum(freq_GHSI_HABBY_Rhithrogena_3$count) * 4
@@ -856,18 +1399,39 @@ WA_tot_HABBY_Rhithrogena_3 <- sum(freq_GHSI_HABBY_Rhithrogena_3$count) * 4
 # Q4.6
 WA_tot_HABBY_Rhithrogena_4 <- sum(freq_GHSI_HABBY_Rhithrogena_4$count) * 4
 
+# Q7
+WA_tot_HABBY_Rhithrogena_7 <- sum(freq_GHSI_HABBY_Rhithrogena_7$count) * 4
+
+# Q9
+WA_tot_HABBY_Rhithrogena_9 <- sum(freq_GHSI_HABBY_Rhithrogena_9$count) * 4
+
 # Q11
 WA_tot_HABBY_Rhithrogena_11 <- sum(freq_GHSI_HABBY_Rhithrogena_11$count) * 4
 
 # Q13.3
 WA_tot_HABBY_Rhithrogena_13 <- sum(freq_GHSI_HABBY_Rhithrogena_13$count) * 4
 
+# Q15
+WA_tot_HABBY_Rhithrogena_15 <- sum(freq_GHSI_HABBY_Rhithrogena_15$count) * 4
+
+# Q18
+WA_tot_HABBY_Rhithrogena_18 <- sum(freq_GHSI_HABBY_Rhithrogena_18$count) * 4
+
+# Q22
+WA_tot_HABBY_Rhithrogena_22 <- sum(freq_GHSI_HABBY_Rhithrogena_22$count) * 4
+
+# Q25
+WA_tot_HABBY_Rhithrogena_25 <- sum(freq_GHSI_HABBY_Rhithrogena_25$count) * 4
+
+# Q28
+WA_tot_HABBY_Rhithrogena_28 <- sum(freq_GHSI_HABBY_Rhithrogena_28$count) * 4
+
 # Q32.69
 WA_tot_HABBY_Rhithrogena_32 <- sum(freq_GHSI_HABBY_Rhithrogena_32$count) * 4
 
-# Tanno 2012: Baetis sp.
-# Q7
-WA_tot_Tanno_2012_Baetis_7 <- sum(freq_GHSI_Tanno_2012_Baetis_7$count) * 4
+# Tanno 2012: Baetis sp. -------------------------------------------
+# Q2.4
+WA_tot_Tanno_2012_Baetis_2 <- sum(freq_GHSI_Tanno_2012_Baetis_2$count) * 4
 
 # Q3.9
 WA_tot_Tanno_2012_Baetis_3 <- sum(freq_GHSI_Tanno_2012_Baetis_3$count) * 4
@@ -875,11 +1439,32 @@ WA_tot_Tanno_2012_Baetis_3 <- sum(freq_GHSI_Tanno_2012_Baetis_3$count) * 4
 # Q4.6
 WA_tot_Tanno_2012_Baetis_4 <- sum(freq_GHSI_Tanno_2012_Baetis_4$count) * 4
 
+# Q7
+WA_tot_Tanno_2012_Baetis_7 <- sum(freq_GHSI_Tanno_2012_Baetis_7$count) * 4
+
+# Q9
+WA_tot_Tanno_2012_Baetis_9 <- sum(freq_GHSI_Tanno_2012_Baetis_9$count) * 4
+
 # Q11
 WA_tot_Tanno_2012_Baetis_11 <- sum(freq_GHSI_Tanno_2012_Baetis_11$count) * 4
 
 # Q13.3
 WA_tot_Tanno_2012_Baetis_13 <- sum(freq_GHSI_Tanno_2012_Baetis_13$count) * 4
+
+# Q15
+WA_tot_Tanno_2012_Baetis_15 <- sum(freq_GHSI_Tanno_2012_Baetis_15$count) * 4
+
+# Q18
+WA_tot_Tanno_2012_Baetis_18 <- sum(freq_GHSI_Tanno_2012_Baetis_18$count) * 4
+
+# Q22
+WA_tot_Tanno_2012_Baetis_22 <- sum(freq_GHSI_Tanno_2012_Baetis_22$count) * 4
+
+# Q25
+WA_tot_Tanno_2012_Baetis_25 <- sum(freq_GHSI_Tanno_2012_Baetis_25$count) * 4
+
+# Q28
+WA_tot_Tanno_2012_Baetis_28 <- sum(freq_GHSI_Tanno_2012_Baetis_28$count) * 4
 
 # Q32.69
 WA_tot_Tanno_2012_Baetis_32 <- sum(freq_GHSI_Tanno_2012_Baetis_32$count) * 4
@@ -887,9 +1472,9 @@ WA_tot_Tanno_2012_Baetis_32 <- sum(freq_GHSI_Tanno_2012_Baetis_32$count) * 4
 
 ## g. Hydraulik Habitat Suitability [-]
 ```{r}
-# Tanno 2012: Rhithrogena 
-# Q7
-HHS_Tanno_2012_Rhithrogena_7 <- WUA_Tanno_2012_Rhithrogena_7/WA_tot_Tanno_2012_Rhithrogena_7
+# Tanno 2012: Rhithrogena -------------------------------------------
+# Q2.4
+HHS_Tanno_2012_Rhithrogena_2 <- WUA_Tanno_2012_Rhithrogena_2/WA_tot_Tanno_2012_Rhithrogena_2
 
 # Q3.9
 HHS_Tanno_2012_Rhithrogena_3 <- WUA_Tanno_2012_Rhithrogena_3/WA_tot_Tanno_2012_Rhithrogena_3
@@ -897,19 +1482,40 @@ HHS_Tanno_2012_Rhithrogena_3 <- WUA_Tanno_2012_Rhithrogena_3/WA_tot_Tanno_2012_R
 # Q4.6
 HHS_Tanno_2012_Rhithrogena_4 <- WUA_Tanno_2012_Rhithrogena_4/WA_tot_Tanno_2012_Rhithrogena_4
 
+# Q7
+HHS_Tanno_2012_Rhithrogena_7 <- WUA_Tanno_2012_Rhithrogena_7/WA_tot_Tanno_2012_Rhithrogena_7
+
+# Q9
+HHS_Tanno_2012_Rhithrogena_9 <- WUA_Tanno_2012_Rhithrogena_9/WA_tot_Tanno_2012_Rhithrogena_9
+
 # Q11
 HHS_Tanno_2012_Rhithrogena_11 <- WUA_Tanno_2012_Rhithrogena_11/WA_tot_Tanno_2012_Rhithrogena_11
 
 # Q13.3
 HHS_Tanno_2012_Rhithrogena_13 <- WUA_Tanno_2012_Rhithrogena_13/WA_tot_Tanno_2012_Rhithrogena_13
 
+# Q15
+HHS_Tanno_2012_Rhithrogena_15 <- WUA_Tanno_2012_Rhithrogena_15/WA_tot_Tanno_2012_Rhithrogena_15
+
+# Q18
+HHS_Tanno_2012_Rhithrogena_18 <- WUA_Tanno_2012_Rhithrogena_18/WA_tot_Tanno_2012_Rhithrogena_18
+
+# Q22
+HHS_Tanno_2012_Rhithrogena_22 <- WUA_Tanno_2012_Rhithrogena_22/WA_tot_Tanno_2012_Rhithrogena_22
+
+# Q25
+HHS_Tanno_2012_Rhithrogena_25 <- WUA_Tanno_2012_Rhithrogena_25/WA_tot_Tanno_2012_Rhithrogena_25
+
+# Q28
+HHS_Tanno_2012_Rhithrogena_28 <- WUA_Tanno_2012_Rhithrogena_28/WA_tot_Tanno_2012_Rhithrogena_28
+
 # Q32.69
 HHS_Tanno_2012_Rhithrogena_32 <- WUA_Tanno_2012_Rhithrogena_32/WA_tot_Tanno_2012_Rhithrogena_32
 
 
-# HABBY Rhithrogena 
-# Q7
-HHS_HABBY_Rhithrogena_7 <- WUA_HABBY_Rhithrogena_7/WA_tot_HABBY_Rhithrogena_7
+# HABBY Rhithrogena -------------------------------------------
+# Q2.4
+HHS_HABBY_Rhithrogena_2 <- WUA_HABBY_Rhithrogena_2/WA_tot_HABBY_Rhithrogena_2
 
 # Q3.9
 HHS_HABBY_Rhithrogena_3 <- WUA_HABBY_Rhithrogena_3/WA_tot_HABBY_Rhithrogena_3
@@ -917,18 +1523,39 @@ HHS_HABBY_Rhithrogena_3 <- WUA_HABBY_Rhithrogena_3/WA_tot_HABBY_Rhithrogena_3
 # Q4.6
 HHS_HABBY_Rhithrogena_4 <- WUA_HABBY_Rhithrogena_4/WA_tot_HABBY_Rhithrogena_4
 
+# Q7
+HHS_HABBY_Rhithrogena_7 <- WUA_HABBY_Rhithrogena_7/WA_tot_HABBY_Rhithrogena_7
+
+# Q9
+HHS_HABBY_Rhithrogena_9 <- WUA_HABBY_Rhithrogena_9/WA_tot_HABBY_Rhithrogena_9
+
 # Q11
 HHS_HABBY_Rhithrogena_11 <- WUA_HABBY_Rhithrogena_11/WA_tot_HABBY_Rhithrogena_11
 
 # Q13.3
 HHS_HABBY_Rhithrogena_13 <- WUA_HABBY_Rhithrogena_13/WA_tot_HABBY_Rhithrogena_13
 
+# Q15
+HHS_HABBY_Rhithrogena_15 <- WUA_HABBY_Rhithrogena_15/WA_tot_HABBY_Rhithrogena_15
+
+# Q18
+HHS_HABBY_Rhithrogena_18 <- WUA_HABBY_Rhithrogena_18/WA_tot_HABBY_Rhithrogena_18
+
+# Q22
+HHS_HABBY_Rhithrogena_22 <- WUA_HABBY_Rhithrogena_22/WA_tot_HABBY_Rhithrogena_22
+
+# Q25
+HHS_HABBY_Rhithrogena_25 <- WUA_HABBY_Rhithrogena_25/WA_tot_HABBY_Rhithrogena_25
+
+# Q28
+HHS_HABBY_Rhithrogena_28 <- WUA_HABBY_Rhithrogena_28/WA_tot_HABBY_Rhithrogena_28
+
 # Q32.69
 HHS_HABBY_Rhithrogena_32 <- WUA_HABBY_Rhithrogena_32/WA_tot_HABBY_Rhithrogena_32
 
-# Tanno 2012: Baetis sp.
-# Q7
-HHS_Tanno_2012_Baetis_7 <- WUA_Tanno_2012_Baetis_7/WA_tot_Tanno_2012_Baetis_7
+# Tanno 2012: Baetis sp. -------------------------------------------
+# Q2.4
+HHS_Tanno_2012_Baetis_2 <- WUA_Tanno_2012_Baetis_2/WA_tot_Tanno_2012_Baetis_2
 
 # Q3.9
 HHS_Tanno_2012_Baetis_3 <- WUA_Tanno_2012_Baetis_3/WA_tot_Tanno_2012_Baetis_3
@@ -936,11 +1563,32 @@ HHS_Tanno_2012_Baetis_3 <- WUA_Tanno_2012_Baetis_3/WA_tot_Tanno_2012_Baetis_3
 # Q4.6
 HHS_Tanno_2012_Baetis_4 <- WUA_Tanno_2012_Baetis_4/WA_tot_Tanno_2012_Baetis_4
 
+# Q7
+HHS_Tanno_2012_Baetis_7 <- WUA_Tanno_2012_Baetis_7/WA_tot_Tanno_2012_Baetis_7
+
+# Q9
+HHS_Tanno_2012_Baetis_9 <- WUA_Tanno_2012_Baetis_9/WA_tot_Tanno_2012_Baetis_9
+
 # Q11
 HHS_Tanno_2012_Baetis_11 <- WUA_Tanno_2012_Baetis_11/WA_tot_Tanno_2012_Baetis_11
 
 # Q13.3
 HHS_Tanno_2012_Baetis_13 <- WUA_Tanno_2012_Baetis_13/WA_tot_Tanno_2012_Baetis_13
+
+# Q15
+HHS_Tanno_2012_Baetis_15 <- WUA_Tanno_2012_Baetis_15/WA_tot_Tanno_2012_Baetis_15
+
+# Q18
+HHS_Tanno_2012_Baetis_18 <- WUA_Tanno_2012_Baetis_18/WA_tot_Tanno_2012_Baetis_18
+
+# Q22
+HHS_Tanno_2012_Baetis_22 <- WUA_Tanno_2012_Baetis_22/WA_tot_Tanno_2012_Baetis_22
+
+# Q25
+HHS_Tanno_2012_Baetis_25 <- WUA_Tanno_2012_Baetis_25/WA_tot_Tanno_2012_Baetis_25
+
+# Q28
+HHS_Tanno_2012_Baetis_28 <- WUA_Tanno_2012_Baetis_28/WA_tot_Tanno_2012_Baetis_28
 
 # Q32.69
 HHS_Tanno_2012_Baetis_32 <- WUA_Tanno_2012_Baetis_32/WA_tot_Tanno_2012_Baetis_32
@@ -950,10 +1598,10 @@ HHS_Tanno_2012_Baetis_32 <- WUA_Tanno_2012_Baetis_32/WA_tot_Tanno_2012_Baetis_32
 # 4. make dataframe and .csv of calculated indices 
 ```{r}
 # data frame WUA and HHS 
-results <- data.frame(Description = c("Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.",  "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva"), Discharge = c(7, 3.9, 4.6, 11.4, 13.3, 32.69, 7, 3.9, 4.6, 11.4, 13.3, 32.69, 7, 3.9, 4.6, 11.4, 13.3, 32.69), 
-                      WUA = c(WUA_Tanno_2012_Baetis_7, WUA_Tanno_2012_Baetis_3, WUA_Tanno_2012_Baetis_4, WUA_Tanno_2012_Baetis_11, WUA_Tanno_2012_Baetis_13, WUA_Tanno_2012_Baetis_32, WUA_Tanno_2012_Rhithrogena_7,WUA_Tanno_2012_Rhithrogena_3, WUA_Tanno_2012_Rhithrogena_4, WUA_Tanno_2012_Rhithrogena_11, WUA_Tanno_2012_Rhithrogena_13, WUA_Tanno_2012_Rhithrogena_32, WUA_HABBY_Rhithrogena_7, WUA_HABBY_Rhithrogena_3, WUA_HABBY_Rhithrogena_4, WUA_HABBY_Rhithrogena_11, WUA_HABBY_Rhithrogena_13, WUA_HABBY_Rhithrogena_32), 
-                      HHS = c(HHS_Tanno_2012_Baetis_7, HHS_Tanno_2012_Baetis_3, HHS_Tanno_2012_Baetis_4, HHS_Tanno_2012_Baetis_11, HHS_Tanno_2012_Baetis_13, HHS_Tanno_2012_Baetis_32, HHS_Tanno_2012_Rhithrogena_7, HHS_Tanno_2012_Rhithrogena_3, HHS_Tanno_2012_Rhithrogena_4, HHS_Tanno_2012_Rhithrogena_11, HHS_Tanno_2012_Rhithrogena_13, HHS_Tanno_2012_Rhithrogena_32, HHS_HABBY_Rhithrogena_7, HHS_HABBY_Rhithrogena_3, HHS_HABBY_Rhithrogena_4, HHS_HABBY_Rhithrogena_11, HHS_HABBY_Rhithrogena_13, HHS_HABBY_Rhithrogena_32),
-                      WA_tot = c(WA_tot_Tanno_2012_Baetis_7, WA_tot_Tanno_2012_Baetis_3, WA_tot_Tanno_2012_Baetis_4, WA_tot_Tanno_2012_Baetis_11, WA_tot_Tanno_2012_Baetis_13, WA_tot_Tanno_2012_Baetis_32, WA_tot_Tanno_2012_Rhithrogena_7, WA_tot_Tanno_2012_Rhithrogena_3, WA_tot_Tanno_2012_Rhithrogena_4, WA_tot_Tanno_2012_Rhithrogena_11, WA_tot_Tanno_2012_Rhithrogena_13, WA_tot_Tanno_2012_Rhithrogena_32, WA_tot_HABBY_Rhithrogena_7, WA_tot_HABBY_Rhithrogena_3, WA_tot_HABBY_Rhithrogena_4, WA_tot_HABBY_Rhithrogena_11, WA_tot_HABBY_Rhithrogena_13, WA_tot_HABBY_Rhithrogena_32))
+results <- data.frame(Description = c("Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Baetis sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "Tanno 2012 Rhithrogena sp.", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva", "HABBY Rhithrogena eaton larva","HABBY Rhithrogena eaton larva"), Discharge = c(2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69, 2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69, 2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69), 
+                      WUA_normal = c(WUA_Tanno_2012_Baetis_2, WUA_Tanno_2012_Baetis_3, WUA_Tanno_2012_Baetis_4, WUA_Tanno_2012_Baetis_7, WUA_Tanno_2012_Baetis_9, WUA_Tanno_2012_Baetis_11, WUA_Tanno_2012_Baetis_13, WUA_Tanno_2012_Baetis_15, WUA_Tanno_2012_Baetis_18, WUA_Tanno_2012_Baetis_22, WUA_Tanno_2012_Baetis_25, WUA_Tanno_2012_Baetis_28, WUA_Tanno_2012_Baetis_32, WUA_Tanno_2012_Rhithrogena_2, WUA_Tanno_2012_Rhithrogena_3, WUA_Tanno_2012_Rhithrogena_4, WUA_Tanno_2012_Rhithrogena_7, WUA_Tanno_2012_Rhithrogena_9, WUA_Tanno_2012_Rhithrogena_11, WUA_Tanno_2012_Rhithrogena_13, WUA_Tanno_2012_Rhithrogena_15, WUA_Tanno_2012_Rhithrogena_18, WUA_Tanno_2012_Rhithrogena_22, WUA_Tanno_2012_Rhithrogena_25, WUA_Tanno_2012_Rhithrogena_28, WUA_Tanno_2012_Rhithrogena_32, WUA_HABBY_Rhithrogena_2, WUA_HABBY_Rhithrogena_3, WUA_HABBY_Rhithrogena_4, WUA_HABBY_Rhithrogena_7, WUA_HABBY_Rhithrogena_9, WUA_HABBY_Rhithrogena_11, WUA_HABBY_Rhithrogena_13, WUA_HABBY_Rhithrogena_15, WUA_HABBY_Rhithrogena_18, WUA_HABBY_Rhithrogena_22, WUA_HABBY_Rhithrogena_25, WUA_HABBY_Rhithrogena_28, WUA_HABBY_Rhithrogena_32), 
+                      HHS = c(HHS_Tanno_2012_Baetis_2, HHS_Tanno_2012_Baetis_3, HHS_Tanno_2012_Baetis_4, HHS_Tanno_2012_Baetis_7, HHS_Tanno_2012_Baetis_9, HHS_Tanno_2012_Baetis_11, HHS_Tanno_2012_Baetis_13, HHS_Tanno_2012_Baetis_15, HHS_Tanno_2012_Baetis_18, HHS_Tanno_2012_Baetis_22, HHS_Tanno_2012_Baetis_25, HHS_Tanno_2012_Baetis_28, HHS_Tanno_2012_Baetis_32, HHS_Tanno_2012_Rhithrogena_2, HHS_Tanno_2012_Rhithrogena_3, HHS_Tanno_2012_Rhithrogena_4, HHS_Tanno_2012_Rhithrogena_7, HHS_Tanno_2012_Rhithrogena_9, HHS_Tanno_2012_Rhithrogena_11, HHS_Tanno_2012_Rhithrogena_13, HHS_Tanno_2012_Rhithrogena_15, HHS_Tanno_2012_Rhithrogena_18, HHS_Tanno_2012_Rhithrogena_22, HHS_Tanno_2012_Rhithrogena_25, HHS_Tanno_2012_Rhithrogena_28, HHS_Tanno_2012_Rhithrogena_32, HHS_HABBY_Rhithrogena_2, HHS_HABBY_Rhithrogena_3, HHS_HABBY_Rhithrogena_4, HHS_HABBY_Rhithrogena_7, HHS_HABBY_Rhithrogena_9, HHS_HABBY_Rhithrogena_11, HHS_HABBY_Rhithrogena_13, HHS_HABBY_Rhithrogena_15, HHS_HABBY_Rhithrogena_18, HHS_HABBY_Rhithrogena_22, HHS_HABBY_Rhithrogena_25, HHS_HABBY_Rhithrogena_28, HHS_HABBY_Rhithrogena_32),
+                      WA_tot = c(WA_tot_Tanno_2012_Baetis_2, WA_tot_Tanno_2012_Baetis_3, WA_tot_Tanno_2012_Baetis_4, WA_tot_Tanno_2012_Baetis_7, WA_tot_Tanno_2012_Baetis_9, WA_tot_Tanno_2012_Baetis_11, WA_tot_Tanno_2012_Baetis_13, WA_tot_Tanno_2012_Baetis_15, WA_tot_Tanno_2012_Baetis_18, WA_tot_Tanno_2012_Baetis_22, WA_tot_Tanno_2012_Baetis_25, WA_tot_Tanno_2012_Baetis_28, WA_tot_Tanno_2012_Baetis_32, WA_tot_Tanno_2012_Rhithrogena_2, WA_tot_Tanno_2012_Rhithrogena_3, WA_tot_Tanno_2012_Rhithrogena_4, WA_tot_Tanno_2012_Rhithrogena_7, WA_tot_Tanno_2012_Rhithrogena_9, WA_tot_Tanno_2012_Rhithrogena_11, WA_tot_Tanno_2012_Rhithrogena_13, WA_tot_Tanno_2012_Rhithrogena_15, WA_tot_Tanno_2012_Rhithrogena_18, WA_tot_Tanno_2012_Rhithrogena_22, WA_tot_Tanno_2012_Rhithrogena_25, WA_tot_Tanno_2012_Rhithrogena_28, WA_tot_Tanno_2012_Rhithrogena_32, WA_tot_HABBY_Rhithrogena_2, WA_tot_HABBY_Rhithrogena_3, WA_tot_HABBY_Rhithrogena_4, WA_tot_HABBY_Rhithrogena_7, WA_tot_HABBY_Rhithrogena_9, WA_tot_HABBY_Rhithrogena_11, WA_tot_HABBY_Rhithrogena_13, WA_tot_HABBY_Rhithrogena_15, WA_tot_HABBY_Rhithrogena_18, WA_tot_HABBY_Rhithrogena_22, WA_tot_HABBY_Rhithrogena_25, WA_tot_HABBY_Rhithrogena_28, WA_tot_HABBY_Rhithrogena_32))
 
 write.csv(results, file = "results_statistics/Results_Multivariate_Habitat_Model.csv", row.names = FALSE)
 ```
@@ -967,38 +1615,52 @@ library(readr)
 library(ggplot2)
 WUA_HHS <- read_delim("results_statistics/Results_Multivariate_Habitat_Model.csv")
 
-# select all WUA's for plotting
-WUA_Tanno_2012_Baetis <- WUA_HHS[ c(0:6), c(1:3)]
-WUA_Tanno_2012_Rhithrogena <- WUA_HHS[ c(0, 7:12), c(1:3)]
-WUA_HABBY_Rhithrogena <- WUA_HHS[ c(0, 13:18), c(1:3)]
+# select all WUA's normal for plotting
+WUA_Tanno_2012_Baetis <- WUA_HHS[ c(0:13), c(1:3)]
+WUA_Tanno_2012_Rhithrogena <- WUA_HHS[ c(0, 14:26), c(1:3)]
+WUA_HABBY_Rhithrogena <- WUA_HHS[ c(0, 27:39), c(1:3)]
 
 # select all HHS's for plotting
-HHS_Tanno_2012_Baetis <- WUA_HHS[ c(0:6), c(1,2,4)]
-HHS_Tanno_2012_Rhithrogena <- WUA_HHS[ c(0, 7:12), c(1,2,4)]
-HHS_HABBY_Rhithrogena <- WUA_HHS[ c(0, 13:18), c(1,2,4)]
+HHS_Tanno_2012_Baetis <- WUA_HHS[ c(0:13), c(1,2,4)]
+HHS_Tanno_2012_Rhithrogena <- WUA_HHS[ c(0, 14:26), c(1,2,4)]
+HHS_HABBY_Rhithrogena <- WUA_HHS[ c(0, 27:39), c(1,2,4)]
 
 # select all WA_tot's for plotting
-WA_Tanno_2012_Baetis <- WUA_HHS[ c(0:6), c(1,2,5)]
-WA_Tanno_2012_Rhithrogena <- WUA_HHS[ c(0, 7:12), c(1,2,5)]
-WA_HABBY_Rhithrogena <- WUA_HHS[ c(0, 13:18), c(1,2,5)]
+WA_Tanno_2012_Baetis <- WUA_HHS[ c(0:13), c(1,2,5)]
+WA_Tanno_2012_Rhithrogena <- WUA_HHS[ c(0, 14:26), c(1,2,5)]
+WA_HABBY_Rhithrogena <- WUA_HHS[ c(0, 27:39), c(1,2,5)]
 
 
 # plot results
-# WUA results
-WUA_results <- ggplot() +
-  geom_line(data = WUA_Tanno_2012_Baetis, aes(Discharge, WUA, color = "WUA_Tanno_Baetis")) +
-  geom_point(data = WUA_Tanno_2012_Baetis, aes(Discharge, WUA, color = "WUA_Tanno_Baetis")) +
-  geom_line(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA, color = "WUA_Tanno_Rhithrogena")) +
-  geom_point(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA, color = "WUA_Tanno_Rhithrogena")) +
-   geom_line(data = WUA_HABBY_Rhithrogena, aes(Discharge, WUA, color = "HABBY_Rhithrogena")) +
-  geom_point(data = WUA_HABBY_Rhithrogena, aes(Discharge, WUA, color = "HABBY_Rhithrogena")) +
+# WUA normal results
+# Tanno 2012: Baetis sp. 
+ggplot() +
+  geom_line(data = WUA_Tanno_2012_Baetis, aes(Discharge, WUA_normal, color = "WUA_Tanno_Baetis")) +
+  geom_point(data = WUA_Tanno_2012_Baetis, aes(Discharge, WUA_normal, color = "WUA_Tanno_Baetis")) +
+  geom_line(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA_normal, color = "WUA_Tanno_Rhithrogena")) +
+  geom_point(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA_normal, color = "WUA_Tanno_Rhithrogena")) +
+   geom_line(data = WUA_HABBY_Rhithrogena, aes(Discharge, WUA_normal, color = "HABBY_Rhithrogena")) +
+  geom_point(data = WUA_HABBY_Rhithrogena, aes(Discharge, WUA_normal, color = "HABBY_Rhithrogena")) +
    scale_color_manual(name = "Macroinvertebrates",
                      values = c("WUA_Tanno_Baetis" = "violet", "WUA_Tanno_Rhithrogena" = "lightblue", "HABBY_Rhithrogena" = "green" ), 
                      labels = c("Tanno 2012 Baetis sp.", "Tanno 2012 Rhithrogena", "HABBY Rhithrogena eaton larva")) +
   labs(title = "Comparing WUA of different macroinvertebrates and literature", x = "Discharge [m3/s]", y = "Weighted usable area (WUA)")
 
+# Tanno 2012: Rhithrogena  
+ggplot() +
+  geom_line(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA_normal),  color = "lightblue", lwd = 1) +
+  geom_point(data = WUA_Tanno_2012_Rhithrogena, aes(Discharge, WUA_normal), color = "lightblue") +
+  labs(title = "Comparing WUA of different macroinvertebrates and literature", x = "Discharge [m3/s]", y = "Weighted usable area (WUA)")
+
+# Plot WUA normal ALL 
+ggplot(WUA_HHS, aes(Discharge, WUA_normal, col = Description)) +
+  facet_wrap(~Description) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Comparing WUA of different macroinvertebrates and literature", x = "Discharge [m3/s]", y = "Weighted usable area (WUA)") 
+
 # HHS results
-HHS_results <- ggplot() +
+ggplot() +
   geom_line(data = HHS_Tanno_2012_Baetis, aes(Discharge, HHS, color = "HHS_Tanno_Baetis")) +
   geom_point(data = HHS_Tanno_2012_Baetis, aes(Discharge, HHS, color = "HHS_Tanno_Baetis")) +
   geom_line(data = HHS_Tanno_2012_Rhithrogena, aes(Discharge, HHS, color = "HHS_Tanno_Rhithrogena")) +
@@ -1010,11 +1672,19 @@ HHS_results <- ggplot() +
                      labels = c("Tanno 2012 Baetis sp.", "Tanno 2012 Rhithrogena", "HABBY Rhithrogena eaton larva")) +
   labs(title = "Comparing HHS of different macroinvertebrates and literature", x = "Discharge [m3/s]", y = "HHS")
 
+# HHS Plots ALL
+ggplot(WUA_HHS, aes(Discharge, HHS, col = Description)) +
+  facet_wrap(~Description) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Comparing WUA of different macroinvertebrates and literature", x = "Discharge [m3/s]", y = "Weighted usable area (WUA)") 
+
 # WA tot results
-WA_tot_results <- ggplot() +
-  geom_line(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot), col = "blue") +
-  geom_point(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot), col = "blue") +
-  labs(title = "Comparing total wetted area at different discharges", x = "Discharge [m3/s]", y = "Wetted Area (WA_tot)")
+ggplot() +
+  geom_line(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot), lwd = 1) +
+  geom_point(data = WA_Tanno_2012_Baetis, aes(Discharge, WA_tot)) +
+  labs(title = "Comparing total wetted area at different discharges", x = "Discharge [m3/s]", y = "Wetted Area (WA_tot)") +
+  theme_minimal()
 ```
 
 ```{r}
@@ -1025,7 +1695,6 @@ quadrat_height <- 10 # in cm
 
 # WUA 
 ggsave(filename = "results_statistics/WUA_results.png",plot = WUA_results, width = quadrat_width, height = quadrat_height, units = "cm")
-
 
 # HHS
 ggsave(filename = "results_statistics/HHS_results.png",plot = HHS_results, width = quadrat_width, height = quadrat_height, units = "cm")
