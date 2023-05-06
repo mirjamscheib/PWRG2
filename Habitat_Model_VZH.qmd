@@ -196,6 +196,12 @@ persistent_25 <- mask(VZH_2, VZH_25)
 persistent_28 <- mask(VZH_2, VZH_28)
 persistent_32 <- mask(VZH_2, VZH_32)
 
+# proof results
+# verteilung VZH_32 sieht anders aus, als persistent_32 und persistent_32 sieht genau gleich aus wie persistent_2 in der Habitatverteilung....
+plot(VZH_32)
+plot(persistent_32)
+plot(persistent_2)
+
 # Save the clipped raster-files as a new file
 writeRaster(persistent_2, filename="results_univariate/persistent_VZH_2.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_3, filename="results_univariate/persistent_VZH_3.tif", format="GTiff", overwrite = TRUE)
