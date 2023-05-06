@@ -216,6 +216,7 @@ writeRaster(persistent_22, filename="results_univariate/persistent_VZH_22.tif", 
 writeRaster(persistent_25, filename="results_univariate/persistent_VZH_25.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_28, filename="results_univariate/persistent_VZH_28.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_32, filename="results_univariate/persistent_VZH_32.tif", format="GTiff", overwrite = TRUE)
+
 ```
 
 # Calculate WUA normal 
