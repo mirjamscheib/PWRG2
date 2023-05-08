@@ -160,6 +160,21 @@ VZH_22 <- univariat_v(v_22)
 VZH_25 <- univariat_v(v_25)
 VZH_28 <- univariat_v(v_28)
 VZH_32 <- univariat_v(v_32)
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(VZH_2, filename="results_univariate/VZH_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_3, filename="results_univariate/VZH_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_4, filename="results_univariate/VZH_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_7, filename="results_univariate/VZH_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_9, filename="results_univariate/VZH_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_11, filename="results_univariate/VZH_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_13, filename="results_univariate/VZH_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_15, filename="results_univariate/VZH_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_18, filename="results_univariate/VZH_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_22, filename="results_univariate/VZH_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_25, filename="results_univariate/VZH_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_28, filename="results_univariate/VZH_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_32, filename="results_univariate/VZH_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
 ## Persistent Habitats
