@@ -5,13 +5,13 @@ format: html
 
 # Clear R environment 
 ```{r}
-#clear R environment
+#clear R environment ---------------------------------------
 rm(list = ls())
 ```
 
 # Install and load packages 
 ```{r}
-# check for a package, install and load
+# check for a package, install and load ---------------------------------------
 pkgCheck <- function(x){ 
   if (!require(x,character.only = TRUE)){
     install.packages(x,dependencies=TRUE)
@@ -23,19 +23,21 @@ pkgCheck <- function(x){
 
 pkgCheck("raster")
 pkgCheck("spsurvey")
-library(terra)
-library(tmap)
-library(raster)
-library(ggplot2)
-library(tibble)
+pkgCheck("terra")
+pkgCheck("raster")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
 ```
 
 # Load input rasters (velocity only)
 ```{r}
-# Read raster-files of velocities 
+# Read raster-files of velocities ---------------------------------------
 v_path <- "raster_files"
 
-# read raster-files
+# read raster-files ---------------------------------------
 velocity_2 <- raster(file.path(v_path, "Landquart_results_velocity_2.tif"))
 velocity_3 <- raster(file.path(v_path, "Landquart_results_velocity_3.tif"))
 velocity_4 <- raster(file.path(v_path, "Landquart_results_velocity_4.tif"))
@@ -50,7 +52,7 @@ velocity_25 <- raster(file.path(v_path, "Landquart_results_velocity_25.tif"))
 velocity_28 <- raster(file.path(v_path, "Landquart_results_velocity_28.tif"))
 velocity_32 <- raster(file.path(v_path, "Landquart_results_velocity_32.tif"))
 
-# Set all 0-cells to NA 
+# Set all 0-cells to NA ---------------------------------------
 velocity_2[velocity_2 == 0] <- NA
 velocity_3[velocity_3 == 0] <- NA
 velocity_4[velocity_4 == 0] <- NA
@@ -68,7 +70,7 @@ velocity_32[velocity_32 == 0] <- NA
 
 # Reclassify Rasters (VZH)
 ```{r}
-# Define the reclassification table
+# Define the reclassification table ---------------------------------------
 # In this example, values from 0 to 0.05 are set to 1,
 # values from 0.05 to 0.25 are set to 3, and so on.
 # values from VZH are in cm/s, in raster in m/s (therefore values from VZH are converted into m/s with e.g., 5cm/s / 100 = 0.05m/s)
@@ -79,7 +81,7 @@ reclass_table <- c(0, 0.05, 1,
                    1.50, 2.50, 5,
                    2.50, Inf, NA)
 
-# Classify rasters (include.lowest = TRUE includes 0 m/s, which will be also classified as 1)
+# Classify rasters (include.lowest = TRUE includes 0 m/s, which will be also classified as 1) ---------------------------------------
 raster_classify_2 <- reclassify(velocity_2, reclass_table,  include.lowest = TRUE)
 raster_classify_3 <- reclassify(velocity_3, reclass_table,  include.lowest = TRUE)
 raster_classify_4 <- reclassify(velocity_4, reclass_table,  include.lowest = TRUE)
@@ -95,7 +97,7 @@ raster_classify_28 <- reclassify(velocity_28, reclass_table,  include.lowest = T
 raster_classify_32 <- reclassify(velocity_32, reclass_table,  include.lowest = TRUE)
 
 
-# write/save reclassified rasters
+# write/save reclassified rasters ---------------------------------------
 writeRaster(raster_classify_2, "raster_files/raster_classify_2.tif", format="GTiff", overwrite = TRUE)
 writeRaster(raster_classify_3, "raster_files/raster_classify_3.tif", format="GTiff", overwrite = TRUE)
 writeRaster(raster_classify_4, "raster_files/raster_classify_4.tif", format="GTiff", overwrite = TRUE)
@@ -114,17 +116,17 @@ writeRaster(raster_classify_32, "raster_files/raster_classify_32.tif", format="G
 # Habitat modelling 
 ## Read Suitability Curve 
 ```{r}
-# Read suitability curve
+# Read suitability curve ---------------------------------------
 sc_v_VZH_path <- "Suitability_Curves_Data/VZH/VZH_B5.csv" 
 sc_v_VZH <- read.csv(sc_v_VZH_path, sep=";", dec=".", header = TRUE)
 ```
 
 ## Univariate Habitat Model (Velocity Class)
 ```{r}
-# Read raster-files of velocities 
+# Read raster-files of velocities ---------------------------------------
 v_path <- "raster_files"
 
-# read raster-files
+# read raster-files ---------------------------------------
 v_2 <- raster(file.path(v_path, "raster_classify_2.tif"))
 v_3 <- raster(file.path(v_path, "raster_classify_3.tif"))
 v_4 <- raster(file.path(v_path, "raster_classify_4.tif"))
@@ -139,70 +141,52 @@ v_25 <- raster(file.path(v_path, "raster_classify_25.tif"))
 v_28 <- raster(file.path(v_path, "raster_classify_28.tif"))
 v_32 <- raster(file.path(v_path, "raster_classify_32.tif"))
 
-# Q2.4
-VZH_2 <- calc(v_2, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+# define function for univariate calculation -----------------------------------
+univariat_v <- function(x, y = sc_v_VZH$Bewohnbarkeitsklasse, z = sc_v_VZH$HSI){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
 
-# Q3.9
-VZH_3 <- calc(v_3, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q4.6
-VZH_4 <- calc(v_4, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q7
-VZH_7 <- calc(v_7, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q9.24
-VZH_9 <- calc(v_9, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q11
-VZH_11 <- calc(v_11, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q13.3
-VZH_13 <- calc(v_13, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q15
-VZH_15 <- calc(v_15, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q18.9
-VZH_18 <- calc(v_18, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q22
-VZH_22 <- calc(v_22, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q25
-VZH_25 <- calc(v_25, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q28
-VZH_28 <- calc(v_28, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
-
-# Q32.69
-VZH_32 <- calc(v_32, fun = approxfun(sc_v_VZH$Bewohnbarkeitsklasse, sc_v_VZH$HSI, rule = 2)) 
+# calculation for all Q's ---------------------------------------
+VZH_2 <- univariat_v(v_2)
+VZH_3 <- univariat_v(v_3)
+VZH_4 <- univariat_v(v_4)
+VZH_7 <- univariat_v(v_7)
+VZH_9 <- univariat_v(v_9)
+VZH_11 <- univariat_v(v_11)
+VZH_13 <- univariat_v(v_13)
+VZH_15 <- univariat_v(v_15)
+VZH_18 <- univariat_v(v_18)
+VZH_22 <- univariat_v(v_22)
+VZH_25 <- univariat_v(v_25)
+VZH_28 <- univariat_v(v_28)
+VZH_32 <- univariat_v(v_32)
 ```
 
 ## Persistent Habitats
 ```{r}
-# Clip the raster1 with raster2
+# Clip the raster1 with raster2 ---------------------------------------
 persistent_2 <- mask(VZH_2, VZH_2)
-persistent_3 <- mask(VZH_2, VZH_3)
-persistent_4 <- mask(VZH_2, VZH_4)
-persistent_7 <- mask(VZH_2, VZH_7)
-persistent_9 <- mask(VZH_2, VZH_9)
-persistent_11 <- mask(VZH_2, VZH_11)
-persistent_13 <- mask(VZH_2, VZH_13)
-persistent_15 <- mask(VZH_2, VZH_15)
-persistent_18 <- mask(VZH_2, VZH_18)
-persistent_22 <- mask(VZH_2, VZH_22)
-persistent_25 <- mask(VZH_2, VZH_25)
-persistent_28 <- mask(VZH_2, VZH_28)
-persistent_32 <- mask(VZH_2, VZH_32)
+persistent_3 <- mask(VZH_3, VZH_2)
+persistent_4 <- mask(VZH_4, VZH_2)
+persistent_7 <- mask(VZH_7, VZH_2)
+persistent_9 <- mask(VZH_9, VZH_2)
+persistent_11 <- mask(VZH_11, VZH_2)
+persistent_13 <- mask(VZH_13, VZH_2)
+persistent_15 <- mask(VZH_15, VZH_2)
+persistent_18 <- mask(VZH_18, VZH_2)
+persistent_22 <- mask(VZH_22, VZH_2)
+persistent_25 <- mask(VZH_25, VZH_2)
+persistent_28 <- mask(VZH_28, VZH_2)
+persistent_32 <- mask(VZH_32, VZH_2)
 
-# proof results
+# proof results ---------------------------------------
 # verteilung VZH_32 sieht anders aus, als persistent_32 und persistent_32 sieht genau gleich aus wie persistent_2 in der Habitatverteilung....
 plot(VZH_32)
 plot(persistent_32)
+plot(persistent_28)
 plot(persistent_2)
 
-# Save the clipped raster-files as a new file
+# Save the clipped raster-files ---------------------------------------
 writeRaster(persistent_2, filename="results_univariate/persistent_VZH_2.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_3, filename="results_univariate/persistent_VZH_3.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_4, filename="results_univariate/persistent_VZH_4.tif", format="GTiff", overwrite = TRUE)
@@ -216,401 +200,176 @@ writeRaster(persistent_22, filename="results_univariate/persistent_VZH_22.tif", 
 writeRaster(persistent_25, filename="results_univariate/persistent_VZH_25.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_28, filename="results_univariate/persistent_VZH_28.tif", format="GTiff", overwrite = TRUE)
 writeRaster(persistent_32, filename="results_univariate/persistent_VZH_32.tif", format="GTiff", overwrite = TRUE)
-
 ```
 
 # Calculate WUA normal 
 ```{r}
-# Q2.4
-WUA_VZH_2 <- cellStats(VZH_2, 'sum') * 4
+# define function for WUA calculation -----------------------------------
+wua <- function(x){
+  cellStats(x, 'sum') * 4
+}
 
-# Q3.9
-WUA_VZH_3 <- cellStats(VZH_3, 'sum') * 4
-
-# Q4.6
-WUA_VZH_4 <- cellStats(VZH_4, 'sum') * 4
-
-# Q7
-WUA_VZH_7 <- cellStats(VZH_7, 'sum') * 4
-
-# Q9.24
-WUA_VZH_9 <- cellStats(VZH_9, 'sum') * 4
-
-# Q11
-WUA_VZH_11 <- cellStats(VZH_11, 'sum') * 4
-
-# Q13.3
-WUA_VZH_13 <- cellStats(VZH_13, 'sum') * 4
-
-# Q15
-WUA_VZH_15 <- cellStats(VZH_15, 'sum') * 4
-
-# Q18.9
-WUA_VZH_18 <- cellStats(VZH_18, 'sum') * 4
-
-# Q22
-WUA_VZH_22 <- cellStats(VZH_22, 'sum') * 4
-
-# Q25
-WUA_VZH_25 <- cellStats(VZH_25, 'sum') * 4
-
-# Q28
-WUA_VZH_28 <- cellStats(VZH_28, 'sum') * 4
-
-# Q32.69
-WUA_VZH_32 <- cellStats(VZH_32, 'sum') * 4
+# calculate WUA for all Q's -----------------------------------
+WUA_VZH_2 <- wua(VZH_2)
+WUA_VZH_3 <- wua(VZH_3)
+WUA_VZH_4 <- wua(VZH_4)
+WUA_VZH_7 <- wua(VZH_7)
+WUA_VZH_9 <- wua(VZH_9)
+WUA_VZH_11 <- wua(VZH_11)
+WUA_VZH_13 <- wua(VZH_13)
+WUA_VZH_15 <- wua(VZH_15)
+WUA_VZH_18 <- wua(VZH_18)
+WUA_VZH_22 <- wua(VZH_22)
+WUA_VZH_25 <- wua(VZH_25)
+WUA_VZH_28 <- wua(VZH_28)
+WUA_VZH_32 <- wua(VZH_32)
 ```
 
 # Calculate WUA with persistent habitat
 ```{r}
-# Q2.4
-WUA_pers_2 <- cellStats(persistent_2, 'sum') * 4
-
-# Q3.9
-WUA_pers_3 <- cellStats(persistent_3, 'sum') * 4
-
-# Q4.6
-WUA_pers_4 <- cellStats(persistent_4, 'sum') * 4
-
-# Q7
-WUA_pers_7 <- cellStats(persistent_7, 'sum') * 4
-
-# Q9.24
-WUA_pers_9 <- cellStats(persistent_9, 'sum') * 4
-
-# Q11
-WUA_pers_11 <- cellStats(persistent_11, 'sum') * 4
-
-# Q13.3
-WUA_pers_13 <- cellStats(persistent_13, 'sum') * 4
-
-# Q15
-WUA_pers_15 <- cellStats(persistent_15, 'sum') * 4
-
-# Q18.9
-WUA_pers_18 <- cellStats(persistent_18, 'sum') * 4
-
-# Q22
-WUA_pers_22 <- cellStats(persistent_22, 'sum') * 4
-
-# Q25
-WUA_pers_25 <- cellStats(persistent_25, 'sum') * 4
-
-# Q28
-WUA_pers_28 <- cellStats(persistent_28, 'sum') * 4
-
-# Q32.69
-WUA_pers_32 <- cellStats(persistent_32, 'sum') * 4
+# calculate WUA für pers. habitats for all Q's ----------------------------------
+WUA_pers_2 <- wua(persistent_2)
+WUA_pers_3 <- wua(persistent_3)
+WUA_pers_4 <- wua(persistent_4)
+WUA_pers_7 <- wua(persistent_7)
+WUA_pers_9 <- wua(persistent_9)
+WUA_pers_11 <- wua(persistent_11)
+WUA_pers_13 <- wua(persistent_13)
+WUA_pers_15 <- wua(persistent_15)
+WUA_pers_18 <- wua(persistent_18)
+WUA_pers_22 <- wua(persistent_22)
+WUA_pers_25 <- wua(persistent_25)
+WUA_pers_28 <- wua(persistent_28)
+WUA_pers_32 <- wua(persistent_32)
 ```
 
 # Calculate frequency table normal
 ```{r}
-# Q2.4
-freq_VZH_2 <- as.data.frame(freq(VZH_2, digit=1, useNA= "no"))
+# define function for feq_table calculation -----------------------------------
+feq_table <- function(x){
+  as.data.frame(freq(x, digit=1, useNA= "no"))
+}
 
-# Q3.9
-freq_VZH_3 <- as.data.frame(freq(VZH_3, digit=1, useNA= "no")) 
-
-# Q4.6
-freq_VZH_4 <- as.data.frame(freq(VZH_4, digit=1, useNA= "no")) 
-
-# Q7
-freq_VZH_7 <- as.data.frame(freq(VZH_7, digit=1, useNA= "no"))
-
-# Q9
-freq_VZH_9 <- as.data.frame(freq(VZH_9, digit=1, useNA= "no")) 
-
-# Q11
-freq_VZH_11 <- as.data.frame(freq(VZH_11, digit=1, useNA= "no")) 
-
-# Q13.3
-freq_VZH_13 <- as.data.frame(freq(VZH_13, digit=1, useNA= "no")) 
-
-# Q15
-freq_VZH_15 <- as.data.frame(freq(VZH_15, digit=1, useNA= "no")) 
-
-# Q18.9
-freq_VZH_18 <- as.data.frame(freq(VZH_18, digit=1, useNA= "no")) 
-
-# Q22
-freq_VZH_22 <- as.data.frame(freq(VZH_22, digit=1, useNA= "no")) 
-
-# Q25
-freq_VZH_25 <- as.data.frame(freq(VZH_25, digit=1, useNA= "no")) 
-
-# Q28
-freq_VZH_28 <- as.data.frame(freq(VZH_28, digit=1, useNA= "no")) 
-
-# Q32.69
-freq_VZH_32 <- as.data.frame(freq(VZH_32, digit=1, useNA= "no")) 
+# calculate feq_table for all Q's -----------------------------------
+freq_VZH_2 <- feq_table(VZH_2)
+freq_VZH_3 <- feq_table(VZH_3)
+freq_VZH_4 <- feq_table(VZH_4)
+freq_VZH_7 <- feq_table(VZH_7)
+freq_VZH_9 <- feq_table(VZH_9)
+freq_VZH_11 <- feq_table(VZH_11)
+freq_VZH_13 <- feq_table(VZH_13)
+freq_VZH_15 <- feq_table(VZH_15)
+freq_VZH_18 <- feq_table(VZH_18)
+freq_VZH_22 <- feq_table(VZH_22)
+freq_VZH_25 <- feq_table(VZH_25)
+freq_VZH_28 <- feq_table(VZH_28)
+freq_VZH_32 <- feq_table(VZH_32)
 ```
 
-# Calculate frequency table persistent
+# Calculate WA_tot 
 ```{r}
-# Q2.4
-freq_pers_2 <- as.data.frame(freq(persistent_2, digit=1, useNA= "no"))
+# define function for WA_tot calculation -----------------------------------
+wa_tot <- function(x, column_name){
+  sum(x[[column_name]]) * 4
+}
 
-# Q3.9
-freq_pers_3 <- as.data.frame(freq(persistent_3, digit=1, useNA= "no")) 
-
-# Q4.6
-freq_pers_4 <- as.data.frame(freq(persistent_4, digit=1, useNA= "no")) 
-
-# Q7
-freq_pers_7 <- as.data.frame(freq(persistent_7, digit=1, useNA= "no")) 
-
-# Q9
-freq_pers_9 <- as.data.frame(freq(persistent_9, digit=1, useNA= "no")) 
-
-# Q11
-freq_pers_11 <- as.data.frame(freq(persistent_11, digit=1, useNA= "no")) 
-
-# Q13.3
-freq_pers_13 <- as.data.frame(freq(persistent_13, digit=1, useNA= "no")) 
-
-# Q15
-freq_pers_15 <- as.data.frame(freq(persistent_15, digit=1, useNA= "no")) 
-
-# Q18.9
-freq_pers_18 <- as.data.frame(freq(persistent_18, digit=1, useNA= "no")) 
-
-# Q22
-freq_pers_22 <- as.data.frame(freq(persistent_22, digit=1, useNA= "no")) 
-
-# Q25
-freq_pers_25 <- as.data.frame(freq(persistent_25, digit=1, useNA= "no")) 
-
-# Q28
-freq_pers_28 <- as.data.frame(freq(persistent_28, digit=1, useNA= "no")) 
-
-# Q32.69
-freq_pers_32 <- as.data.frame(freq(persistent_32, digit=1, useNA= "no")) 
+# calculate feq_table for all Q's -----------------------------------
+WA_tot_VZH_2 <- wa_tot(freq_VZH_2, column_name = "count")
+WA_tot_VZH_3 <- wa_tot(freq_VZH_3, column_name = "count")
+WA_tot_VZH_4 <- wa_tot(freq_VZH_4, column_name = "count")
+WA_tot_VZH_7 <- wa_tot(freq_VZH_7, column_name = "count")
+WA_tot_VZH_9 <- wa_tot(freq_VZH_9, column_name = "count")
+WA_tot_VZH_11 <- wa_tot(freq_VZH_11, column_name = "count")
+WA_tot_VZH_13 <- wa_tot(freq_VZH_13, column_name = "count")
+WA_tot_VZH_15 <- wa_tot(freq_VZH_15, column_name = "count")
+WA_tot_VZH_18 <- wa_tot(freq_VZH_18, column_name = "count")
+WA_tot_VZH_22 <- wa_tot(freq_VZH_22, column_name = "count")
+WA_tot_VZH_25 <- wa_tot(freq_VZH_25, column_name = "count")
+WA_tot_VZH_28 <- wa_tot(freq_VZH_28, column_name = "count")
+WA_tot_VZH_32 <- wa_tot(freq_VZH_32, column_name = "count")
 ```
 
-# Calculate WA_tot normal
+# Calculate HHS [-] 
 ```{r}
-# Q2.4
-WA_tot_VZH_2 <- sum(freq_VZH_2$count) * 4
-
-# Q3.9
-WA_tot_VZH_3 <- sum(freq_VZH_3$count) * 4
-
-# Q4.6
-WA_tot_VZH_4 <- sum(freq_VZH_4$count) * 4
-
-# Q7
-WA_tot_VZH_7 <- sum(freq_VZH_7$count) * 4
-
-# Q9
-WA_tot_VZH_9 <- sum(freq_VZH_9$count) * 4
-
-# Q11
-WA_tot_VZH_11 <- sum(freq_VZH_11$count) * 4
-
-# Q13.3
-WA_tot_VZH_13 <- sum(freq_VZH_13$count) * 4
-
-# Q15
-WA_tot_VZH_15 <- sum(freq_VZH_15$count) * 4
-
-# Q18.9
-WA_tot_VZH_18 <- sum(freq_VZH_18$count) * 4
-
-# Q22
-WA_tot_VZH_22 <- sum(freq_VZH_22$count) * 4
-
-# Q25
-WA_tot_VZH_25 <- sum(freq_VZH_25$count) * 4
-
-# Q28
-WA_tot_VZH_28 <- sum(freq_VZH_28$count) * 4
-
-# Q32.69
-WA_tot_VZH_32 <- sum(freq_VZH_32$count) * 4
-```
-
-# Calculate WA_tot persistent
-```{r}
-# Q2.4
-WA_tot_pers_2 <- sum(freq_pers_2$count) * 4
-
-# Q3.9
-WA_tot_pers_3 <- sum(freq_pers_3$count) * 4
-
-# Q4.6
-WA_tot_pers_4 <- sum(freq_pers_4$count) * 4
-
-# Q7
-WA_tot_pers_7 <- sum(freq_pers_7$count) * 4
-
-# Q9
-WA_tot_pers_9 <- sum(freq_pers_9$count) * 4
-
-# Q11
-WA_tot_pers_11 <- sum(freq_pers_11$count) * 4
-
-# Q13.3
-WA_tot_pers_13 <- sum(freq_pers_13$count) * 4
-
-# Q15
-WA_tot_pers_15 <- sum(freq_pers_15$count) * 4
-
-# Q18.9
-WA_tot_pers_18 <- sum(freq_pers_18$count) * 4
-
-# Q22
-WA_tot_pers_22 <- sum(freq_pers_22$count) * 4
-
-# Q25
-WA_tot_pers_25 <- sum(freq_pers_25$count) * 4
-
-# Q28
-WA_tot_pers_28 <- sum(freq_pers_28$count) * 4
-
-# Q32.69
-WA_tot_pers_32 <- sum(freq_pers_32$count) * 4
-```
-
-# Calculate HHS [-] normal
-```{r}
-# Q2.4
+# calculate HHS for all Q's -----------------------------------
 HHS_VZH_2 <- WUA_VZH_2/WA_tot_VZH_2
-
-# Q3.9
 HHS_VZH_3 <- WUA_VZH_3/WA_tot_VZH_3
-
-# Q4.6
 HHS_VZH_4 <- WUA_VZH_4/WA_tot_VZH_4
-
-# Q7
 HHS_VZH_7 <- WUA_VZH_7/WA_tot_VZH_7
-
-# Q9
 HHS_VZH_9 <- WUA_VZH_9/WA_tot_VZH_9
-
-# Q11
 HHS_VZH_11 <- WUA_VZH_11/WA_tot_VZH_11
-
-# Q13.3
 HHS_VZH_13 <- WUA_VZH_13/WA_tot_VZH_13
-
-# Q15
 HHS_VZH_15 <- WUA_VZH_15/WA_tot_VZH_15
-
-# Q18.9
 HHS_VZH_18 <- WUA_VZH_18/WA_tot_VZH_18
-
-# Q22
 HHS_VZH_22 <- WUA_VZH_22/WA_tot_VZH_22
-
-# Q25
 HHS_VZH_25 <- WUA_VZH_25/WA_tot_VZH_25
-
-# Q28
 HHS_VZH_28 <- WUA_VZH_28/WA_tot_VZH_28
-
-# Q32.69
 HHS_VZH_32 <- WUA_VZH_32/WA_tot_VZH_32
-```
-
-# Calculate HHS [-] persistent
-```{r}
-# Q2.4
-HHS_pers_2 <- WUA_pers_2/WA_tot_pers_2
-
-# Q3.9
-HHS_pers_3 <- WUA_pers_3/WA_tot_pers_3
-
-# Q4.6
-HHS_pers_4 <- WUA_pers_4/WA_tot_pers_4
-
-# Q7
-HHS_pers_7 <- WUA_pers_7/WA_tot_pers_7
-
-# Q9
-HHS_pers_9 <- WUA_pers_9/WA_tot_pers_9
-
-# Q11
-HHS_pers_11 <- WUA_pers_11/WA_tot_pers_11
-
-# Q13.3
-HHS_pers_13 <- WUA_pers_13/WA_tot_pers_13
-
-# Q15
-HHS_pers_15 <- WUA_pers_15/WA_tot_pers_15
-
-# Q18.9
-HHS_pers_18 <- WUA_pers_18/WA_tot_pers_18
-
-# Q22
-HHS_pers_22 <- WUA_pers_22/WA_tot_pers_22
-
-# Q25
-HHS_pers_25 <- WUA_pers_25/WA_tot_pers_25
-
-# Q28
-HHS_pers_28 <- WUA_pers_28/WA_tot_pers_28
-
-# Q32.69
-HHS_pers_32 <- WUA_pers_32/WA_tot_pers_32
 ```
 
 # dataframe and .csv of calculated indices 
 ```{r}
-# data frame WUA and HHS 
+# data frame WUA, HHS etc. -----------------------------------
 results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH"), Discharge = c(2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69), 
                       WUA_normal = c(WUA_VZH_2, WUA_VZH_3, WUA_VZH_4, WUA_VZH_7, WUA_VZH_9, WUA_VZH_11, WUA_VZH_13, WUA_VZH_15, WUA_VZH_18, WUA_VZH_22, WUA_VZH_25, WUA_VZH_28, WUA_VZH_32), 
                       WUA_pers = c(WUA_pers_2, WUA_pers_3, WUA_pers_4, WUA_pers_7, WUA_pers_9,  WUA_pers_11, WUA_pers_13, WUA_pers_15, WUA_pers_18, WUA_pers_22, WUA_pers_25, WUA_pers_28, WUA_pers_32),
-                      HHS_normal = c(HHS_VZH_2, HHS_VZH_3, HHS_VZH_4, HHS_VZH_7, HHS_VZH_9, HHS_VZH_11, HHS_VZH_13, HHS_VZH_15, HHS_VZH_18, HHS_VZH_22, HHS_VZH_25, HHS_VZH_28, HHS_VZH_32),
-                      HHS_pers = c(HHS_pers_2, HHS_pers_3, HHS_pers_4, HHS_pers_7, HHS_pers_9, HHS_pers_11, HHS_pers_13, HHS_pers_15, HHS_pers_18, HHS_pers_22, HHS_pers_25, HHS_pers_28, HHS_pers_32),
-                      WA_tot_normal = c(WA_tot_VZH_2, WA_tot_VZH_3, WA_tot_VZH_4, WA_tot_VZH_7, WA_tot_VZH_9, WA_tot_VZH_11, WA_tot_VZH_13, WA_tot_VZH_15, WA_tot_VZH_18, WA_tot_VZH_22, WA_tot_VZH_25, WA_tot_VZH_28, WA_tot_VZH_32),
-                      WA_tot_pers = c(WA_tot_pers_2, WA_tot_pers_3, WA_tot_pers_4, WA_tot_pers_7, WA_tot_pers_9, WA_tot_pers_11, WA_tot_pers_13, WA_tot_pers_15, WA_tot_pers_18, WA_tot_pers_22, WA_tot_pers_25, WA_tot_pers_28, WA_tot_pers_32))
+                      HHS = c(HHS_VZH_2, HHS_VZH_3, HHS_VZH_4, HHS_VZH_7, HHS_VZH_9, HHS_VZH_11, HHS_VZH_13, HHS_VZH_15, HHS_VZH_18, HHS_VZH_22, HHS_VZH_25, HHS_VZH_28, HHS_VZH_32),
+                      WA_tot = c(WA_tot_VZH_2, WA_tot_VZH_3, WA_tot_VZH_4, WA_tot_VZH_7, WA_tot_VZH_9, WA_tot_VZH_11, WA_tot_VZH_13, WA_tot_VZH_15, WA_tot_VZH_18, WA_tot_VZH_22, WA_tot_VZH_25, WA_tot_VZH_28, WA_tot_VZH_32))
 
+# safe df into .csv file -----------------------------------
 write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
 ```
 
 # Comparing WUA, HHS, WA_tot with different Q
 ```{r}
-# make data frame for plotting
-library(readr)
-library(ggplot2)
+# make data frame for plotting -----------------------------------
 WUA_HHS <- read_delim("results_statistics/Results_VZH_Habitat_Model.csv")
 
-# plot results
-# WUA normal results
-WUA_normal_results <- ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, WUA_normal, color = "WUA_HHS_VZH")) +
-  geom_point(data = WUA_HHS, aes(Discharge, WUA_normal, color = "WUA_HHS_VZH")) +
-   scale_color_manual(name = "Macroinvertebrates",
-                     values = c("WUA_HHS_VZH" = "violet")) +
+# make variable with WUA normal/persistent -----------------------------------
+# long format to plot in facet_wrap 
+WUA_normal <- WUA_HHS[ , c(1:3)]
+WUA_pers <- WUA_HHS[ , c(1,2,4)]
+
+WUA <- full_join(WUA_normal, WUA_pers, by = "Discharge")
+WUA_long <- pivot_longer(WUA, cols = c(WUA_normal, WUA_pers), names_to = "WUA", values_to = "value")
+
+# WUA facet_wrap results -----------------------------------
+ggplot(WUA_long, aes(Discharge, value)) +
+  facet_wrap(~WUA) +
+  geom_line(col = "blue") +
+  geom_point(col = "blue") +
   labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
   theme(legend.position = "none") +
   theme_minimal()
 
-# WUA persistent results
-WUA_pers_results <- ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, WUA_pers, color = "WUA_HHS_VZH")) +
-  geom_point(data = WUA_HHS, aes(Discharge, WUA_pers, color = "WUA_HHS_VZH")) +
-   scale_color_manual(name = "Macroinvertebrates",
-                     values = c("WUA_HHS_VZH" = "violet")) +
+# WUA normal results -----------------------------------
+ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, WUA_normal), col = "blue") +
+  geom_point(data = WUA_HHS, aes(Discharge, WUA_normal), col = "blue") +
   labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
   theme(legend.position = "none") +
   theme_minimal()
 
-# HHS normal results
-HSS_results <- ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, HHS_normal, color = "WUA_HHS_VZH")) +
-  geom_point(data = WUA_HHS, aes(Discharge, HHS_normal, color = "WUA_HHS_VZH")) +
-   scale_color_manual(name = "Macroinvertebrates",
-                     values = c("WUA_HHS_VZH" = "violet")) +
+# WUA persistent results -----------------------------------
+ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, WUA_pers)) +
+  geom_point(data = WUA_HHS, aes(Discharge, WUA_pers)) +
+  labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
+  theme(legend.position = "none") +
+  theme_minimal()
+
+# HHS results -----------------------------------
+ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, HHS)) +
+  geom_point(data = WUA_HHS, aes(Discharge, HHS)) +
   labs(title = "HHS of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Hydraulic Habitat Suitability (HHS)") +
   theme(legend.position = "none") +
   theme_minimal()
 
-# WA tot normal results
-WA_tot_results <- ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, WA_tot_normal), col = "blue") +
-  geom_point(data = WUA_HHS, aes(Discharge, WA_tot_normal), col = "blue") +
+# WA tot results -----------------------------------
+ggplot() +
+  geom_line(data = WUA_HHS, aes(Discharge, WA_tot), col = "blue") +
+  geom_point(data = WUA_HHS, aes(Discharge, WA_tot), col = "blue") +
   labs(title = "Comparing total wetted area at different discharges", x = expression(paste("Discharge [", m^3/s, "]")), y = "Wetted Area (WA_tot)") +
   theme(legend.position = "none") +
   theme_minimal()
