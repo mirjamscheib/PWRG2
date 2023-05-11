@@ -348,15 +348,34 @@ WUA_pers <- WUA_HHS[ , c(1,2,4)]
 WUA <- full_join(WUA_normal, WUA_pers, by = "Discharge")
 WUA_long <- pivot_longer(WUA, cols = c(WUA_normal, WUA_pers), names_to = "WUA", values_to = "value")
 
-# WUA facet_wrap results -----------------------------------
-ggplot(WUA_long, aes(Discharge, value)) +
-  facet_wrap(~WUA) +
-  geom_line(col = "blue") +
-  geom_point(col = "blue") +
-  labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
-  theme(legend.position = "none") +
-  theme_minimal()
+# Define a custom labelling function
+my_labeller <- function(variable, value) {
+  if (variable == "WUA") {
+    return(c("WUA_normal" = "WUA", "WUA_pers" = "WUA persistent habitat")[value])
+  } 
+}
 
+WUA_long
+
+# WUA facet_wrap results -----------------------------------
+WUA_results <- ggplot(WUA_long, aes(Discharge, value, col = WUA)) +
+  facet_wrap(~WUA, labeller = my_labeller) +
+  geom_line(lwd = 0.8) +
+  geom_point(size = 2) +
+  labs(title = "Comparing Weighted Usable Area (WUA) with 13 discharges and between normal and persistent habitats", x = expression(paste("Discharge [", m^3/s, "]")), y = "WUA") +
+  guides(color = FALSE) +
+  theme(plot.title = element_text(size = 100)) +
+  theme_grey()
+
+# HHS results -----------------------------------
+HHS_results <- ggplot(WUA_HHS, aes(Discharge, HHS)) +
+  geom_line(lwd = 0.8) +
+  geom_point(size = 2) +
+  labs(title = "Hydraulic Habitat Suitability (HHS) comparing 13 discharges", x = expression(paste("Discharge [", m^3/s, "]")), y = "HHS [-]") +
+  theme_gray()
+```
+
+```{r}
 # WUA normal results -----------------------------------
 ggplot() +
   geom_line(data = WUA_HHS, aes(Discharge, WUA_normal), col = "blue") +
@@ -372,41 +391,19 @@ ggplot() +
   labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
   theme(legend.position = "none") +
   theme_minimal()
-
-# HHS results -----------------------------------
-ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, HHS)) +
-  geom_point(data = WUA_HHS, aes(Discharge, HHS)) +
-  labs(title = "HHS of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Hydraulic Habitat Suitability (HHS)") +
-  theme(legend.position = "none") +
-  theme_minimal()
-
-# WA tot results -----------------------------------
-ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, WA_tot), col = "blue") +
-  geom_point(data = WUA_HHS, aes(Discharge, WA_tot), col = "blue") +
-  labs(title = "Comparing total wetted area at different discharges", x = expression(paste("Discharge [", m^3/s, "]")), y = "Wetted Area (WA_tot)") +
-  theme(legend.position = "none") +
-  theme_minimal()
 ```
 
 ```{r}
 # save plots into .png
 # set the dimensions of the quadrat
-quadrat_width <- 15 # in cm
-quadrat_height <- 10 # in cm
+quadrat_width <- 25 # in cm
+quadrat_height <- 20 # in cm
 
-# WUA normal
-ggsave(filename = "results_statistics/WUA_VZH_normal_results.png",plot = WUA_normal_results, width = quadrat_width, height = quadrat_height, units = "cm")
-
-# WUA persistent
-ggsave(filename = "results_statistics/WUA_VZH_pers_results.png",plot = WUA_pers_results, width = quadrat_width, height = quadrat_height, units = "cm")
+# WUA results
+ggsave(filename = "results_statistics/WUA_VZH_results.png",plot = WUA_results, width = quadrat_width, height = quadrat_height, units = "cm")
 
 # HHS
 ggsave(filename = "results_statistics/HHS_VZH_results.png",plot = HHS_results, width = quadrat_width, height = quadrat_height, units = "cm")
-
-# WA_tot
-ggsave(filename = "results_statistics/WA_tot_VZH_results.png",plot = WA_tot_results, width = quadrat_width, height = quadrat_height, units = "cm")
 ```
 
 
