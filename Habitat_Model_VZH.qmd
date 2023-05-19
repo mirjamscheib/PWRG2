@@ -113,6 +113,39 @@ writeRaster(raster_classify_28, "raster_files/raster_classify_28.tif", format="G
 writeRaster(raster_classify_32, "raster_files/raster_classify_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
+## Persistent Habitats
+```{r}
+# Clip the raster1 with raster2 ---------------------------------------
+pers_class_2 <- mask(raster_classify_2, raster_classify_2)
+pers_class_3 <- mask(raster_classify_3, raster_classify_2)
+pers_class_4 <- mask(raster_classify_4, raster_classify_2)
+pers_class_7 <- mask(raster_classify_7, raster_classify_2)
+pers_class_9 <- mask(raster_classify_9, raster_classify_2)
+pers_class_11 <- mask(raster_classify_11, raster_classify_2)
+pers_class_13 <- mask(raster_classify_13, raster_classify_2)
+pers_class_15 <- mask(raster_classify_15, raster_classify_2)
+pers_class_18 <- mask(raster_classify_18, raster_classify_2)
+pers_class_22 <- mask(raster_classify_22, raster_classify_2)
+pers_class_25 <- mask(raster_classify_25, raster_classify_2)
+pers_class_28 <- mask(raster_classify_28, raster_classify_2)
+pers_class_32 <- mask(raster_classify_32, raster_classify_2)
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(pers_class_2, filename="results_univariate/pers_class_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_3, filename="results_univariate/pers_class_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_4, filename="results_univariate/pers_class_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_7, filename="results_univariate/pers_class_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_9, filename="results_univariate/pers_class_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_11, filename="results_univariate/pers_class_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_13, filename="results_univariate/pers_class_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_15, filename="results_univariate/pers_class_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_18, filename="results_univariate/pers_class_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_22, filename="results_univariate/pers_class_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_25, filename="results_univariate/pers_class_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_28, filename="results_univariate/pers_class_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_32, filename="results_univariate/pers_class_32.tif", format="GTiff", overwrite = TRUE)
+```
+
 # Habitat modelling 
 ## Read Suitability Curve 
 ```{r}
@@ -358,7 +391,7 @@ my_labeller <- function(variable, value) {
 WUA_long
 
 # WUA facet_wrap results -----------------------------------
-WUA_results <- ggplot(WUA_long, aes(Discharge, value, col = WUA)) +
+ggplot(WUA_long, aes(Discharge, value, col = WUA)) +
   facet_wrap(~WUA, labeller = my_labeller) +
   geom_line(lwd = 0.8) +
   geom_point(size = 2) +
