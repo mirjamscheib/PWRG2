@@ -1451,55 +1451,6 @@ WUA_pers_Tanno_2012_Baetis_28 <- wua(persistent_tanno_2012_baetis_28)
 WUA_pers_Tanno_2012_Baetis_32 <- wua(persistent_tanno_2012_baetis_32)
 ```
 
-## e. Weigthed Usable Area velocity persistent [m2]
-```{r}
-# calculate WUA for all Q's -----------------------------------
-# Tanno 2012: Rhithrogena -------------------------------------------
-wua_v_pers_tanno_rhith_2 <- wua(v_tanno_2012_rhith_pers_2)
-wua_v_pers_tanno_rhith_3 <- wua(v_tanno_2012_rhith_pers_3)
-wua_v_pers_tanno_rhith_4 <- wua(v_tanno_2012_rhith_pers_4)
-wua_v_pers_tanno_rhith_7 <- wua(v_tanno_2012_rhith_pers_7)
-wua_v_pers_tanno_rhith_9 <- wua(v_tanno_2012_rhith_pers_9)
-wua_v_pers_tanno_rhith_11 <- wua(v_tanno_2012_rhith_pers_11)
-wua_v_pers_tanno_rhith_13 <- wua(v_tanno_2012_rhith_pers_13)
-wua_v_pers_tanno_rhith_15 <- wua(v_tanno_2012_rhith_pers_15)
-wua_v_pers_tanno_rhith_18 <- wua(v_tanno_2012_rhith_pers_18)
-wua_v_pers_tanno_rhith_22 <- wua(v_tanno_2012_rhith_pers_22)
-wua_v_pers_tanno_rhith_25 <- wua(v_tanno_2012_rhith_pers_25)
-wua_v_pers_tanno_rhith_28 <- wua(v_tanno_2012_rhith_pers_28)
-wua_v_pers_tanno_rhith_32 <- wua(v_tanno_2012_rhith_pers_32)
-
-# HABBY Rhithrogena -------------------------------------------
-wua_v_pers_habby_rhith_2 <- wua(v_habby_rhith_pers_2)
-wua_v_pers_habby_rhith_3 <- wua(v_habby_rhith_pers_3)
-wua_v_pers_habby_rhith_4 <- wua(v_habby_rhith_pers_4)
-wua_v_pers_habby_rhith_7 <- wua(v_habby_rhith_pers_7)
-wua_v_pers_habby_rhith_9 <- wua(v_habby_rhith_pers_9)
-wua_v_pers_habby_rhith_11 <- wua(v_habby_rhith_pers_11)
-wua_v_pers_habby_rhith_13 <- wua(v_habby_rhith_pers_13)
-wua_v_pers_habby_rhith_15 <- wua(v_habby_rhith_pers_15)
-wua_v_pers_habby_rhith_18 <- wua(v_habby_rhith_pers_18)
-wua_v_pers_habby_rhith_22 <- wua(v_habby_rhith_pers_22)
-wua_v_pers_habby_rhith_25 <- wua(v_habby_rhith_pers_25)
-wua_v_pers_habby_rhith_28 <- wua(v_habby_rhith_pers_28)
-wua_v_pers_habby_rhith_32 <- wua(v_habby_rhith_pers_32)
-
-# Tanno 2012: Baetis sp. -------------------------------------------
-wua_v_pers_tanno_baetis_2 <- wua(v_tanno_2012_baetis_pers_2)
-wua_v_pers_tanno_baetis_3 <- wua(v_tanno_2012_baetis_pers_3)
-wua_v_pers_tanno_baetis_4 <- wua(v_tanno_2012_baetis_pers_4)
-wua_v_pers_tanno_baetis_7 <- wua(v_tanno_2012_baetis_pers_7)
-wua_v_pers_tanno_baetis_9 <- wua(v_tanno_2012_baetis_pers_9)
-wua_v_pers_tanno_baetis_11 <- wua(v_tanno_2012_baetis_pers_11)
-wua_v_pers_tanno_baetis_13 <- wua(v_tanno_2012_baetis_pers_13)
-wua_v_pers_tanno_baetis_15 <- wua(v_tanno_2012_baetis_pers_15)
-wua_v_pers_tanno_baetis_18 <- wua(v_tanno_2012_baetis_pers_18)
-wua_v_pers_tanno_baetis_22 <- wua(v_tanno_2012_baetis_pers_22)
-wua_v_pers_tanno_baetis_25 <- wua(v_tanno_2012_baetis_pers_25)
-wua_v_pers_tanno_baetis_28 <- wua(v_tanno_2012_baetis_pers_28)
-wua_v_pers_tanno_baetis_32 <- wua(v_tanno_2012_baetis_pers_32)
-```
-
 ## f. Wetted Area [m2]
 ```{r}
 # Only for one species, as WA_tot is the same for every species
@@ -1649,6 +1600,130 @@ HHS_Tanno_2012_Baetis_28 <- WUA_Tanno_2012_Baetis_28/WA_tot_Tanno_2012_Rhithroge
 HHS_Tanno_2012_Baetis_32 <- WUA_Tanno_2012_Baetis_32/WA_tot_Tanno_2012_Rhithrogena_32
 ```
 
+## g. Hydraulik Habitat Suitability persistent [-]
+```{r}
+# Tanno 2012: Rhithrogena -------------------------------------------
+# Q2.4
+HHS_Tanno_2012_Rhithrogena_pers_2 <- WUA_pers_Tanno_2012_Rhithrogena_2/WA_tot_Tanno_2012_Rhithrogena_2
+
+# Q3.9
+HHS_Tanno_2012_Rhithrogena_pers_3 <- WUA_pers_Tanno_2012_Rhithrogena_3/WA_tot_Tanno_2012_Rhithrogena_3
+
+# Q4.6
+HHS_Tanno_2012_Rhithrogena_pers_4 <- WUA_pers_Tanno_2012_Rhithrogena_4/WA_tot_Tanno_2012_Rhithrogena_4
+
+# Q7
+HHS_Tanno_2012_Rhithrogena_pers_7 <- WUA_pers_Tanno_2012_Rhithrogena_7/WA_tot_Tanno_2012_Rhithrogena_7
+
+# Q9
+HHS_Tanno_2012_Rhithrogena_pers_9 <- WUA_pers_Tanno_2012_Rhithrogena_9/WA_tot_Tanno_2012_Rhithrogena_9
+
+# Q11
+HHS_Tanno_2012_Rhithrogena_pers_11 <- WUA_pers_Tanno_2012_Rhithrogena_11/WA_tot_Tanno_2012_Rhithrogena_11
+
+# Q13.3
+HHS_Tanno_2012_Rhithrogena_pers_13 <- WUA_pers_Tanno_2012_Rhithrogena_13/WA_tot_Tanno_2012_Rhithrogena_13
+
+# Q15
+HHS_Tanno_2012_Rhithrogena_pers_15 <- WUA_pers_Tanno_2012_Rhithrogena_15/WA_tot_Tanno_2012_Rhithrogena_15
+
+# Q18
+HHS_Tanno_2012_Rhithrogena_pers_18 <- WUA_pers_Tanno_2012_Rhithrogena_18/WA_tot_Tanno_2012_Rhithrogena_18
+
+# Q22
+HHS_Tanno_2012_Rhithrogena_pers_22 <- WUA_pers_Tanno_2012_Rhithrogena_22/WA_tot_Tanno_2012_Rhithrogena_22
+
+# Q25
+HHS_Tanno_2012_Rhithrogena_pers_25 <- WUA_pers_Tanno_2012_Rhithrogena_25/WA_tot_Tanno_2012_Rhithrogena_25
+
+# Q28
+HHS_Tanno_2012_Rhithrogena_pers_28 <- WUA_pers_Tanno_2012_Rhithrogena_28/WA_tot_Tanno_2012_Rhithrogena_28
+
+# Q32.69
+HHS_Tanno_2012_Rhithrogena_pers_32 <- WUA_pers_Tanno_2012_Rhithrogena_32/WA_tot_Tanno_2012_Rhithrogena_32
+
+
+# HABBY Rhithrogena -------------------------------------------
+# Q2.4
+HHS_HABBY_Rhithrogena_pers_2 <- WUA_pers_HABBY_Rhithrogena_2/WA_tot_Tanno_2012_Rhithrogena_2
+
+# Q3.9
+HHS_HABBY_Rhithrogena_pers_3 <- WUA_pers_HABBY_Rhithrogena_3/WA_tot_Tanno_2012_Rhithrogena_3
+
+# Q4.6
+HHS_HABBY_Rhithrogena_pers_4 <- WUA_pers_HABBY_Rhithrogena_4/WA_tot_Tanno_2012_Rhithrogena_4
+
+# Q7
+HHS_HABBY_Rhithrogena_pers_7 <- WUA_pers_HABBY_Rhithrogena_7/WA_tot_Tanno_2012_Rhithrogena_7
+
+# Q9
+HHS_HABBY_Rhithrogena_pers_9 <- WUA_pers_HABBY_Rhithrogena_9/WA_tot_Tanno_2012_Rhithrogena_9
+
+# Q11
+HHS_HABBY_Rhithrogena_pers_11 <- WUA_pers_HABBY_Rhithrogena_11/WA_tot_Tanno_2012_Rhithrogena_11
+
+# Q13.3
+HHS_HABBY_Rhithrogena_pers_13 <- WUA_pers_HABBY_Rhithrogena_13/WA_tot_Tanno_2012_Rhithrogena_13
+
+# Q15
+HHS_HABBY_Rhithrogena_pers_15 <- WUA_pers_HABBY_Rhithrogena_15/WA_tot_Tanno_2012_Rhithrogena_15
+
+# Q18
+HHS_HABBY_Rhithrogena_pers_18 <- WUA_pers_HABBY_Rhithrogena_18/WA_tot_Tanno_2012_Rhithrogena_18
+
+# Q22
+HHS_HABBY_Rhithrogena_pers_22 <- WUA_pers_HABBY_Rhithrogena_22/WA_tot_Tanno_2012_Rhithrogena_22
+
+# Q25
+HHS_HABBY_Rhithrogena_pers_25 <- WUA_pers_HABBY_Rhithrogena_25/WA_tot_Tanno_2012_Rhithrogena_25
+
+# Q28
+HHS_HABBY_Rhithrogena_pers_28 <- WUA_pers_HABBY_Rhithrogena_28/WA_tot_Tanno_2012_Rhithrogena_28
+
+# Q32.69
+HHS_HABBY_Rhithrogena_pers_32 <- WUA_pers_HABBY_Rhithrogena_32/WA_tot_Tanno_2012_Rhithrogena_32
+
+# Tanno 2012: Baetis sp. -------------------------------------------
+# Q2.4
+HHS_Tanno_2012_Baetis_pers_2 <- WUA_pers_Tanno_2012_Baetis_2/WA_tot_Tanno_2012_Rhithrogena_2
+
+# Q3.9
+HHS_Tanno_2012_Baetis_pers_3 <- WUA_pers_Tanno_2012_Baetis_3/WA_tot_Tanno_2012_Rhithrogena_3
+
+# Q4.6
+HHS_Tanno_2012_Baetis_pers_4 <- WUA_pers_Tanno_2012_Baetis_4/WA_tot_Tanno_2012_Rhithrogena_4
+
+# Q7
+HHS_Tanno_2012_Baetis_pers_7 <- WUA_pers_Tanno_2012_Baetis_7/WA_tot_Tanno_2012_Rhithrogena_7
+
+# Q9
+HHS_Tanno_2012_Baetis_pers_9 <- WUA_pers_Tanno_2012_Baetis_9/WA_tot_Tanno_2012_Rhithrogena_9
+
+# Q11
+HHS_Tanno_2012_Baetis_pers_11 <- WUA_pers_Tanno_2012_Baetis_11/WA_tot_Tanno_2012_Rhithrogena_11
+
+# Q13.3
+HHS_Tanno_2012_Baetis_pers_13 <- WUA_pers_Tanno_2012_Baetis_13/WA_tot_Tanno_2012_Rhithrogena_13
+
+# Q15
+HHS_Tanno_2012_Baetis_pers_15 <- WUA_pers_Tanno_2012_Baetis_15/WA_tot_Tanno_2012_Rhithrogena_15
+
+# Q18
+HHS_Tanno_2012_Baetis_pers_18 <- WUA_pers_Tanno_2012_Baetis_18/WA_tot_Tanno_2012_Rhithrogena_18
+
+# Q22
+HHS_Tanno_2012_Baetis_pers_22 <- WUA_pers_Tanno_2012_Baetis_22/WA_tot_Tanno_2012_Rhithrogena_22
+
+# Q25
+HHS_Tanno_2012_Baetis_pers_25 <- WUA_pers_Tanno_2012_Baetis_25/WA_tot_Tanno_2012_Rhithrogena_25
+
+# Q28
+HHS_Tanno_2012_Baetis_pers_28 <- WUA_pers_Tanno_2012_Baetis_28/WA_tot_Tanno_2012_Rhithrogena_28
+
+# Q32.69
+HHS_Tanno_2012_Baetis_pers_32 <- WUA_pers_Tanno_2012_Baetis_32/WA_tot_Tanno_2012_Rhithrogena_32
+```
+
 # 4. make dataframe and .csv of calculated indices 
 ```{r}
 # data frame WUA and HHS -------------------------------------------
@@ -1656,7 +1731,8 @@ results <- data.frame(Description = c("Tanno 2012 Baetis sp.", "Tanno 2012 Baeti
                       WUA_normal = c(WUA_Tanno_2012_Baetis_2, WUA_Tanno_2012_Baetis_3, WUA_Tanno_2012_Baetis_4, WUA_Tanno_2012_Baetis_7, WUA_Tanno_2012_Baetis_9, WUA_Tanno_2012_Baetis_11, WUA_Tanno_2012_Baetis_13, WUA_Tanno_2012_Baetis_15, WUA_Tanno_2012_Baetis_18, WUA_Tanno_2012_Baetis_22, WUA_Tanno_2012_Baetis_25, WUA_Tanno_2012_Baetis_28, WUA_Tanno_2012_Baetis_32, WUA_Tanno_2012_Rhithrogena_2, WUA_Tanno_2012_Rhithrogena_3, WUA_Tanno_2012_Rhithrogena_4, WUA_Tanno_2012_Rhithrogena_7, WUA_Tanno_2012_Rhithrogena_9, WUA_Tanno_2012_Rhithrogena_11, WUA_Tanno_2012_Rhithrogena_13, WUA_Tanno_2012_Rhithrogena_15, WUA_Tanno_2012_Rhithrogena_18, WUA_Tanno_2012_Rhithrogena_22, WUA_Tanno_2012_Rhithrogena_25, WUA_Tanno_2012_Rhithrogena_28, WUA_Tanno_2012_Rhithrogena_32, WUA_HABBY_Rhithrogena_2, WUA_HABBY_Rhithrogena_3, WUA_HABBY_Rhithrogena_4, WUA_HABBY_Rhithrogena_7, WUA_HABBY_Rhithrogena_9, WUA_HABBY_Rhithrogena_11, WUA_HABBY_Rhithrogena_13, WUA_HABBY_Rhithrogena_15, WUA_HABBY_Rhithrogena_18, WUA_HABBY_Rhithrogena_22, WUA_HABBY_Rhithrogena_25, WUA_HABBY_Rhithrogena_28, WUA_HABBY_Rhithrogena_32), 
                       WUA_pers_GHSI = c(WUA_pers_Tanno_2012_Baetis_2, WUA_pers_Tanno_2012_Baetis_3, WUA_pers_Tanno_2012_Baetis_4, WUA_pers_Tanno_2012_Baetis_7, WUA_pers_Tanno_2012_Baetis_9, WUA_pers_Tanno_2012_Baetis_11, WUA_pers_Tanno_2012_Baetis_13, WUA_pers_Tanno_2012_Baetis_15, WUA_pers_Tanno_2012_Baetis_18, WUA_pers_Tanno_2012_Baetis_22, WUA_pers_Tanno_2012_Baetis_25, WUA_pers_Tanno_2012_Baetis_28, WUA_pers_Tanno_2012_Baetis_32, WUA_pers_Tanno_2012_Rhithrogena_2, WUA_pers_Tanno_2012_Rhithrogena_3, WUA_pers_Tanno_2012_Rhithrogena_4, WUA_pers_Tanno_2012_Rhithrogena_7, WUA_pers_Tanno_2012_Rhithrogena_9, WUA_pers_Tanno_2012_Rhithrogena_11, WUA_pers_Tanno_2012_Rhithrogena_13, WUA_pers_Tanno_2012_Rhithrogena_15, WUA_pers_Tanno_2012_Rhithrogena_18, WUA_pers_Tanno_2012_Rhithrogena_22, WUA_pers_Tanno_2012_Rhithrogena_25, WUA_pers_Tanno_2012_Rhithrogena_28, WUA_pers_Tanno_2012_Rhithrogena_32, WUA_pers_HABBY_Rhithrogena_2, WUA_pers_HABBY_Rhithrogena_3, WUA_pers_HABBY_Rhithrogena_4, WUA_pers_HABBY_Rhithrogena_7, WUA_pers_HABBY_Rhithrogena_9, WUA_pers_HABBY_Rhithrogena_11, WUA_pers_HABBY_Rhithrogena_13, WUA_pers_HABBY_Rhithrogena_15, WUA_pers_HABBY_Rhithrogena_18, WUA_pers_HABBY_Rhithrogena_22, WUA_pers_HABBY_Rhithrogena_25, WUA_pers_HABBY_Rhithrogena_28, WUA_pers_HABBY_Rhithrogena_32),
                       WUA_pers_V = c(wua_v_pers_tanno_baetis_2, wua_v_pers_tanno_baetis_3, wua_v_pers_tanno_baetis_4, wua_v_pers_tanno_baetis_7, wua_v_pers_tanno_baetis_9, wua_v_pers_tanno_baetis_11, wua_v_pers_tanno_baetis_13, wua_v_pers_tanno_baetis_15, wua_v_pers_tanno_baetis_18, wua_v_pers_tanno_baetis_22, wua_v_pers_tanno_baetis_25, wua_v_pers_tanno_baetis_28, wua_v_pers_tanno_baetis_32, wua_v_pers_tanno_rhith_2, wua_v_pers_tanno_rhith_3, wua_v_pers_tanno_rhith_4, wua_v_pers_tanno_rhith_7, wua_v_pers_tanno_rhith_9, wua_v_pers_tanno_rhith_11, wua_v_pers_tanno_rhith_13, wua_v_pers_tanno_rhith_15, wua_v_pers_tanno_rhith_18, wua_v_pers_tanno_rhith_22, wua_v_pers_tanno_rhith_25, wua_v_pers_tanno_rhith_28, wua_v_pers_tanno_rhith_32, wua_v_pers_habby_rhith_2, wua_v_pers_habby_rhith_3, wua_v_pers_habby_rhith_4, wua_v_pers_habby_rhith_7, wua_v_pers_habby_rhith_9, wua_v_pers_habby_rhith_11, wua_v_pers_habby_rhith_13, wua_v_pers_habby_rhith_15, wua_v_pers_habby_rhith_18, wua_v_pers_habby_rhith_22, wua_v_pers_habby_rhith_25, wua_v_pers_habby_rhith_28, wua_v_pers_habby_rhith_32), 
-                      HHS = c(HHS_Tanno_2012_Baetis_2, HHS_Tanno_2012_Baetis_3, HHS_Tanno_2012_Baetis_4, HHS_Tanno_2012_Baetis_7, HHS_Tanno_2012_Baetis_9, HHS_Tanno_2012_Baetis_11, HHS_Tanno_2012_Baetis_13, HHS_Tanno_2012_Baetis_15, HHS_Tanno_2012_Baetis_18, HHS_Tanno_2012_Baetis_22, HHS_Tanno_2012_Baetis_25, HHS_Tanno_2012_Baetis_28, HHS_Tanno_2012_Baetis_32, HHS_Tanno_2012_Rhithrogena_2, HHS_Tanno_2012_Rhithrogena_3, HHS_Tanno_2012_Rhithrogena_4, HHS_Tanno_2012_Rhithrogena_7, HHS_Tanno_2012_Rhithrogena_9, HHS_Tanno_2012_Rhithrogena_11, HHS_Tanno_2012_Rhithrogena_13, HHS_Tanno_2012_Rhithrogena_15, HHS_Tanno_2012_Rhithrogena_18, HHS_Tanno_2012_Rhithrogena_22, HHS_Tanno_2012_Rhithrogena_25, HHS_Tanno_2012_Rhithrogena_28, HHS_Tanno_2012_Rhithrogena_32, HHS_HABBY_Rhithrogena_2, HHS_HABBY_Rhithrogena_3, HHS_HABBY_Rhithrogena_4, HHS_HABBY_Rhithrogena_7, HHS_HABBY_Rhithrogena_9, HHS_HABBY_Rhithrogena_11, HHS_HABBY_Rhithrogena_13, HHS_HABBY_Rhithrogena_15, HHS_HABBY_Rhithrogena_18, HHS_HABBY_Rhithrogena_22, HHS_HABBY_Rhithrogena_25, HHS_HABBY_Rhithrogena_28, HHS_HABBY_Rhithrogena_32),
+                      HHS = c(HHS_Tanno_2012_Baetis_2, HHS_Tanno_2012_Baetis_3, HHS_Tanno_2012_Baetis_4, HHS_Tanno_2012_Baetis_7, HHS_Tanno_2012_Baetis_9, HHS_Tanno_2012_Baetis_11, HHS_Tanno_2012_Baetis_13, HHS_Tanno_2012_Baetis_15, HHS_Tanno_2012_Baetis_18, HHS_Tanno_2012_Baetis_22, HHS_Tanno_2012_Baetis_25, HHS_Tanno_2012_Baetis_28, HHS_Tanno_2012_Baetis_32, HHS_Tanno_2012_Rhithrogena_2, HHS_Tanno_2012_Rhithrogena_3, HHS_Tanno_2012_Rhithrogena_4, HHS_Tanno_2012_Rhithrogena_7, HHS_Tanno_2012_Rhithrogena_9, HHS_Tanno_2012_Rhithrogena_11, HHS_Tanno_2012_Rhithrogena_13, HHS_Tanno_2012_Rhithrogena_15, HHS_Tanno_2012_Rhithrogena_18, HHS_Tanno_2012_Rhithrogena_22, HHS_Tanno_2012_Rhithrogena_25, HHS_Tanno_2012_Rhithrogena_28, HHS_Tanno_2012_Rhithrogena_32, HHS_HABBY_Rhithrogena_2, HHS_HABBY_Rhithrogena_3, HHS_HABBY_Rhithrogena_4, HHS_HABBY_Rhithrogena_7, HHS_HABBY_Rhithrogena_9, HHS_HABBY_Rhithrogena_11, HHS_HABBY_Rhithrogena_13, HHS_HABBY_Rhithrogena_15, HHS_HABBY_Rhithrogena_18, HHS_HABBY_Rhithrogena_22, HHS_HABBY_Rhithrogena_25, HHS_HABBY_Rhithrogena_28, HHS_HABBY_Rhithrogena_32), 
+                      HHS_pers = c(HHS_Tanno_2012_Baetis_pers_2, HHS_Tanno_2012_Baetis_pers_3, HHS_Tanno_2012_Baetis_pers_4, HHS_Tanno_2012_Baetis_pers_7, HHS_Tanno_2012_Baetis_pers_9, HHS_Tanno_2012_Baetis_pers_11, HHS_Tanno_2012_Baetis_pers_13, HHS_Tanno_2012_Baetis_pers_15, HHS_Tanno_2012_Baetis_pers_18, HHS_Tanno_2012_Baetis_pers_22, HHS_Tanno_2012_Baetis_pers_25, HHS_Tanno_2012_Baetis_pers_28, HHS_Tanno_2012_Baetis_pers_32, HHS_Tanno_2012_Rhithrogena_pers_2, HHS_Tanno_2012_Rhithrogena_pers_3, HHS_Tanno_2012_Rhithrogena_pers_4, HHS_Tanno_2012_Rhithrogena_pers_7, HHS_Tanno_2012_Rhithrogena_pers_9, HHS_Tanno_2012_Rhithrogena_pers_11, HHS_Tanno_2012_Rhithrogena_pers_13, HHS_Tanno_2012_Rhithrogena_pers_15, HHS_Tanno_2012_Rhithrogena_pers_18, HHS_Tanno_2012_Rhithrogena_pers_22, HHS_Tanno_2012_Rhithrogena_pers_25, HHS_Tanno_2012_Rhithrogena_pers_28, HHS_Tanno_2012_Rhithrogena_pers_32, HHS_HABBY_Rhithrogena_pers_2, HHS_HABBY_Rhithrogena_pers_3, HHS_HABBY_Rhithrogena_pers_4, HHS_HABBY_Rhithrogena_pers_7, HHS_HABBY_Rhithrogena_pers_9, HHS_HABBY_Rhithrogena_pers_11, HHS_HABBY_Rhithrogena_pers_13, HHS_HABBY_Rhithrogena_pers_15, HHS_HABBY_Rhithrogena_pers_18, HHS_HABBY_Rhithrogena_pers_22, HHS_HABBY_Rhithrogena_pers_25, HHS_HABBY_Rhithrogena_pers_28, HHS_HABBY_Rhithrogena_pers_32),
                       WA_tot = c(WA_tot_Tanno_2012_Rhithrogena_2, WA_tot_Tanno_2012_Rhithrogena_3, WA_tot_Tanno_2012_Rhithrogena_4, WA_tot_Tanno_2012_Rhithrogena_7, WA_tot_Tanno_2012_Rhithrogena_9, WA_tot_Tanno_2012_Rhithrogena_11, WA_tot_Tanno_2012_Rhithrogena_13, WA_tot_Tanno_2012_Rhithrogena_15, WA_tot_Tanno_2012_Rhithrogena_18, WA_tot_Tanno_2012_Rhithrogena_22, WA_tot_Tanno_2012_Rhithrogena_25, WA_tot_Tanno_2012_Rhithrogena_28, WA_tot_Tanno_2012_Rhithrogena_32, WA_tot_Tanno_2012_Rhithrogena_2, WA_tot_Tanno_2012_Rhithrogena_3, WA_tot_Tanno_2012_Rhithrogena_4, WA_tot_Tanno_2012_Rhithrogena_7, WA_tot_Tanno_2012_Rhithrogena_9, WA_tot_Tanno_2012_Rhithrogena_11, WA_tot_Tanno_2012_Rhithrogena_13, WA_tot_Tanno_2012_Rhithrogena_15, WA_tot_Tanno_2012_Rhithrogena_18, WA_tot_Tanno_2012_Rhithrogena_22, WA_tot_Tanno_2012_Rhithrogena_25, WA_tot_Tanno_2012_Rhithrogena_28, WA_tot_Tanno_2012_Rhithrogena_32, WA_tot_Tanno_2012_Rhithrogena_2, WA_tot_Tanno_2012_Rhithrogena_3, WA_tot_Tanno_2012_Rhithrogena_4, WA_tot_Tanno_2012_Rhithrogena_7, WA_tot_Tanno_2012_Rhithrogena_9, WA_tot_Tanno_2012_Rhithrogena_11, WA_tot_Tanno_2012_Rhithrogena_13, WA_tot_Tanno_2012_Rhithrogena_15, WA_tot_Tanno_2012_Rhithrogena_18, WA_tot_Tanno_2012_Rhithrogena_22, WA_tot_Tanno_2012_Rhithrogena_25, WA_tot_Tanno_2012_Rhithrogena_28, WA_tot_Tanno_2012_Rhithrogena_32))
 
 # write data frame into .csv file -------------------------------------------
@@ -1672,9 +1748,7 @@ library("ggplot2")
 # install.packages("ggforce")
 library("ggforce")
 # make data frame for plotting -------------------------------------------
-WUA_HHS <- read_delim("results_statistics/Results_Multivariate_Habitat_Model.csv")
-
-WUA_HHS_1 <- read_delim("results_statistics/Results_VZH_Habitat_Model.csv")
+WUA_HHS <- read_delim("results_statistics/Results_VZH_Habitat_Model.csv")
 
 # bind the two data frames together --------------------------------------
 WUA_HHS <- WUA_HHS |>
@@ -1705,8 +1779,15 @@ my_labeller <- function(variable, value) {
 # facet_wrap(WUA_HHS~Description, ncol = 3, nrow = 3, labeller = my_labeller) +
 
 # Plot WUA ALL  -----------------------------------
-plot <- ggplot(WUA_long, aes(Discharge, value, col = Description)) +
+ggplot(WUA_long, aes(Discharge, value, col = Description)) +
   facet_wrap(WUA_HHS~Description, scales = "free_y", labeller = my_labeller) +
+  geom_point(size = 2) +
+  geom_line(lwd = 0.7) +
+  labs(title = "Comparing Weightes Usable Area (WUA) of three macroinvertebrates", x = expression(paste("Discharge [", m^3/s, "]")), y = "Y", col = "Macroinvertebrates") +
+  theme_gray()
+
+
+ggplot(WUA_long, aes(Discharge, HHS_pers, col = Description)) +
   geom_point(size = 2) +
   geom_line(lwd = 0.7) +
   labs(title = "Comparing Weightes Usable Area (WUA) of three macroinvertebrates", x = expression(paste("Discharge [", m^3/s, "]")), y = "Y", col = "Macroinvertebrates") +
@@ -1756,6 +1837,168 @@ ggsave(filename = "results_statistics/HHS_results.png",plot = HHS_results, width
 # WA_tot
 ggsave(filename = "results_statistics/WA_tot_results.png",plot = WA_tot_results, width = quadrat_width, height = quadrat_height, units = "cm")
 ```
+
+## f. calculate areas - make barplot 
+```{r}
+# All scenarios ------------------------------------------------------
+# Rhithrogena sp. -----------------------------------
+freq_GHSI_Tanno_2012_Rhithrogena_2 <- freq_table(GHSI_Tanno_2012_Rhithrogena_2)
+
+freq_GHSI_Tanno_2012_Rhithrogena_9 <- freq_table(GHSI_Tanno_2012_Rhithrogena_9)
+
+freq_GHSI_Tanno_2012_Rhithrogena_pers_9 <- freq_table(persistent_tanno_2012_rhithrogena_9)
+
+# Rhithrogena HABBY ----------------------------------
+freq_GHSI_HABBY_Rhithrogena_2 <- freq_table(GHSI_HABBY_Rhithrogena_2)
+
+freq_GHSI_HABBY_Rhithrogena_9 <- freq_table(GHSI_HABBY_Rhithrogena_9)
+
+freq_GHSI_HABBY_Rhithrogena_pers_9 <- freq_table(persistent_habby_rhithrogena_9)
+
+# Baetis sp. ---------------------------------------------------
+freq_GHSI_Tanno_2012_Baetis_2 <- freq_table(GHSI_Tanno_2012_Baetis_2)
+
+freq_GHSI_Tanno_2012_Baetis_9 <- freq_table(GHSI_Tanno_2012_Baetis_9)
+
+freq_GHSI_Tanno_2012_Baetis_pers_9 <- freq_table(persistent_tanno_2012_baetis_9)
+
+# bind all together 
+join <- freq_GHSI_Tanno_2012_Rhithrogena_2 |>
+  full_join(freq_GHSI_Tanno_2012_Rhithrogena_9, by = "value") |>
+  full_join(freq_GHSI_Tanno_2012_Rhithrogena_pers_9, by = "value") |>
+  full_join(freq_GHSI_HABBY_Rhithrogena_2, by = "value") |>
+  full_join(freq_GHSI_HABBY_Rhithrogena_9, by = "value") |>
+  full_join(freq_GHSI_HABBY_Rhithrogena_pers_9, by = "value") |>
+  full_join(freq_GHSI_Tanno_2012_Baetis_2, by = "value") |>
+  full_join(freq_GHSI_Tanno_2012_Baetis_9, by = "value") |>
+  full_join(freq_GHSI_Tanno_2012_Baetis_pers_9, by = "value")
+
+colnames(join) <- c("value", "Rhith_Tanno_2", "Rhith_Tanno_9", "Rhith_Tanno_pers", "Rhith_habby_2", "Rhith_habby_9", "Rhith_habby_pers", "Baetis_2", "Baetis_9", "Baetis_pers")
+
+
+# export all results 
+# write data frame into .csv file -------------------------------------------
+write.csv(join, file = "results_statistics/multivariate_share.csv", row.names = FALSE)
+```
+
+
+```{r}
+# install.packages("scales")
+library(scales)
+# load data fresh 
+join_multi <- read_delim("results_statistics/multivariate_share.csv")
+
+# Create a new colum as a separate dataframe
+join_multi$threshold <- ifelse(join_multi$value < 0.5, "< 0.5", "> 0.5")
+
+# make long table for plotting
+join_long <- pivot_longer(join_multi, cols = c(2:10), names_to = "attribute", values_to = "area")
+
+join_long$value <- as.factor(join_long$value)
+
+# Sort the factor levels in ascending order
+#join_long$classes <- factor(join_long$classes, levels = c("v40 < 5cm/s", "5 < v40 < 25cm/s", "25 < v40 < 75cm/s", "75 < v40 < 150cm/s", "150 < v40 < 250cm/s", "v40 > 250cm/s"))
+
+colors <- c("0" = "red", "0.1" = "darkorange3", "0.2" = "orange", "0.3" = "sandybrown", "0.4" = "wheat", "0.5" = "lightyellow", "0.6" = "darkolivegreen1", "0.7" = "darkolivegreen3", "0.8" = "darkslategray3", "0.9" = "dodgerblue3", "1" = "blue")
+
+colors2 <- c("< 0.5" = "red", "> 0.5" = "blue")
+
+# share rhithrogena tanno with all suitabilities 
+share_rhith_tanno <- join_long |>
+  subset(attribute == c("Rhith_Tanno_2", "Rhith_Tanno_9", "Rhith_Tanno_pers")) |>
+  ggplot(aes(attribute, area, fill = value)) +
+  geom_bar(stat = "identity", position = "fill")  +
+  labs(x = "", y = "") +
+  ggtitle("Comparing the Share of Habitat Suitability between Scenarios for Rhithrogena sp.") +
+  labs(fill = "Habitat Suitability") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = function(x) x * 100) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_fill_manual(values = colors)
+
+# share rhithrogena tanno with threshold
+thresh_rhith_tanno <-join_long |>
+  subset(attribute == c("Rhith_Tanno_2", "Rhith_Tanno_9", "Rhith_Tanno_pers")) |>
+  ggplot(aes(attribute, area, fill = threshold)) +
+  geom_bar(stat = "identity", position = "fill")  +
+  labs(x = "", y = "") +
+  ggtitle("Comparing the Share of Suitability </> 0.5 between Scenarios for Rhithrogena sp.") +
+  labs(fill = "Habitat Suitability") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = function(x) x * 100) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_fill_manual(values = colors2)
+  
+# share rhithrogena habby with all suitabilities
+share_rhith_habby <-join_long |>
+  subset(attribute == c("Rhith_habby_2", "Rhith_habby_9", "Rhith_habby_pers")) |>
+  ggplot(aes(attribute, area, fill = value)) +
+  geom_bar(stat = "identity", position = "fill")  +
+  labs(x = "", y = "") +
+  ggtitle("Comparing the Share of Habitat Suitability between Scenarios for Rhithrogena Eaton (larva)") +
+  labs(fill = "Habitat Suitability") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = function(x) x * 100) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_fill_manual(values = colors) 
+
+# share rhithrogena habby with thresholt
+thresh_rhith_habby <-join_long |>
+  subset(attribute == c("Rhith_habby_2", "Rhith_habby_9", "Rhith_habby_pers")) |>
+  ggplot(aes(attribute, area, fill = threshold)) +
+  geom_bar(stat = "identity", position = "fill")  +
+  labs(x = "", y = "") +
+  ggtitle("Comparing the Share of Suitability </> 0.5 between Scenarios for Rhithrogena Eaton (larva)") +
+  labs(fill = "Habitat Suitability") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = function(x) x * 100) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_fill_manual(values = colors2) 
+
+# share baetis tanno with all suitabilities
+share_baetis_tanno <-join_long |>
+  subset(attribute == c("Baetis_2", "Baetis_9", "Baetis_pers")) |>
+  ggplot(aes(attribute, area, fill = value)) +
+  geom_bar(stat = "identity", position = "fill")  +
+ labs(x = "", y = "") +
+  ggtitle("Comparing the Share of Habitat Suitability between Scenarios for Baetis sp.") +
+  labs(fill = "Habitat Suitability") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = function(x) x * 100) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_fill_manual(values = colors) 
+
+# share baetis tanno with threshold
+thresh_baetis_tanno <-join_long |>
+  subset(attribute == c("Baetis_2", "Baetis_9", "Baetis_pers")) |>
+  ggplot(aes(attribute, area, fill = threshold)) +
+  geom_bar(stat = "identity", position = "fill")  +
+ labs(x = "", y = "") +
+  ggtitle("Comparing the Share of Suitability </> 0.5 between Scenarios for Baetis sp.") +
+  labs(fill = "Habitat Suitability") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = function(x) x * 100) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_fill_manual(values = colors2) 
+
+# save plots into .png
+# set the dimensions of the quadrat
+quadrat_width <- 15 # in cm
+quadrat_height <- 15 # in cm
+
+ggsave(filename = "results_statistics/share_rhith_tanno.png",plot = share_rhith_tanno, width = quadrat_width, height = quadrat_height, units = "cm")
+
+ggsave(filename = "results_statistics/thresh_rhith_tanno.png",plot = thresh_rhith_tanno, width = quadrat_width, height = quadrat_height, units = "cm")
+
+ggsave(filename = "results_statistics/share_rhith_habby.png",plot = share_rhith_habby, width = quadrat_width, height = quadrat_height, units = "cm")
+
+ggsave(filename = "results_statistics/thresh_rhith_habby.png",plot = thresh_rhith_habby, width = quadrat_width, height = quadrat_height, units = "cm")
+
+ggsave(filename = "results_statistics/share_baetis_tanno.png",plot = share_baetis_tanno, width = quadrat_width, height = quadrat_height, units = "cm")
+
+ggsave(filename = "results_statistics/thresh_baetis_tanno.png",plot = thresh_baetis_tanno, width = quadrat_width, height = quadrat_height, units = "cm")
+```
+
 
 
 

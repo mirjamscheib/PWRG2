@@ -78,7 +78,7 @@ reclass_table <- c(0, 0.05, 1,
                    0.05, 0.25, 3, 
                    0.25, 0.75, 5,
                    0.75, 1.50, 4,
-                   1.50, 2.50, 5,
+                   1.50, 2.50, 2,
                    2.50, Inf, NA)
 
 # Classify rasters (include.lowest = TRUE includes 0 m/s, which will be also classified as 1) ---------------------------------------
@@ -353,6 +353,21 @@ HHS_VZH_22 <- WUA_VZH_22/WA_tot_VZH_22
 HHS_VZH_25 <- WUA_VZH_25/WA_tot_VZH_25
 HHS_VZH_28 <- WUA_VZH_28/WA_tot_VZH_28
 HHS_VZH_32 <- WUA_VZH_32/WA_tot_VZH_32
+
+# calculate HHS persistent for all Q's -----------------------------------
+HHS_pers_2 <- WUA_pers_2/WA_tot_VZH_2
+HHS_pers_3 <- WUA_pers_3/WA_tot_VZH_3
+HHS_pers_4 <- WUA_pers_4/WA_tot_VZH_4
+HHS_pers_7 <- WUA_pers_7/WA_tot_VZH_7
+HHS_pers_9 <- WUA_pers_9/WA_tot_VZH_9
+HHS_pers_11 <- WUA_pers_11/WA_tot_VZH_11
+HHS_pers_13 <- WUA_pers_13/WA_tot_VZH_13
+HHS_pers_15 <- WUA_pers_15/WA_tot_VZH_15
+HHS_pers_18 <- WUA_pers_18/WA_tot_VZH_18
+HHS_pers_22 <- WUA_pers_22/WA_tot_VZH_22
+HHS_pers_25 <- WUA_pers_25/WA_tot_VZH_25
+HHS_pers_28 <- WUA_pers_28/WA_tot_VZH_28
+HHS_pers_32 <- WUA_pers_32/WA_tot_VZH_32
 ```
 
 # dataframe and .csv of calculated indices 
@@ -362,6 +377,7 @@ results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZ
                       WUA_normal = c(WUA_VZH_2, WUA_VZH_3, WUA_VZH_4, WUA_VZH_7, WUA_VZH_9, WUA_VZH_11, WUA_VZH_13, WUA_VZH_15, WUA_VZH_18, WUA_VZH_22, WUA_VZH_25, WUA_VZH_28, WUA_VZH_32), 
                       WUA_pers = c(WUA_pers_2, WUA_pers_3, WUA_pers_4, WUA_pers_7, WUA_pers_9,  WUA_pers_11, WUA_pers_13, WUA_pers_15, WUA_pers_18, WUA_pers_22, WUA_pers_25, WUA_pers_28, WUA_pers_32),
                       HHS = c(HHS_VZH_2, HHS_VZH_3, HHS_VZH_4, HHS_VZH_7, HHS_VZH_9, HHS_VZH_11, HHS_VZH_13, HHS_VZH_15, HHS_VZH_18, HHS_VZH_22, HHS_VZH_25, HHS_VZH_28, HHS_VZH_32),
+                      HHS_pers = c(HHS_pers_2, HHS_pers_3, HHS_pers_4, HHS_pers_7, HHS_pers_9, HHS_pers_11, HHS_pers_13, HHS_pers_15, HHS_pers_18, HHS_pers_22, HHS_pers_25, HHS_pers_28, HHS_pers_32),
                       WA_tot = c(WA_tot_VZH_2, WA_tot_VZH_3, WA_tot_VZH_4, WA_tot_VZH_7, WA_tot_VZH_9, WA_tot_VZH_11, WA_tot_VZH_13, WA_tot_VZH_15, WA_tot_VZH_18, WA_tot_VZH_22, WA_tot_VZH_25, WA_tot_VZH_28, WA_tot_VZH_32))
 
 # safe df into .csv file -----------------------------------
@@ -384,7 +400,7 @@ WUA_long <- pivot_longer(WUA, cols = c(WUA_normal, WUA_pers), names_to = "WUA", 
 # Define a custom labelling function
 my_labeller <- function(variable, value) {
   if (variable == "WUA") {
-    return(c("WUA_normal" = "WUA", "WUA_pers" = "WUA persistent habitat")[value])
+    return(c("WUA_normal" = "WUA", "WUA_pers" = "WUA persistent habitat", "VZH")[value])
   } 
 }
 
@@ -439,6 +455,66 @@ ggsave(filename = "results_statistics/WUA_VZH_results.png",plot = WUA_results, w
 ggsave(filename = "results_statistics/HHS_VZH_results.png",plot = HHS_results, width = quadrat_width, height = quadrat_height, units = "cm")
 ```
 
+## f. calculate areas - make barplot 
+```{r}
+# All scenarios ------------------------------------------------------
+freq_VZH_pers_9 <- feq_table(pers_class_9)
+freq_VZH_2 <- feq_table(raster_classify_2)
+freq_VZH_9 <- feq_table(raster_classify_9)
+
+
+# bind together 
+join <- left_join(freq_VZH_2, freq_VZH_9, by = "value")
+
+join <- left_join(join, freq_VZH_pers_9, by = "value")
+
+colnames(join) <- c("value", "VZH_2", "VZH_9", "VZH_pers_9")
+
+join <- as.data.frame(join)
+
+# export all results 
+# write data frame into .csv file -------------------------------------------
+write.csv(join, file = "results_statistics/VZH.csv", row.names = FALSE)
+
+
+join_VZH <- read_delim("results_statistics/VZH.csv")
+
+# Create a new row as a separate dataframe
+new_row <- data.frame(value = "-",
+                      VZH_2 = NA,
+                      VZH_9 = NA, 
+                      VZH_pers_9 = NA)
+
+# Add the new row to the existing dataframe
+join_VZH <- rbind(join_VZH, new_row)
+
+join_VZH$classes <- c("v40 < 5cm/s", "150 < v40 < 250cm/s", "5 < v40 < 25cm/s", "75 < v40 < 150cm/s", "25 < v40 < 75cm/s", "v40 > 250cm/s")
+
+join_long <- pivot_longer(join_VZH, cols = c(2:4), names_to = "attribute", values_to = "area")
+
+# Sort the factor levels in ascending order
+join_long$classes <- factor(join_long$classes, levels = c("v40 < 5cm/s", "5 < v40 < 25cm/s", "25 < v40 < 75cm/s", "75 < v40 < 150cm/s", "150 < v40 < 250cm/s", "v40 > 250cm/s"))
+
+colors <- c("v40 < 5cm/s" = "yellow", "5 < v40 < 25cm/s" = "green", "25 < v40 < 75cm/s" = "cyan", "75 < v40 < 150cm/s" = "blue", "150 < v40 < 250cm/s" = "magenta", "v40 > 250cm/s" = "red")
+
+# share 
+share_VZH <- ggplot(join_long, aes(attribute, area, fill = classes)) +
+  geom_bar(stat = "identity", position = "fill")  +
+  labs(x = "", y = "Share") +
+  ggtitle("Comparing the Share of Flow Velocity Classes between Scenarios") +
+  labs(fill = "Flow velocity classes") +
+  scale_fill_manual(values = colors) +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent"))
+  
+
+
+# save plots into .png
+# set the dimensions of the quadrat
+quadrat_width <- 15 # in cm
+quadrat_height <- 15 # in cm
+
+ggsave(filename = "results_statistics/share_VZH.png",plot = share_VZH, width = quadrat_width, height = quadrat_height, units = "cm")
+```
 
 
 

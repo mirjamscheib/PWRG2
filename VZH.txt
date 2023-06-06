@@ -1,0 +1,7 @@
+# QGIS-Farbabbildungsexportdatei
+INTERPOLATION:INTERPOLATED
+1,252,246,58,255,v40 < 5cm/s
+2,250,48,183,255,150 < v40 < 250 cm/s
+3,83,246,50,255,5 < v40 < 25cm/s
+4,5,12,232,255,75 < v40 < 150cm/s
+5,44,222,254,255,25 < v40 < 75cm/s
