@@ -113,7 +113,7 @@ writeRaster(raster_classify_28, "raster_files/raster_classify_28.tif", format="G
 writeRaster(raster_classify_32, "raster_files/raster_classify_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
-## Persistent Habitats
+## Persistent Habitats with reclassified rasters
 ```{r}
 # Clip the raster1 with raster2 ---------------------------------------
 pers_class_2 <- mask(raster_classify_2, raster_classify_2)
@@ -210,7 +210,7 @@ writeRaster(VZH_28, filename="results_univariate/VZH_28.tif", format="GTiff", ov
 writeRaster(VZH_32, filename="results_univariate/VZH_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
-## Persistent Habitats
+## Persistent Habitats of Habitat Model 
 ```{r}
 # Clip the raster1 with raster2 ---------------------------------------
 persistent_2 <- mask(VZH_2, VZH_2)
@@ -226,13 +226,6 @@ persistent_22 <- mask(VZH_22, VZH_2)
 persistent_25 <- mask(VZH_25, VZH_2)
 persistent_28 <- mask(VZH_28, VZH_2)
 persistent_32 <- mask(VZH_32, VZH_2)
-
-# proof results ---------------------------------------
-# verteilung VZH_32 sieht anders aus, als persistent_32 und persistent_32 sieht genau gleich aus wie persistent_2 in der Habitatverteilung....
-plot(VZH_32)
-plot(persistent_32)
-plot(persistent_28)
-plot(persistent_2)
 
 # Save the clipped raster-files ---------------------------------------
 writeRaster(persistent_2, filename="results_univariate/persistent_VZH_2.tif", format="GTiff", overwrite = TRUE)
@@ -291,7 +284,7 @@ WUA_pers_28 <- wua(persistent_28)
 WUA_pers_32 <- wua(persistent_32)
 ```
 
-# Calculate frequency table normal
+# Calculate frequency table 
 ```{r}
 # define function for feq_table calculation -----------------------------------
 feq_table <- function(x){
@@ -337,7 +330,7 @@ WA_tot_VZH_28 <- wa_tot(freq_VZH_28, column_name = "count")
 WA_tot_VZH_32 <- wa_tot(freq_VZH_32, column_name = "count")
 ```
 
-# Calculate HHS [-] 
+# Calculate HHS [-] normal
 ```{r}
 # calculate HHS for all Q's -----------------------------------
 HHS_VZH_2 <- WUA_VZH_2/WA_tot_VZH_2
@@ -384,31 +377,28 @@ results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZ
 write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
 ```
 
-# Comparing WUA, HHS, WA_tot with different Q
+# ! Comparing WUA, HHS, WA_tot with different Q
 ```{r}
 # make data frame for plotting -----------------------------------
 WUA_HHS <- read_delim("results_statistics/Results_VZH_Habitat_Model.csv")
 
-# make variable with WUA normal/persistent -----------------------------------
+# make variable with WUA normal/persistent -------------------------------
 # long format to plot in facet_wrap 
-WUA_normal <- WUA_HHS[ , c(1:3)]
-WUA_pers <- WUA_HHS[ , c(1,2,4)]
-
-WUA <- full_join(WUA_normal, WUA_pers, by = "Discharge")
-WUA_long <- pivot_longer(WUA, cols = c(WUA_normal, WUA_pers), names_to = "WUA", values_to = "value")
+# WUA <- full_join(WUA_normal, WUA_pers, by = "Discharge")
+WUA_long <- pivot_longer(WUA_HHS, cols = c(3:7), names_to = "attribute", values_to = "value")
 
 # Define a custom labelling function
 my_labeller <- function(variable, value) {
   if (variable == "WUA") {
-    return(c("WUA_normal" = "WUA", "WUA_pers" = "WUA persistent habitat", "VZH")[value])
+    return(c("WUA_normal" = "WUA", "WUA_pers" = "WUA persistent habitat", "VZH" = "FOEN")[value])
   } 
 }
 
-WUA_long
+
 
 # WUA facet_wrap results -----------------------------------
-ggplot(WUA_long, aes(Discharge, value, col = WUA)) +
-  facet_wrap(~WUA, labeller = my_labeller) +
+ggplot(WUA_long, aes(Discharge, value, col = attribute)) +
+  facet_wrap(Description~value, labeller = my_labeller) +
   geom_line(lwd = 0.8) +
   geom_point(size = 2) +
   labs(title = "Comparing Weighted Usable Area (WUA) with 13 discharges and between normal and persistent habitats", x = expression(paste("Discharge [", m^3/s, "]")), y = "WUA") +
@@ -455,7 +445,7 @@ ggsave(filename = "results_statistics/WUA_VZH_results.png",plot = WUA_results, w
 ggsave(filename = "results_statistics/HHS_VZH_results.png",plot = HHS_results, width = quadrat_width, height = quadrat_height, units = "cm")
 ```
 
-## f. calculate areas - make barplot 
+## calculate areas - make barplot 
 ```{r}
 # All scenarios ------------------------------------------------------
 freq_VZH_pers_9 <- feq_table(pers_class_9)
@@ -464,19 +454,17 @@ freq_VZH_9 <- feq_table(raster_classify_9)
 
 
 # bind together 
-join <- left_join(freq_VZH_2, freq_VZH_9, by = "value")
-
-join <- left_join(join, freq_VZH_pers_9, by = "value")
+join <- freq_VZH_2 |>
+  full_join(freq_VZH_9, by = "value") |>
+  full_join(freq_VZH_pers_9, by = "value")
 
 colnames(join) <- c("value", "VZH_2", "VZH_9", "VZH_pers_9")
-
-join <- as.data.frame(join)
 
 # export all results 
 # write data frame into .csv file -------------------------------------------
 write.csv(join, file = "results_statistics/VZH.csv", row.names = FALSE)
 
-
+# read created dataframe
 join_VZH <- read_delim("results_statistics/VZH.csv")
 
 # Create a new row as a separate dataframe
@@ -488,16 +476,19 @@ new_row <- data.frame(value = "-",
 # Add the new row to the existing dataframe
 join_VZH <- rbind(join_VZH, new_row)
 
+# add correspondent classes to dataframe for plotting
 join_VZH$classes <- c("v40 < 5cm/s", "150 < v40 < 250cm/s", "5 < v40 < 25cm/s", "75 < v40 < 150cm/s", "25 < v40 < 75cm/s", "v40 > 250cm/s")
 
+# make long table for plotting
 join_long <- pivot_longer(join_VZH, cols = c(2:4), names_to = "attribute", values_to = "area")
 
-# Sort the factor levels in ascending order
+# Sort the factor levels in ascending order for plot
 join_long$classes <- factor(join_long$classes, levels = c("v40 < 5cm/s", "5 < v40 < 25cm/s", "25 < v40 < 75cm/s", "75 < v40 < 150cm/s", "150 < v40 < 250cm/s", "v40 > 250cm/s"))
 
+# generate colors for barplot 
 colors <- c("v40 < 5cm/s" = "yellow", "5 < v40 < 25cm/s" = "green", "25 < v40 < 75cm/s" = "cyan", "75 < v40 < 150cm/s" = "blue", "150 < v40 < 250cm/s" = "magenta", "v40 > 250cm/s" = "red")
 
-# share 
+# Create plot with share of flow velocity classes per section 
 share_VZH <- ggplot(join_long, aes(attribute, area, fill = classes)) +
   geom_bar(stat = "identity", position = "fill")  +
   labs(x = "", y = "Share") +
@@ -506,7 +497,6 @@ share_VZH <- ggplot(join_long, aes(attribute, area, fill = classes)) +
   scale_fill_manual(values = colors) +
   scale_x_discrete(labels = c("residual", "hydropeak", "persistent"))
   
-
 
 # save plots into .png
 # set the dimensions of the quadrat

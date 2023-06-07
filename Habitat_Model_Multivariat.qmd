@@ -144,20 +144,6 @@ depth_masked_25 <- mask(depth_25, mask_25)
 depth_masked_28 <- mask(depth_28, mask_28)
 depth_masked_32 <- mask(depth_32, mask_32)
 
-# Save the masked raster as a new file ----------------------------------------
-writeRaster(depth_masked_2, "raster_files/depth_masked_2.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_3, "raster_files/depth_masked_3.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_4, "raster_files/depth_masked_4.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_7, "raster_files/depth_masked_7.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_9, "raster_files/depth_masked_9.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_11, "raster_files/depth_masked_11.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_13, "raster_files/depth_masked_13.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_15, "raster_files/depth_masked_15.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_18, "raster_files/depth_masked_18.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_22, "raster_files/depth_masked_22.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_25, "raster_files/depth_masked_25.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_28, "raster_files/depth_masked_28.tif", format="GTiff", overwrite = TRUE)
-writeRaster(depth_masked_32, "raster_files/depth_masked_32.tif", format="GTiff", overwrite = TRUE)
 
 # Clip the raster1 with raster2 ----------------------------------------------
 sub_2 <- mask(sub, depth_masked_2)
@@ -231,53 +217,6 @@ sc_sub_Baetis <- read.csv(sc_sub_Baetis_path, sep=";", dec=".", header = TRUE)
 sc_sub_Rhithrogena_path <- "Suitability_Curves_Data/Rhithrogena/Tanno_2012_Rhithrogena_sp_substrate_winter.csv" 
 sc_sub_Rhithrogena <- read.csv(sc_sub_Rhithrogena_path, sep=";", dec=".", header = TRUE)
 ```
-
-```{r}
-# Plot suitability curves 
-### WATER DEPTH ### ----------------------------------------------------
-# Tanno 2012 Rhithrogena ----------------------------------------------------
-plot(approxfun(sc_depth_Tanno_2012_Rhithrogena$depth..m., sc_depth_Tanno_2012_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
-     main = "Tanno 2012: Rhithrogena sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Depth [m]", ylab = "HS [-]")
-
-# HABBY Rhithrogena ----------------------------------------------------
-plot(approxfun(sc_depth_HABBY_Rhithrogena$depth..m., sc_depth_HABBY_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
-     main = "HABBY: Rhithrogena eaton", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Depth [m]", ylab = "HS [-]")
-
-# Tanno 2012 Baetis ----------------------------------------------------
-plot(approxfun(sc_depth_Tanno_2012_Baetis$depth..m., sc_depth_Tanno_2012_Baetis$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
-     main = "Tanno 2012: Baetis sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Depth [m]", ylab = "HS [-]")
-
-### VELOCITY ### ----------------------------------------------------
-# Tanno 2012 Rhithrogena ----------------------------------------------------
-plot(approxfun(sc_v_Tanno_2012_Rhithrogena$Velocity..m.s., sc_v_Tanno_2012_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
-     main = "Tanno 2012: Rhithrogena sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Velocity [m/s]", ylab = "HS [-]")
-
-# HABBY Rhithrogena ----------------------------------------------------
-plot(approxfun(sc_v_HABBY_Rhithrogena$Velocity..m.s., sc_v_HABBY_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
-     main = "HABBY: Rhithrogena eaton", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Velocity [m/s]", ylab = "HS [-]")
-
-# Tanno 2012 Baetis ----------------------------------------------------
-plot(approxfun(sc_v_Tanno_2012_Baetis$Velocity..m.s., sc_v_Tanno_2012_Baetis$Abundance, method = "linear", rule = 2), xlim = c(0,1.5), 
-     main = "Tanno 2012: Baetis sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Velocity [m/s]", ylab = "HS [-]")
-
-### SUBSTRATE ### ----------------------------------------------------
-# Tanno 2012 Baetis ----------------------------------------------------
-plot(approxfun(sc_sub_Baetis$Substrate.class, sc_sub_Baetis$Abundance, method = "linear", rule = 2), xlim = c(0,8.5), 
-     main = "Tanno 2012: Baetis sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Substrate class", ylab = "HS [-]")
-
-# Tanno 2012 Rhithrogena ----------------------------------------------------
-plot(approxfun(sc_sub_Rhithrogena$Substrate.class, sc_sub_Rhithrogena$Abundance, method = "linear", rule = 2), xlim = c(0,8.5), 
-     main = "Tanno 2012: Rhithrogena sp. (winter)", col = "black",  lty = 1, lwd = 2, 
-     xlab = "Substrate class", ylab = "HS [-]")
-```
-
 
 ## b. Univariate HM 
 ### b1. water depth
@@ -660,7 +599,7 @@ writeRaster(HS_Tanno_2012_Baetis_velocity_28, filename="results_univariate/HS_ve
 writeRaster(HS_Tanno_2012_Baetis_velocity_32, filename="results_univariate/HS_velocity_Tanno_2012_Baetis_sp_winter_32.tif", format="GTiff", overwrite=TRUE)
 ```
 
-### * b3. persistent habitat velocity
+### !! b3. persistent habitat velocity
 ```{r}
 # Clip the raster1 with raster2
 # Tanno 2012 Rhithrogena -------------------------------------------
