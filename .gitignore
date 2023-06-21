@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+hydrodynamic_model_results
+raster_files
+results_multivariate
+results_univariate
+results_HM
+results_statistics
+Suitability_Curves_Data

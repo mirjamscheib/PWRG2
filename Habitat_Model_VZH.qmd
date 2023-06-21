@@ -30,6 +30,7 @@ pkgCheck("tibble")
 pkgCheck("readr")
 pkgCheck("dplyr")
 pkgCheck("tidyr")
+pkgCheck("scales")
 ```
 
 # Load input rasters (velocity only)
@@ -377,74 +378,6 @@ results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZ
 write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
 ```
 
-# ! Comparing WUA, HHS, WA_tot with different Q
-```{r}
-# make data frame for plotting -----------------------------------
-WUA_HHS <- read_delim("results_statistics/Results_VZH_Habitat_Model.csv")
-
-# make variable with WUA normal/persistent -------------------------------
-# long format to plot in facet_wrap 
-# WUA <- full_join(WUA_normal, WUA_pers, by = "Discharge")
-WUA_long <- pivot_longer(WUA_HHS, cols = c(3:7), names_to = "attribute", values_to = "value")
-
-# Define a custom labelling function
-my_labeller <- function(variable, value) {
-  if (variable == "WUA") {
-    return(c("WUA_normal" = "WUA", "WUA_pers" = "WUA persistent habitat", "VZH" = "FOEN")[value])
-  } 
-}
-
-
-
-# WUA facet_wrap results -----------------------------------
-ggplot(WUA_long, aes(Discharge, value, col = attribute)) +
-  facet_wrap(Description~value, labeller = my_labeller) +
-  geom_line(lwd = 0.8) +
-  geom_point(size = 2) +
-  labs(title = "Comparing Weighted Usable Area (WUA) with 13 discharges and between normal and persistent habitats", x = expression(paste("Discharge [", m^3/s, "]")), y = "WUA") +
-  guides(color = FALSE) +
-  theme(plot.title = element_text(size = 100)) +
-  theme_grey()
-
-# HHS results -----------------------------------
-HHS_results <- ggplot(WUA_HHS, aes(Discharge, HHS)) +
-  geom_line(lwd = 0.8) +
-  geom_point(size = 2) +
-  labs(title = "Hydraulic Habitat Suitability (HHS) comparing 13 discharges", x = expression(paste("Discharge [", m^3/s, "]")), y = "HHS [-]") +
-  theme_gray()
-```
-
-```{r}
-# WUA normal results -----------------------------------
-ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, WUA_normal), col = "blue") +
-  geom_point(data = WUA_HHS, aes(Discharge, WUA_normal), col = "blue") +
-  labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
-  theme(legend.position = "none") +
-  theme_minimal()
-
-# WUA persistent results -----------------------------------
-ggplot() +
-  geom_line(data = WUA_HHS, aes(Discharge, WUA_pers)) +
-  geom_point(data = WUA_HHS, aes(Discharge, WUA_pers)) +
-  labs(title = "WUA of VZH", x = expression(paste("Discharge [", m^3/s, "]")), y = "Weighted usable area (WUA)") +
-  theme(legend.position = "none") +
-  theme_minimal()
-```
-
-```{r}
-# save plots into .png
-# set the dimensions of the quadrat
-quadrat_width <- 25 # in cm
-quadrat_height <- 20 # in cm
-
-# WUA results
-ggsave(filename = "results_statistics/WUA_VZH_results.png",plot = WUA_results, width = quadrat_width, height = quadrat_height, units = "cm")
-
-# HHS
-ggsave(filename = "results_statistics/HHS_VZH_results.png",plot = HHS_results, width = quadrat_width, height = quadrat_height, units = "cm")
-```
-
 ## calculate areas - make barplot 
 ```{r}
 # All scenarios ------------------------------------------------------
@@ -458,6 +391,7 @@ join <- freq_VZH_2 |>
   full_join(freq_VZH_9, by = "value") |>
   full_join(freq_VZH_pers_9, by = "value")
 
+# give colnames for plotting 
 colnames(join) <- c("value", "VZH_2", "VZH_9", "VZH_pers_9")
 
 # export all results 
@@ -492,10 +426,11 @@ colors <- c("v40 < 5cm/s" = "yellow", "5 < v40 < 25cm/s" = "green", "25 < v40 < 
 share_VZH <- ggplot(join_long, aes(attribute, area, fill = classes)) +
   geom_bar(stat = "identity", position = "fill")  +
   labs(x = "", y = "Share") +
-  ggtitle("Comparing the Share of Flow Velocity Classes between Scenarios") +
-  labs(fill = "Flow velocity classes") +
+  labs(fill = "Flow velocity classes", title = "Comparing the Share of Flow Velocity Classes", subtitle = "Between Residual, Hydropeaking and Persistent Habitat Scenarios") +
+  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
+  scale_y_continuous(labels = percent_format()) +
   scale_fill_manual(values = colors) +
-  scale_x_discrete(labels = c("residual", "hydropeak", "persistent"))
+  theme_minimal()
   
 
 # save plots into .png
