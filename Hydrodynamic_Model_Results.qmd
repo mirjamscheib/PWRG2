@@ -460,17 +460,4 @@ writeRaster(raster_velocity_32, "raster_files/Landquart_results_velocity_32.tif"
 writeRaster(raster_substrate, "raster_files/Landquart_results_substrate.tif", format = "GTiff", overwrite = TRUE)
 ```
 
-# Plot shape/raster to check 
-```{r}
-raster_velocity_2 <- rast("raster_files/Landquart_results_velocity_2.tif")
-raster_velocity_32 <- rast("raster_files/Landquart_results_velocity_32.tif")
-
-raster_depth_3 <- rast("raster_files/Landquart_results_depth_3.tif")
-raster_depth_32 <- rast("raster_files/Landquart_results_depth_32.tif")
-
-plot(raster_velocity_2)
-plot(raster_velocity_32)
-plot(raster_depth_3)
-plot(raster_depth_32)
-```
 

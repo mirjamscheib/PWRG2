@@ -99,19 +99,19 @@ raster_classify_32 <- reclassify(velocity_32, reclass_table,  include.lowest = T
 
 
 # write/save reclassified rasters ---------------------------------------
-writeRaster(raster_classify_2, "raster_files/raster_classify_2.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_3, "raster_files/raster_classify_3.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_4, "raster_files/raster_classify_4.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_7, "raster_files/raster_classify_7.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_9, "raster_files/raster_classify_9.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_11, "raster_files/raster_classify_11.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_13, "raster_files/raster_classify_13.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_15, "raster_files/raster_classify_15.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_18, "raster_files/raster_classify_18.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_22, "raster_files/raster_classify_22.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_25, "raster_files/raster_classify_25.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_28, "raster_files/raster_classify_28.tif", format="GTiff", overwrite = TRUE)
-writeRaster(raster_classify_32, "raster_files/raster_classify_32.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_2, "results_univariate/raster_classify_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_3, "results_univariate/raster_classify_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_4, "results_univariate/raster_classify_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_7, "results_univariate/raster_classify_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_9, "results_univariate/raster_classify_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_11, "results_univariate/raster_classify_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_13, "results_univariate/raster_classify_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_15, "results_univariate/raster_classify_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_18, "results_univariate/raster_classify_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_22, "results_univariate/raster_classify_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_25, "results_univariate/raster_classify_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_28, "results_univariate/raster_classify_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_32, "results_univariate/raster_classify_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
 ## Persistent Habitats with reclassified rasters
@@ -158,7 +158,7 @@ sc_v_VZH <- read.csv(sc_v_VZH_path, sep=";", dec=".", header = TRUE)
 ## Univariate Habitat Model (Velocity Class)
 ```{r}
 # Read raster-files of velocities ---------------------------------------
-v_path <- "raster_files"
+v_path <- "results_univariate"
 
 # read raster-files ---------------------------------------
 v_2 <- raster(file.path(v_path, "raster_classify_2.tif"))
@@ -244,7 +244,7 @@ writeRaster(persistent_28, filename="results_univariate/persistent_VZH_28.tif", 
 writeRaster(persistent_32, filename="results_univariate/persistent_VZH_32.tif", format="GTiff", overwrite = TRUE)
 ```
 
-# Calculate WUA normal 
+# Calculate WUA 
 ```{r}
 # define function for WUA calculation -----------------------------------
 wua <- function(x){
@@ -265,10 +265,7 @@ WUA_VZH_22 <- wua(VZH_22)
 WUA_VZH_25 <- wua(VZH_25)
 WUA_VZH_28 <- wua(VZH_28)
 WUA_VZH_32 <- wua(VZH_32)
-```
 
-# Calculate WUA with persistent habitat
-```{r}
 # calculate WUA für pers. habitats for all Q's ----------------------------------
 WUA_pers_2 <- wua(persistent_2)
 WUA_pers_3 <- wua(persistent_3)
@@ -331,7 +328,7 @@ WA_tot_VZH_28 <- wa_tot(freq_VZH_28, column_name = "count")
 WA_tot_VZH_32 <- wa_tot(freq_VZH_32, column_name = "count")
 ```
 
-# Calculate HHS [-] normal
+# Calculate HHS [-] 
 ```{r}
 # calculate HHS for all Q's -----------------------------------
 HHS_VZH_2 <- WUA_VZH_2/WA_tot_VZH_2
@@ -364,7 +361,7 @@ HHS_pers_28 <- WUA_pers_28/WA_tot_VZH_28
 HHS_pers_32 <- WUA_pers_32/WA_tot_VZH_32
 ```
 
-# dataframe and .csv of calculated indices 
+# Create dataframe and .csv of calculated indices 
 ```{r}
 # data frame WUA, HHS etc. -----------------------------------
 results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH"), Discharge = c(2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69), 
@@ -376,17 +373,14 @@ results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZ
 
 # safe df into .csv file -----------------------------------
 write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
-```
 
-## calculate areas - make barplot 
-```{r}
-# All scenarios ------------------------------------------------------
-freq_VZH_pers_9 <- feq_table(pers_class_9)
+# create dataframe for barchart visualisation 
 freq_VZH_2 <- feq_table(raster_classify_2)
 freq_VZH_9 <- feq_table(raster_classify_9)
+freq_VZH_pers_9 <- feq_table(pers_class_9)
 
 
-# bind together 
+# bind together frequency table results for plots
 join <- freq_VZH_2 |>
   full_join(freq_VZH_9, by = "value") |>
   full_join(freq_VZH_pers_9, by = "value")
@@ -394,52 +388,10 @@ join <- freq_VZH_2 |>
 # give colnames for plotting 
 colnames(join) <- c("value", "VZH_2", "VZH_9", "VZH_pers_9")
 
-# export all results 
-# write data frame into .csv file -------------------------------------------
+# write data frame into .csv file
 write.csv(join, file = "results_statistics/VZH.csv", row.names = FALSE)
-
-# read created dataframe
-join_VZH <- read_delim("results_statistics/VZH.csv")
-
-# Create a new row as a separate dataframe
-new_row <- data.frame(value = "-",
-                      VZH_2 = NA,
-                      VZH_9 = NA, 
-                      VZH_pers_9 = NA)
-
-# Add the new row to the existing dataframe
-join_VZH <- rbind(join_VZH, new_row)
-
-# add correspondent classes to dataframe for plotting
-join_VZH$classes <- c("v40 < 5cm/s", "150 < v40 < 250cm/s", "5 < v40 < 25cm/s", "75 < v40 < 150cm/s", "25 < v40 < 75cm/s", "v40 > 250cm/s")
-
-# make long table for plotting
-join_long <- pivot_longer(join_VZH, cols = c(2:4), names_to = "attribute", values_to = "area")
-
-# Sort the factor levels in ascending order for plot
-join_long$classes <- factor(join_long$classes, levels = c("v40 < 5cm/s", "5 < v40 < 25cm/s", "25 < v40 < 75cm/s", "75 < v40 < 150cm/s", "150 < v40 < 250cm/s", "v40 > 250cm/s"))
-
-# generate colors for barplot 
-colors <- c("v40 < 5cm/s" = "yellow", "5 < v40 < 25cm/s" = "green", "25 < v40 < 75cm/s" = "cyan", "75 < v40 < 150cm/s" = "blue", "150 < v40 < 250cm/s" = "magenta", "v40 > 250cm/s" = "red")
-
-# Create plot with share of flow velocity classes per section 
-share_VZH <- ggplot(join_long, aes(attribute, area, fill = classes)) +
-  geom_bar(stat = "identity", position = "fill")  +
-  labs(x = "", y = "Share") +
-  labs(fill = "Flow velocity classes", title = "Comparing the Share of Flow Velocity Classes", subtitle = "Between Residual, Hydropeaking and Persistent Habitat Scenarios") +
-  scale_x_discrete(labels = c("residual", "hydropeak", "persistent")) +
-  scale_y_continuous(labels = percent_format()) +
-  scale_fill_manual(values = colors) +
-  theme_minimal()
-  
-
-# save plots into .png
-# set the dimensions of the quadrat
-quadrat_width <- 15 # in cm
-quadrat_height <- 15 # in cm
-
-ggsave(filename = "results_statistics/share_VZH.png",plot = share_VZH, width = quadrat_width, height = quadrat_height, units = "cm")
 ```
+
 
 
 
