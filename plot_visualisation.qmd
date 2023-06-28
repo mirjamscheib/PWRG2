@@ -30,10 +30,10 @@ results <- rbind(WUA_HHS, WUA_VZH)
 results[results$Description == "Tanno 2012 Baetis sp.", 1] <- "Baetis sp."
 results[results$Description == "Tanno 2012 Rhithrogena sp.", 1] <- "Rhithrogena sp."
 results[results$Description == "HABBY Rhithrogena eaton larva", 1] <- "Rhithrogena germanica (larva)"
-results[results$Description == "VZH", 1] <- "Schmidlin et al. (2023)"
+results[results$Description == "VZH", 1] <- "Entire MI community"
 
 # Sort the factor levels in ascending order for plot
-results$Description <- factor(results$Description, levels = c("Baetis sp.", "Rhithrogena sp.", "Rhithrogena germanica (larva)", "Schmidlin et al. (2023)"))
+results$Description <- factor(results$Description, levels = c("Baetis sp.", "Rhithrogena sp.", "Rhithrogena germanica (larva)", "Entire MI community"))
 
 # Set individual facet titles
 HHS_names <- c(
@@ -131,7 +131,7 @@ colors <- c("v40 < 5cm/s" = "yellow", "5 < v40 < 25cm/s" = "green", "25 < v40 < 
 share_VZH <- ggplot(join_long, aes(attribute, area, fill = classes)) +
   geom_bar(stat = "identity", position = "fill")  +
   labs(x = "Scenario", y = "Share", fill = "Flow velocity classes") +
-  scale_x_discrete(labels = c("base flow", "hydropeaking flow", "persistent habitat")) +
+  scale_x_discrete(labels = c("base flow", "peak flow", "persistent habitat")) +
   scale_y_continuous(labels = percent_format()) +
   scale_fill_manual(values = colors) +
   theme_minimal() +
